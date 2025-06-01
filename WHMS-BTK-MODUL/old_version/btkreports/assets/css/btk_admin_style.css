@@ -1,0 +1,322 @@
+/* modules/addons/btkreports/assets/css/btk_admin_style.css (v1.0.22) */
+
+/* Genel Modül Çerçevesi */
+#btk_reports_module_index,
+.btk_reports_page_content { /* Diğer TPL dosyalarının ana div'i için ortak sınıf */
+    font-family: 'Open Sans', sans-serif; /* WHMCS admin paneliyle uyumlu font */
+    padding: 15px; /* Ana içerik alanı için genel bir dolgu */
+}
+
+/* Modül Başlık Alanı (index.tpl, config.tpl, personel.tpl vb. için ortak olabilir) */
+.btk-header-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px 20px;
+    margin-bottom: 25px; /* Sekmelerle arasında boşluk için artırıldı */
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btk-module-title {
+    display: flex;
+    align-items: center;
+}
+
+.btk-module-title h2 {
+    font-size: 20px; /* Biraz daha küçük */
+    font-weight: 600;
+    color: #337ab7; /* WHMCS mavi tonu */
+    margin: 0;
+}
+.btk-module-title i.fa, .btk-module-title i.fas { /* İkonlar için */
+    font-size: 1.3em; /* Biraz daha belirgin */
+    margin-right: 10px;
+    vertical-align: middle;
+    color: #555; /* Daha yumuşak bir renk */
+}
+
+
+.btk-header-info {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.btk-header-info a {
+    color: #337ab7;
+    text-decoration: none;
+}
+.btk-header-info a:hover {
+    text-decoration: underline;
+}
+.btk-header-info span {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.btk-header-info i.fas {
+    margin-right: 3px;
+}
+
+/* FTP Durum Göstergesi */
+.ftp-status {
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 0.9em;
+    border: 1px solid transparent; /* Kenarlık için yer tutucu */
+}
+.ftp-status i.fas {
+    margin-right: 5px;
+}
+.ftp-status-active {
+    color: #3c763d; /* Yeşil */
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.ftp-status-passive {
+    color: #a94442; /* Kırmızı */
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+.ftp-status-error,
+.ftp-status-unknown {
+    color: #8a6d3b; /* Sarı/Turuncu */
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
+.ftp-status-not-configured {
+    color: #777;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+
+/* Sekmeli Menü (Bootstrap nav-tabs üzerine özelleştirme) */
+.btk-nav-tabs {
+    border-bottom: 2px solid #337ab7;
+    margin-bottom: 0px; 
+}
+
+.btk-nav-tabs > li > a {
+    color: #4F5357; /* WHMCS sekme rengi */
+    border-radius: 4px 4px 0 0;
+    margin-right: 2px;
+    padding: 12px 18px; /* Biraz daha geniş */
+    font-weight: 600;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    background-color: #f9f9f9; /* Hafif arkaplan */
+    transition: all 0.2s ease-in-out;
+}
+.btk-nav-tabs > li > a i.fas {
+    margin-right: 6px;
+}
+
+.btk-nav-tabs > li > a:hover,
+.btk-nav-tabs > li > a:focus {
+    background-color: #e7e7e7;
+    border-color: #ccc #ccc transparent #ccc;
+    color: #333;
+}
+
+.btk-nav-tabs > li.active > a,
+.btk-nav-tabs > li.active > a:hover,
+.btk-nav-tabs > li.active > a:focus {
+    color: #fff;
+    background-color: #337ab7; /* WHMCS mavi tonu */
+    border: 1px solid #337ab7;
+    border-bottom: 2px solid #337ab7; /* Aktif sekmenin alt çizgisi */
+    cursor: default;
+}
+.btk-nav-tabs > li.active > a i.fas { /* Aktif sekmedeki ikon rengi */
+    color: #fff; 
+}
+
+
+/* Sekme içeriği için biraz dolgu ve kenarlık */
+.btk-tab-content {
+    border: 1px solid #ddd;
+    border-top: none; /* Sekme çizgisiyle birleşsin */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.05);
+    margin-bottom: 20px; /* Altına biraz boşluk */
+}
+
+/* Paneller (config.tpl ve diğer sayfalarda kullanılabilir) */
+.panel {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.07); /* Hafif gölge */
+    margin-bottom: 25px; /* Paneller arası boşluk */
+}
+.panel-default > .panel-heading {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    color: #333;
+    padding: 12px 15px; /* Başlık için dolgu */
+}
+.panel-default > .panel-heading .panel-title,
+.panel-info > .panel-heading .panel-title,
+.panel-warning > .panel-heading .panel-title,
+.panel-primary > .panel-heading .panel-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+.panel-default > .panel-heading .panel-title i.fas,
+.panel-info > .panel-heading .panel-title i.fas,
+.panel-warning > .panel-heading .panel-title i.fas,
+.panel-primary > .panel-heading .panel-title i.fas {
+    margin-right: 7px;
+    color: #666; /* Panel başlık ikon rengi */
+}
+
+.panel-warning > .panel-heading {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+}
+.panel-warning > .panel-heading .panel-title i.fas { color: #8a6d3b;}
+
+.panel-info > .panel-heading {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+.panel-info > .panel-heading .panel-title i.fas { color: #31708f;}
+
+.panel-primary > .panel-heading { /* Personel formu için */
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: white;
+}
+.panel-primary > .panel-heading .panel-title i.fas { color: white;}
+.panel-body {
+    padding: 20px; /* Panel içeriği için dolgu */
+}
+
+
+/* Form Elemanları (config.tpl, personel.tpl vb.) */
+.form-horizontal .control-label {
+    font-weight: 600;
+    text-align: right;
+    padding-top: 7px; /* Bootstrap varsayılanı */
+}
+.form-group {
+    margin-bottom: 18px;
+}
+.help-block {
+    font-size: 0.9em;
+    color: #737373;
+    margin-top: 5px;
+}
+.checkbox-inline label, .radio-inline label {
+    font-weight: normal;
+}
+.text-danger { /* WHMCS ile uyumlu */
+    color: #a94442;
+}
+.form-control[readonly] {
+    background-color: #eee;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+/* BTK Yetki Türleri Checkbox Düzeni (config.tpl) */
+.btk-auth-types-container .row {
+    margin-left: -5px;  /* Sütunlar arası boşluğu azaltmak için */
+    margin-right: -5px;
+}
+.btk-auth-types-container .col-md-4,
+.btk-auth-types-container .col-sm-6 {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.btk-auth-types-container .checkbox {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 20px; /* Checkbox için yer */
+}
+.btk-auth-types-container .checkbox label {
+    font-weight: normal;
+    font-size: 0.95em;
+}
+
+
+/* Datatables için genel iyileştirmeler (logs.tpl, personel.tpl) */
+.table.datatable th {
+    font-weight: 600;
+    background-color: #f9f9f9;
+    border-bottom-width: 2px;
+}
+.table.datatable td {
+    vertical-align: middle !important;
+}
+
+/* Genel Buton İyileştirmeleri */
+.btn i.fas {
+    margin-right: 5px;
+}
+.btn-lg i.fas {
+    margin-right: 8px;
+}
+
+/* Hızlı Bağlantı Butonları (index.tpl) */
+.panel-body > h4 + p .btn-sm {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* Tab içeriği için minimum yükseklik (opsiyonel) */
+.btk-tab-content .tab-pane {
+    min-height: 350px; 
+}
+
+/* Personel listesi senkronize butonu için */
+#syncPersonelButton i.fa-spin,
+#generatePersonelReportButton i.fa-spin,
+#testFtpButtonConfig i.fa-spin { /* Config'deki FTP test butonu için de */
+    margin-right: 5px;
+}
+
+/* Özel context butonları (personel.tpl'deki gibi) */
+.context-buttons {
+    margin-bottom: 15px; /* Başlık altındaki butonlar için */
+}
+.context-buttons .btn {
+    margin-left: 5px;
+}
+
+/* Form içindeki paneller için biraz daha az alt boşluk */
+form .panel {
+    margin-bottom: 20px;
+}
+
+/* README içeriği için pre stili */
+.panel-body pre {
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+    font-family: monospace; 
+    padding: 15px; 
+    border: 1px solid #ddd; 
+    background-color: #f9f9f9;
+    max-height: 500px; /* Uzunsa scroll edilebilir */
+    overflow-y: auto;
+}
+
+/* Adres blokları için (client_details.tpl, service_details.tpl) */
+.address-block legend {
+    font-size: 1.1em;
+    font-weight: bold;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
+.nvi-status {
+    margin-top: 5px;
+    font-size: 0.9em;
+}
+.nvi-status .label-success { background-color: #5cb85c; }
+.nvi-status .label-danger { background-color: #d9534f; }
+.nvi-status .label-warning { background-color: #f0ad4e; }

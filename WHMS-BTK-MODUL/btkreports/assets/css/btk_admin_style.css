@@ -1,0 +1,192 @@
+/**
+ * WHMCS BTK Raporlama Modülü - Admin Alanı Özel CSS Stilleri - V2.0.1 - Beta
+ */
+
+/* Genel BTK Modül Kapsayıcıları için Stil */
+.btk-custom-fields,
+.btk-client-custom-fields, /* Müşteri detayları formu için */
+.btk-service-custom-fields, /* Hizmet detayları formu için */
+.btk-dashboard, /* Ana sayfa için */
+.btk-config-page, /* Ayarlar sayfası için */
+.btk-personel-page, /* Personel yönetimi sayfası için */
+.btk-reports-page, /* Rapor oluşturma sayfası için */
+.btk-logs-page { /* Log görüntüleme sayfası için */
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd; /* WHMCS .tablebg border'ına benzer */
+    border-radius: 4px; /* WHMCS .panel border-radius'una benzer */
+    background-color: #f9f9f9; /* Hafif bir arka plan */
+    box-shadow: 0 1px 1px rgba(0,0,0,.05); /* WHMCS .panel box-shadow'una benzer */
+}
+
+.btk-dashboard h4,
+.btk-config-page h4,
+.btk-personel-page h4,
+.btk-reports-page h4,
+.btk-logs-page h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    font-size: 18px; /* WHMCS .panel-title font size'ına yakın */
+    color: #337ab7; /* WHMCS primary color */
+}
+
+.btk-custom-fields h5,
+.btk-service-custom-fields h5 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+    font-size: 1.1em;
+    color: #007bff; 
+}
+
+.btk-custom-fields h6,
+.btk-service-custom-fields h6 {
+    font-size: 1em;
+    color: #333;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.btk-custom-fields .text-info,
+.btk-service-custom-fields .text-info {
+    cursor: help;
+    color: #17a2b8 !important; 
+}
+
+/* Sekmeli Yapılar için Stil (Hizmet ve Ayarlar Sayfası) */
+.btk-service-custom-fields .nav-tabs > li > a,
+.btk-config-page .nav-tabs > li > a {
+    color: #007bff;
+    border-radius: .25rem .25rem 0 0;
+}
+.btk-service-custom-fields .nav-tabs > li.active > a,
+.btk-service-custom-fields .nav-tabs > li.active > a:hover,
+.btk-service-custom-fields .nav-tabs > li.active > a:focus,
+.btk-config-page .nav-tabs > li.active > a,
+.btk-config-page .nav-tabs > li.active > a:hover,
+.btk-config-page .nav-tabs > li.active > a:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+.btk-service-custom-fields .tab-content,
+.btk-config-page .tab-content {
+    padding-top: 15px;
+    border: 1px solid #dee2e6;
+    border-top: none; 
+    padding: 20px;
+    border-radius: 0 0 .35rem .35rem;
+    background-color: #fff; 
+}
+
+/* Form Grupları ve Alanlar */
+.btk-custom-fields .form-group,
+.btk-service-custom-fields .form-group,
+.btk-config-page .form-group {
+    margin-bottom: 1rem; /* WHMCS'te kullanılan bootstrap .form-group margin'i */
+}
+
+.btk-service-custom-fields .yetki-fields-grup { 
+    margin-top: 15px; 
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+}
+.btk-service-custom-fields .yetki-fields-grup .row .col-md-6:nth-child(odd) { padding-right: 7px; }
+.btk-service-custom-fields .yetki-fields-grup .row .col-md-6:nth-child(even) { padding-left: 7px; }
+
+
+/* NVI Doğrulama Etiketleri */
+.btk-nvi-status-label, /* Müşteri profili için */
+.btk-nvi-status-label-serv { /* Hizmet detayları için */
+    font-size: 0.85em;
+    padding: .3em .6em .3em;
+    margin-top: 5px;
+    display: inline-block;
+    border-radius: .25em;
+    font-weight: bold;
+}
+.btk-nvi-status-label.label-success, .btk-nvi-status-label-serv.label-success { background-color: #5cb85c; color: white; } /* WHMCS success */
+.btk-nvi-status-label.label-danger, .btk-nvi-status-label-serv.label-danger { background-color: #d9534f; color: white; } /* WHMCS danger */
+.btk-nvi-status-label.label-warning, .btk-nvi-status-label-serv.label-warning { background-color: #f0ad4e; color: white; } /* WHMCS warning */
+.btk-nvi-status-label.label-info, .btk-nvi-status-label-serv.label-info { background-color: #5bc0de; color: white; } /* WHMCS info */
+
+/* Devre Dışı Bırakılmış Alanlar için Stil (JS ile eklenebilir) */
+.btk-disabled-field {
+    background-color: #eee !important; /* Bootstrap disabled gibi */
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Personel Listesi - İşten Ayrılmış Satır */
+#tablePersonelList tr.disabled td {
+    background-color: #f2dede !important; /* Hafif kırmızımsı arka plan */
+    color: #a94442;
+    text-decoration: line-through;
+}
+#tablePersonelList tr.disabled .btn {
+    opacity: 0.6;
+    pointer-events: none; /* Butonlara tıklamayı engelle */
+}
+
+/* Ana Sayfa Butonları */
+.btk-dashboard .btn-block {
+    transition: all 0.2s ease-in-out;
+}
+.btk-dashboard .btn-block:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,.15) !important;
+}
+
+/* Log Sayfası Etiketleri */
+#tableBtkLogs .label {
+    font-size: 0.9em; 
+    padding: .3em .6em .3em;
+}
+
+/* Responsive Tablolar için (eğer WHMCS teması zaten sağlamıyorsa) */
+@media screen and (max-width: 768px) {
+    .table-responsive {
+        border: 1px solid #ddd;
+    }
+}
+
+/* Genel Kart Stili (index, generate_reports, view_logs TPL'leri için) */
+.card {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.card-header {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.card-header .card-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+.card-body {
+    padding: 15px;
+}
+.form-horizontal .control-label { /* Bootstrap 3.x stilini taklit etmeye çalışıyoruz */
+    text-align: right;
+    padding-top: 7px; /* Dikey hizalama için */
+    margin-bottom: 0;
+}
+/* Bootstrap 4 veya 5 kullanılıyorsa, WHMCS teması zaten .row, .col-md-X gibi sınıfları içerir.
+   Bu CSS dosyası WHMCS'in mevcut admin temasıyla uyumlu çalışacak şekilde tasarlanmıştır.
+   Eğer özel bir admin temanız varsa veya farklı Bootstrap versiyonları arasında uyumsuzluk olursa
+   buradaki stillerin ayarlanması gerekebilir.
+*/

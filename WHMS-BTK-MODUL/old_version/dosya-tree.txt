@@ -1,0 +1,77 @@
+### BTK Raporlama Modülü - Kalan Son Adımlar
+
+Modülümüzün temel PHP mantığı, veri işleme katmanları ve ana arayüzleri büyük ölçüde tamamlanmıştır. "Bitiş vuruşu" için odaklanmamız gereken son adımlar şunlardır:
+
+1.  **Harici Kütüphane Entegrasyonu ve Kontrolü:**
+    * **`Cron\CronExpression` Kütüphanesi:** `btkreports_cron.php`
+
+
+WHMCS_BTK_Modülü_Projesi/ (Version 2.0.2 - Kararlı Sürüm Adayı)
+├── modules/
+│   └── addons/
+│       └── btkreports/
+│           ├── + btkreports.php
+│           │   ├── İşlev: Ana modül dosyası. Admin arayüzü, AJAX istekleri ve tüm action&#39;ları yönetir.
+│           │   └── Durum: Tamamlandı (V2.0.2). &quot;Ürün Grubu Eşleştirme&quot; action&#39;ı eklendi.
+│           ├── + hooks.php
+│           │   ├── İşlev: WHMCS kancalarını yönetir.
+│           │   └── Durum: Tamamlandı (V2.0.2). Ürün grubu eşleştirmesinin etkileri gözden geçirildi.
+│           ├── + btkreports_cron.php
+│           │   ├── İşlev: Periyodik rapor oluşturma, sıkıştırma ve FTP yükleme.
+│           │   └── Durum: Tamamlandı (V2.0.2). Harici kütüphane bağımlılıkları ve test gereksinimi devam ediyor.
+│           ├── sql/
+│           │   ├── + install.sql
+│           │   │   ├── İşlev: Veritabanı tablolarının şeması.
+│           │   │   └── Durum: Tamamlandı (V2.0.2). `mod_btk_product_group_map` tablosu eklendi/güncellendi.
+│           │   └── initial_reference_data.sql
+│           │       ├── İşlev: Başlangıç referans verileri.
+│           │       └── Durum: Kullanıcı Tarafından Tamamlanacak. Yapısı ve örnekleri sunuldu.
+│           ├── lib/
+│           │   ├── NviSoapClient.php
+│           │   │   ├── İşlev: NVI SOAP servisleriyle iletişim.
+│           │   │   └── Durum: Tamamlandı (V2.0.2). Entegrasyonu test edilmeli.
+│           │   └── btkhelper.php
+│           │       ├── İşlev: Merkezi yardımcı fonksiyonlar.
+│           │       └── Durum: Tamamlandı (V2.0.2). Ürün grubu eşleştirme mantığı ve NVI entegrasyonları tamamlandı. Kapsamlı test ve ince ayar gereklidir.
+│           ├── templates/admin/index.tpl
+│           │   └── admin/index.tpl
+│           │       ├── index.tpl
+│           │       │   ├── İşlev: Modülün admin panelindeki ana sayfası (dashboard).
+│           │       │   └── Durum: Tamamlandı (V2.0.2). &quot;Ürün Grubu Eşleştirme&quot; linki eklendi.
+│           │       ├── config.tpl
+│           │       │   ├── İşlev: Modül ayarlar sayfası.
+│           │       │   └── Durum: Tamamlandı (V2.0.2). &quot;Ürün Grubu Eşleştirme&quot; sekmesi için yönlendirme eklendi (veya ayrı buton).
+│           │       ├── product_group_mappings.tpl (Yeni)
+│           │       │   ├── İşlev: Ürün gruplarını BTK Yetki ve Hizmet Tipleri ile eşleştirme arayüzü.
+│           │       │   └── Durum: Tamamlandı (V2.0.2).
+│           │       ├── personel.tpl
+│           │       │   ├── İşlev: Personel yönetimi arayüzü.
+│           │       │   └── Durum: Tamamlandı (V2.0.2).
+│           │       ├── generate_reports.tpl
+│           │       │   ├── İşlev: Manuel rapor oluşturma arayüzü.
+│           │       │   └── Durum: Tamamlandı (V2.0.2).
+│           │       ├── view_logs.tpl
+│           │       │   ├── İşlev: İşlem loglarını görüntüleme arayüzü.
+│           │       │   └── Durum: Tamamlandı (V2.0.2).
+│           │       ├── confirm_password.tpl
+│           │       │   ├── İşlev: Şifre onay formu.
+│           │       │   └── Durum: Tamamlandı (V2.0.2).
+│           │       ├── client_details_btk_form.tpl
+│           │       │   ├── İşlev: Müşteri profili BTK formu.
+│           │       │   └── Durum: Tamamlandı (V2.0.2).
+│           │       └── service_details_btk_form.tpl
+│           │           ├── İşlev: Hizmet detayları BTK formu.
+│           │           └── Durum: Tamamlandı (V2.0.2). Ürün grubu eşleştirmesinden gelen varsayılanları dikkate alır.
+│           ├── assets/
+│           │   ├── css/
+│           │   │   └── btk_admin_style.css
+│           │   │       └── Durum: Mevcut (Kullanıcıdan Alındı - V2.0.2 ile uyumlu).
+│           │   └── js/
+│           │       └── btk_admin_scripts.js
+│           │           └── Durum: Mevcut (Kullanıcıdan Alındı - V2.0.2 ile uyumlu).
+│           ├── lang/
+│           │   └── turkish.php
+│           │       └── Durum: Tamamlandı (V2.0.2). &quot;Ürün Grubu Eşleştirme&quot; için dil değişkenleri eklendi.
+│           └── README.md
+│               └── Durum: Güncellenecek (V2.0.2 için). Temel taslak mevcut.
+└── ...
