@@ -1,0 +1,221 @@
+/**
+ * WHMCS BTK Raporlama Modülü - Özel CSS Stilleri (Blend Teması Toggle ve Config Tasarımı)
+ * Version: 6.0.1 BETA
+ */
+
+/* Genel Sekme ve Sayfa Yapısı (WHMCS admin paneliyle uyumlu) */
+.btk-addon-page-container {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.btk-page-title {
+    font-size: 22px;
+    font-weight: 300;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+.btk-page-title .fas { margin-right: 10px; color: #555; }
+
+ul.nav.nav-tabs.btk-nav-tabs {
+    margin-bottom: 0;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    padding-left: 0;
+}
+ul.nav.nav-tabs.btk-nav-tabs > li > a {
+    color: #555; font-weight: 600; border-radius: 4px 4px 0 0;
+    padding: 10px 15px; border: 1px solid transparent;
+}
+ul.nav.nav-tabs.btk-nav-tabs > li.active > a,
+ul.nav.nav-tabs.btk-nav-tabs > li.active > a:hover,
+ul.nav.nav-tabs.btk-nav-tabs > li.active > a:focus {
+    color: #555; background-color: #fff; border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd; border-top: 3px solid #0073b7;
+    border-bottom-color: #fff; margin-bottom: -1px;
+}
+
+.tab-content.btk-tab-content { padding: 20px; background-color: #fff; border: 1px solid #ddd; border-top: none; }
+
+/* Config Sayfası Bölüm Başlıkları */
+.btk-section-title {
+    padding: 10px 15px; margin-top: 20px; margin-bottom: 20px;
+    background-color: #1abc9c; /* Tema-ConfigSayfa.png'deki canlı turkuaz/yeşil */
+    color: #ffffff; border-radius: 4px; font-size: 16px; font-weight: bold;
+}
+.btk-section-title:first-of-type { margin-top: 0; }
+.btk-section-title .fas { margin-right: 8px; }
+
+.btk-subsection-title {
+    font-size: 14px; font-weight: bold; color: #333; padding-bottom: 8px;
+    margin-top: 20px; margin-bottom: 15px; border-bottom: 1px solid #eee;
+}
+.btk-subsection-title .fas { margin-right: 5px; }
+
+
+/* Form Elemanları (WHMCS Blend temasına daha yakın) */
+.btk-config-form table.form { width: 100%; margin-bottom: 10px; }
+.btk-config-form table.form td { padding: 8px; vertical-align: top; }
+.btk-config-form table.form td.fieldlabel {
+    width: 250px; /* Sabit genişlik */
+    font-weight: 600; /* Blend temasındaki gibi */
+    color: #4f5256;  /* Blend temasındaki gibi */
+    text-align: right; /* Blend temasındaki gibi sağa yaslı */
+    padding-right: 15px;
+}
+.btk-config-form table.form td.fieldarea { /* Alanın kendisi için */ }
+.btk-config-form table.form td.fieldarea input[type="text"],
+.btk-config-form table.form td.fieldarea input[type="password"],
+.btk-config-form table.form td.fieldarea input[type="number"],
+.btk-config-form table.form td.fieldarea select.form-control {
+    border: 1px solid #c9d5e0; /* Blend border */
+    border-radius: 3px;
+    box-shadow: none;
+    padding: 6px 10px;
+    height: 32px; /* Blend input yüksekliği */
+}
+.btk-config-form table.form td.fieldarea input.input-100 { max-width: 100px; }
+.btk-config-form table.form td.fieldarea input.input-150 { max-width: 150px; }
+.btk-config-form table.form td.fieldarea input.input-250 { max-width: 250px; }
+.btk-config-form table.form td.fieldarea input.input-300 { max-width: 300px; }
+.btk-config-form table.form td.fieldarea input.input-400 { max-width: 400px; }
+.btk-config-form table.form td.fieldarea input.input-500 { max-width: 500px; }
+.btk-config-form table.form td.fieldarea small.help-block { font-size: 12px; color: #888; margin-top: 5px; display: block; }
+
+/* WHMCS Blend Teması ON/OFF Toggle Switch Stilleri */
+.Ｂtk-switch-blend { /* Yeni sınıf adı, çakışmayı önlemek için */
+    position: relative;
+    display: inline-block;
+    width: 80px;  /* Blend temasındaki genişlik */
+    height: 26px; /* Blend temasındaki yükseklik */
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.btk-switch-blend input { display: none; }
+.btk-switch-blend label { /* Bu label input'u saracak */
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 0 solid #ccc;
+    border-radius: 20px; /* Blend yuvarlaklığı */
+    margin: 0;
+}
+.btk-switch-blend .btk-switch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.2s ease-in 0s;
+}
+.btk-switch-blend .btk-switch-inner:before, .btk-switch-blend .btk-switch-inner:after {
+    display: block;
+    float: left;
+    width: 50%;
+    height: 26px;
+    padding: 0;
+    line-height: 26px;
+    font-size: 12px; /* Blend font boyutu */
+    color: white;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+.btk-switch-blend .btk-switch-inner:before { /* ON durumu */
+    content: "ON"; /* Veya dil dosyasından {$LANG.on} */
+    padding-left: 10px;
+    background-color: #46A44A; /* Blend ON rengi (Yeşil) */
+    color: #FFFFFF;
+}
+.btk-switch-blend .btk-switch-inner:after { /* OFF durumu */
+    content: "OFF"; /* Veya dil dosyasından {$LANG.off} */
+    padding-right: 10px;
+    background-color: #E1E1E1; /* Blend OFF rengi (Gri) */
+    color: #666666; /* Blend OFF yazı rengi */
+    text-align: right;
+}
+.btk-switch-blend .btk-switch-switch { /* Ortadaki topuz */
+    display: block;
+    width: 18px; /* Blend topuz genişliği */
+    margin: 4px; /* Kenarlardan boşluk */
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 52px; /* Başlangıç pozisyonu (OFF için sağda) */
+    border: 0 solid #ccc;
+    border-radius: 20px;
+    transition: all 0.2s ease-in 0s;
+}
+.btk-switch-blend input:checked + label .btk-switch-inner { margin-left: 0; }
+.btk-switch-blend input:checked + label .btk-switch-switch { right: 0px; }
+
+/* İki Sütunlu Toggle Listesi (BTK Yetkilendirme) */
+.btk-yetki-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* İki eşit sütun */
+    gap: 0px 20px; /* Satırlar arası 0, sütunlar arası 20px boşluk */
+}
+.btk-yetki-grid .btk-yetki-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.btk-yetki-grid .btk-yetki-item .btk-switch-blend {
+    margin-right: 10px;
+}
+.btk-yetki-grid .btk-yetki-item label { /* Switch yanındaki metin için */
+    font-weight: normal;
+    margin-bottom: 0; /* Bootstrap label alt boşluğunu sıfırla */
+    cursor: pointer;
+}
+.btk-yetki-grid .btk-info-icon { margin-left: auto; /* İkonu sağa yasla */ }
+
+
+/* Diğer Ayarlar Bölümü (Tek sütunlu, daha kompakt) */
+.btk-diger-ayarlar-list {
+    list-style: none;
+    padding: 0;
+    margin:0;
+}
+.btk-diger-ayarlar-list li {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.btk-diger-ayarlar-list li:last-child { border-bottom: none; }
+.btk-diger-ayarlar-list .btk-switch-blend { margin-right: 10px; }
+.btk-diger-ayarlar-list .btk-diger-ayar-label {
+    flex-grow: 1;
+    font-weight: normal;
+}
+.btk-diger-ayarlar-list .btk-diger-ayar-aciklama {
+    font-size: 12px;
+    color: #777;
+    margin-left: 90px; /* Switch genişliği + boşluk kadar */
+    display: block;
+    margin-top: 2px;
+}
+.btk-config-uyari { font-weight: bold; color: #c9302c !important; }
+
+
+/* Kaydet Butonu */
+.btn-container { text-align: center; padding: 20px 0; margin-top: 10px; border-top: 1px solid #eee; }
+.btn-primary.btn-lg { font-size: 16px; padding: 10px 24px; }
+
+/* Diğer stiller (FTP Test, Ana Sayfa vb. öncekiyle aynı kalabilir) */
+.btn-info.btn-sm { font-size: 12px; padding: 5px 10px; }
+#ftpTestResultAna, #ftpTestResultYedek { margin-top: 10px; padding: 8px; border-radius: 3px; font-size: 0.9em; }
+#ftpTestResultAna.alert-success, #ftpTestResultYedek.alert-success { background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d; }
+#ftpTestResultAna.alert-danger, #ftpTestResultYedek.alert-danger { background-color: #f2dede; border-color: #ebccd1; color: #a94442; }
+#ftpTestResultAna.alert-info, #ftpTestResultYedek.alert-info { background-color: #d9edf7; border-color: #bce8f1; color: #31708f; }
+.btk-yedek-ftp-fields.hidden { display: none; }
+
+.btk-info-box { border-radius: 3px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px;}
+.btk-info-box .panel-heading { border-bottom: none; border-top-left-radius: 3px; border-top-right-radius: 3px; padding: 10px 15px; }
+.btk-info-box .panel-body { padding: 15px; }
+.btk-info-box .panel-body .table td { padding: 5px 8px; }
+.btk-info-box .status-aktif { color: #00a65a; font-weight: bold; }
+.btk-info-box .status-pasif { color: #dd4b39; font-weight: bold; }
