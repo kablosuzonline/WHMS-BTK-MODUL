@@ -1,0 +1,42 @@
+WHMCS_BTK_Modulu_Projesi/ (Version 6.0.3+)
+├── modules/
+│   └── addons/
+│       └── btkreports/
+│           ├── btkreports.php             # Ana modül dosyası (GÖNDERİLECEK - TAM VE GÜNCEL)
+│           ├── hooks.php                  # WHMCS kancaları (HENÜZ GELİŞTİRİLMEDİ - BOŞ VEYA İSKELET)
+│           ├── btkreports_cron.php        # Periyodik raporlar (HENÜZ GELİŞTİRİLMEDİ - BOŞ VEYA İSKELET)
+│           │
+│           ├── lib/
+│           │   ├── btkhelper.php          # Yardımcı fonksiyonlar (GÖNDERİLDİ - TAM VE GÜNCEL)
+│           │   ├── NviSoapClient.php      # NVI için (HENÜZ GELİŞTİRİLMEDİ - İSKELET OLABİLİR)
+│           │   └── ExcelExporter.php      # Excel için (HENÜZ GELİŞTİRİLMEDİ - İSKELET OLABİLİR)
+│           │
+│           ├── sql/
+│           │   ├── install.sql            # TÜM Tablo Şemaları (GÖNDERİLDİ - TAM VE GÜNCEL)
+│           │   └── initial_reference_data.sql # BAŞLANGIÇ VERİLERİ (GÖNDERİLDİ - TAM VE GÜNCEL)
+│           │
+│           ├── templates/
+│           │   └── admin/
+│           │       ├── index.tpl          # Ana Sayfa (GÖNDERİLECEK - TAM VE TASARIMI GÜNCELLENMİŞ)
+│           │       ├── config.tpl         # Ayarlar Sayfası (GÖNDERİLECEK - TAM VE TASARIMI GÜNCELLENMİŞ)
+│           │       ├── product_group_mappings.tpl # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │       ├── personel.tpl       # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │       ├── generate_reports.tpl # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │       ├── view_logs.tpl      # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │       ├── client_details_btk_form.tpl # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │       ├── service_details_btk_form.tpl # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │       └── confirm_password.tpl # (HENÜZ GELİŞTİRİLMEDİ - BOŞ)
+│           │
+│           ├── assets/
+│           │   ├── css/
+│           │   │   └── btk_admin_style.css # Ana CSS (GÖNDERİLECEK - TASARIMA GÖRE TAM GÜNCELLENMİŞ)
+│           │   └── js/
+│           │       └── btk_admin_scripts.js # Ana JS (GÖNDERİLDİ - GÜNCEL)
+│           │
+│           ├── lang/
+│           │   └── turkish.php            # Dil Dosyası (GÖNDERİLECEK - config.tpl ve index.tpl için GÜNCELLENMİŞ)
+│           │
+│           ├── README.md                  # (FİNALDE OLUŞTURULACAK)
+│           │
+│           └── vendor/                    # (HENÜZ KULLANILMADI - Composer bağımlılıkları için)
+│               └── autoload.php
