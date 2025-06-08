@@ -1,0 +1,134 @@
+{*
+ * WHMCS BTK Raporlama Modülü - Ana Sayfa (Dashboard) - Sizin Tasarımınıza Göre
+ * Version: 6.0.1 BETA
+*}
+
+<div class="btk-dashboard">
+    <div class="page-header" style="margin-bottom: 0;">
+        <h2 style="display: inline-block; margin-right: 10px;"><i class="fas fa-file-signature"></i> {$LANG.btkreports_modul_adi_anasayfa|default:'BTK Abone Veri Raporlama'}</h2>
+        {* <small>v{$version}</small>  İsterseniz versiyonu burada da gösterebiliriz *}
+    </div>
+
+    <ul class="nav nav-tabs btk-nav-tabs" role="tablist" style="margin-bottom: 20px;">
+        <li role="presentation" class="active"><a href="{$modulelink}&action=dashboard" aria-controls="anasayfa" role="tab">{$LANG.btkreports_anasayfa}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=config" aria-controls="ayarlar" role="tab">{$LANG.btkreports_ayarlar}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=productgroupmap" aria-controls="eslestirme" role="tab">{$LANG.btkreports_urun_grup_eslestirme}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=personel" aria-controls="personel" role="tab">{$LANG.btkreports_personel_yonetimi}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=generatereports" aria-controls="raporlar" role="tab">{$LANG.btkreports_rapor_secimi_ve_islem}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=viewlogs" aria-controls="loglar" role="tab">{$LANG.btkreports_gunluk_kayitlari}</a></li>
+    </ul>
+
+    <div class="tab-content btk-tab-content" style="padding:0; border:none;"> {* Ana içerik için padding ve border'ı kaldırdık, kutucuklar kendi stillerini alacak *}
+        <div role="tabpanel" class="tab-pane active" id="anasayfa_content">
+
+            <div class="row">
+                {* Sol Kutu: Modül Versiyon Bilgisi *}
+                <div class="col-md-3">
+                    <div class="panel panel-default btk-info-box" style="border-top: 3px solid #00c0ef;">
+                        <div class="panel-body text-center">
+                            <div style="margin-bottom: 10px;">
+                                <i class="fas fa-cube fa-3x" style="color: #00c0ef;"></i>
+                            </div>
+                            <h4 style="font-weight: bold; margin-top:0; margin-bottom: 5px; background-color: #00c0ef; color:white; padding: 5px 0;">Module Version :V{$version}</h4>
+                            <p style="font-weight:bold; margin-bottom: 5px;">{$LANG.btkreports_surum_notlari_baslik|default:'Sürüm Notlarına İlişkin'}</p>
+                            <p><a href="{$modulelink}&action=readme" target="_blank" class="text-muted">({$LANG.btkreports_txt_dokuman_link|default:'TXT Döküman Linki'})</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                {* Orta Kutu: BTK Sunucu Bilgileri / Durumu *}
+                <div class="col-md-5">
+                    <div class="panel panel-default btk-info-box" style="border-top: 3px solid #00a65a;">
+                        <div class="panel-heading" style="background-color: #00a65a; color:white; text-align:center; font-weight:bold;">
+                             <i class="fas fa-server"></i> {$LANG.btkreports_btk_sunucu_bilgileri_durumu|default:'BTK SUNUCU BİLGİLERİ / DURUMU (AKTİF / PASİF)'}
+                        </div>
+                        <div class="panel-body" style="padding-top: 5px; padding-bottom: 5px;">
+                            <table class="table table-condensed" style="margin-bottom: 0;">
+                                <tr>
+                                    <td style="width:50%; border-top:none;"><strong>FTP Sunucu Durumu</strong></td>
+                                    <td style="border-top:none;">:
+                                        {if $ftpDurumu.ana.status === 'success'}
+                                            <span style="color: #00a65a; font-weight: bold;">AKTİF</span>
+                                        {elseif $ftpDurumu.ana.status === 'error'}
+                                            <span style="color: #dd4b39; font-weight: bold;">PASİF</span>
+                                        {else}
+                                            <span class="text-muted">{$LANG.btkreports_test_edilemedi|default:'Test Edilemedi'}</span>
+                                        {/if}
+                                        <button type="button" id="testFtpAnaIndex" class="btn btn-xs btn-info pull-right" style="margin-left:5px;" title="Ana FTP Bağlantısını Şimdi Test Et">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                        <div id="ftpTestResultAnaIndex" style="font-size:0.9em; margin-top:3px; clear:both;">
+                                            {if $ftpDurumu.ana.status === 'error'}<small class="text-danger">{$ftpDurumu.ana.message}</small>{/if}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr><td><strong>REHBER Dosya Son Gönderim</strong></td><td>: {$sonGonderimler.rehber|default:'Veri Yok'}</td></tr>
+                                <tr><td><strong>HAREKET Dosya Son Gönderim</strong></td><td>: {$sonGonderimler.hareket|default:'Veri Yok'}</td></tr>
+                                <tr><td><strong>PERSONEL Dosya Son Gönderim</strong></td><td>: {$sonGonderimler.personel|default:'Veri Yok'}</td></tr>
+                                <tr><td colspan="2" style="padding: 5px 0;"><hr style="margin:0;"></td></tr>
+                                <tr><td>FTP Kullanıcı Adı</td><td>: {$currentConfig.ftp_username|default:'Ayarlanmadı'}</td></tr>
+                                <tr><td>FTP Sunucu Adresi (Host)</td><td>: {$currentConfig.ftp_host|default:'Ayarlanmadı'}</td></tr>
+                                <tr><td>FTP REHBER Dosya Yolu</td><td>: {$currentConfig.ftp_path_rehber|default:'Ayarlanmadı'}</td></tr>
+                                <tr><td>FTP HAREKET Dosya Yolu</td><td>: {$currentConfig.ftp_path_hareket|default:'Ayarlanmadı'}</td></tr>
+                                {if $currentConfig.ftp_yedek_aktif}
+                                    <tr><td colspan="2" style="padding-top:10px; font-weight:bold; color:#3c8dbc;">Yedek FTP Bilgileri:</td></tr>
+                                    <tr>
+                                        <td style="width:50%;"><strong>Yedek FTP Sunucu Durumu</strong></td>
+                                        <td>:
+                                            {if $ftpDurumu.yedek.status === 'success'}
+                                                <span style="color: #00a65a; font-weight: bold;">AKTİF</span>
+                                            {elseif $ftpDurumu.yedek.status === 'error'}
+                                                <span style="color: #dd4b39; font-weight: bold;">PASİF</span>
+                                            {else}
+                                                <span class="text-muted">{$LANG.btkreports_test_edilemedi|default:'Test Edilemedi'}</span>
+                                            {/if}
+                                            <button type="button" id="testFtpYedekIndex" class="btn btn-xs btn-info pull-right" style="margin-left:5px;" title="Yedek FTP Bağlantısını Şimdi Test Et">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </button>
+                                            <div id="ftpTestResultYedekIndex" style="font-size:0.9em; margin-top:3px; clear:both;">
+                                                {if $ftpDurumu.yedek.status === 'error'}<small class="text-danger">{$ftpDurumu.yedek.message}</small>{/if}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr><td>Yedek FTP Kullanıcı Adı</td><td>: {$currentConfig.ftp_username_yedek|default:'Ayarlanmadı'}</td></tr>
+                                    <tr><td>Yedek FTP Sunucu Adresi (Host)</td><td>: {$currentConfig.ftp_host_yedek|default:'Ayarlanmadı'}</td></tr>
+                                {/if}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {* Sağ Kutu: Yardım ve Bilgilendirme *}
+                <div class="col-md-4">
+                    <div class="panel panel-default btk-info-box" style="border-top: 3px solid #f39c12;">
+                         <div class="panel-heading" style="background-color: #f39c12; color:white; text-align:center; font-weight:bold;">
+                            <i class="fas fa-info-circle"></i> {$LANG.btkreports_yardim_bilgilendirme_baslik|default:'BTK SUNUCULARINA VERİ GÖNDERİM MODÜLÜ HAKKINDA YARDIM VE BİLGİLENDİRME'}
+                        </div>
+                        <div class="panel-body">
+                            <p>{$LANG.btkreports_yardim_bilgi_1|default:'Modülün doğru çalışması için lütfen öncelikle "Modül Genel Ayarları" bölümünden gerekli tüm yapılandırmaları yapın.'}</p>
+                            <p>{$LANG.btkreports_yardim_bilgi_2|default:'Daha sonra "Ürün Grubu - BTK Yetki Eşleştirme" bölümünden WHMCS ürün gruplarınızı ilgili BTK kategorileri ile eşleştirin.'}</p>
+                            <p>{$LANG.btkreports_yardim_bilgi_3|default:'Müşteri ve hizmet bazlı BTK verilerini, ilgili müşteri özet sayfasındaki "BTK Bilgileri" sekmesinden ve hizmet detay sayfasındaki "BTK Hizmet Bilgileri" bölümünden yönetebilirsiniz.'}</p>
+                            <p>{$LANG.btkreports_yardim_bilgi_4|default:"Raporlar, cron job ayarlarınıza bağlı olarak otomatik oluşturulacak ve FTP'ye yüklenecektir. Manuel rapor oluşturma ve gönderme işlemleri için \"Rapor Seçimi ve İşlem\" sayfasını kullanabilirsiniz."}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {* Diğer sekmelerin içerikleri buraya gelecek *}
+    </div>
+</div>
+
+{* Dil değişkenlerini ve modül linkini JavaScript'e aktarmak için (config.tpl ile aynı olabilir) *}
+<script type="text/javascript">
+    var BtkLang = {
+        test_ediliyor: "{$LANG.btkreports_test_ediliyor}",
+        lutfen_bekleyin: "{$LANG.btkreports_lutfen_bekleyin}",
+        ftp_test_basarili: "{$LANG.btkreports_ftp_test_basarili}",
+        ftp_test_basarisiz: "{$LANG.btkreports_ftp_test_basarisiz}"
+    };
+    var btkModuleLink = "{$modulelink}";
+</script>
+
+{* Modüle özel JavaScript dosyasını dahil et (config.tpl ile aynı) *}
+<script type="text/javascript" src="../modules/addons/btkreports/assets/js/btk_admin_scripts.js?v={$version}"></script>
