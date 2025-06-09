@@ -318,7 +318,7 @@ INSERT IGNORE INTO `mod_btk_adres_il` (`id`, `il_adi`, `plaka_kodu`) VALUES
 (17, 'ÇANAKKALE', '17'),
 (18, 'ÇANKIRI', '18'),
 (19, 'ÇORUM', '19'),
-(20, 'DENİZLİ', '20');
+(20, 'DENİZLİ', '20'),
 (21, 'DİYARBAKIR', '21'),
 (22, 'EDİRNE', '22'),
 (23, 'ELAZIĞ', '23'),
@@ -338,7 +338,7 @@ INSERT IGNORE INTO `mod_btk_adres_il` (`id`, `il_adi`, `plaka_kodu`) VALUES
 (37, 'KASTAMONU', '37'),
 (38, 'KAYSERİ', '38'),
 (39, 'KIRKLARELİ', '39'),
-(40, 'KIRŞEHİR', '40');
+(40, 'KIRŞEHİR', '40'),
 (41, 'KOCAELİ', '41'),
 (42, 'KONYA', '42'),
 (43, 'KÜTAHYA', '43'),
@@ -358,7 +358,7 @@ INSERT IGNORE INTO `mod_btk_adres_il` (`id`, `il_adi`, `plaka_kodu`) VALUES
 (57, 'SİNOP', '57'),
 (58, 'SİVAS', '58'),
 (59, 'TEKİRDAĞ', '59'),
-(60, 'TOKAT', '60');
+(60, 'TOKAT', '60'),
 -- initial_reference_data.sql (BÖLÜM 7/10)
 -- ... (Bölüm 6/10'un sonu) ...
 
@@ -383,8 +383,8 @@ INSERT IGNORE INTO `mod_btk_adres_il` (`id`, `il_adi`, `plaka_kodu`) VALUES
 (77, 'YALOVA', '77'),
 (78, 'KARABÜK', '78'),
 (79, 'KİLİS', '79'),
-(80, 'OSMANİYE', '80');
-(81, 'DÜZCE', '81');
+(80, 'OSMANİYE', '80'),
+(81, 'DÜZCE', '81'),
 
 -- AYVALIK İLÇESİ (BALIKESİR İLİNE BAĞLI - Balıkesir ID:10)
 -- İlçe ID'sini manuel olarak belirliyoruz, çakışmaması için yüksek bir değer seçilebilir
