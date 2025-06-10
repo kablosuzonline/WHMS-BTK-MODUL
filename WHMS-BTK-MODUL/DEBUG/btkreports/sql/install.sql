@@ -1,280 +1,333 @@
--- WHMCS BTK Raporlama Modülü - Kurulum SQL Dosyası
--- Version: 6.0.0
--- Bu script, modül aktive edildiğinde çalıştırılır.
--- Tüm tablolar 'mod_btk_' prefix'i ile başlar.
+-- WHMCS BTK Raporlama Modülü Kurulum SQL Dosyası
+-- Versiyon: (Bir sonraki sürüm numaranız)
+-- Güncelleme Tarihi: (Bugünün tarihi)
 
--- Modül Ayarları Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_settings` (
-    `setting` VARCHAR(255) NOT NULL PRIMARY KEY,
-    `value` TEXT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Tablo: mod_btk_config (Modül Ayarları)
+CREATE TABLE IF NOT EXISTS `mod_btk_config` (
+    `setting` VARCHAR(255) NOT NULL,
+    `value` TEXT DEFAULT NULL,
+    PRIMARY KEY (`setting`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- BTK Ana Yetki Türleri Referans Tablosu (Adminin config'de seçeceği genel yetkiler)
-CREATE TABLE IF NOT EXISTS `mod_btk_yetki_turleri_referans` (
+-- Varsayılan ayarları ekle (sadece ilk kurulumda)
+INSERT IGNORE INTO `mod_btk_config` (`setting`, `value`) VALUES
+('operator_kodu', ''),
+('operator_adi', ''),
+('operator_unvani', ''),
+('ftp_host_btk', ''),
+('ftp_port_btk', '21'),
+('ftp_user_btk', ''),
+('ftp_pass_btk', ''),
+('ftp_path_rehber_btk', '/REHBER/'),
+('ftp_path_hareket_btk', '/HAREKET/'),
+('ftp_path_personel_btk', '/PERSONEL/'),
+('ftp_use_ssl_btk', '0'),
+('ftp_use_passive_btk', '1'),
+('ftp_yedek_aktif', '0'),
+('ftp_host_yedek', ''),
+('ftp_port_yedek', '21'),
+('ftp_user_yedek', ''),
+('ftp_pass_yedek', ''),
+('ftp_path_rehber_yedek', '/REHBER/'),
+('ftp_path_hareket_yedek', '/HAREKET/'),
+('ftp_path_personel_yedek', '/PERSONEL/'),
+('ftp_use_ssl_yedek', '0'),
+('ftp_use_passive_yedek', '1'),
+('cron_rehber_zamanlama', '0 10 1 * *'),
+('cron_hareket_zamanlama', '0 1 * * *'),
+('cron_personel_zamanlama_haziran', '0 16 L 6 *'),
+('cron_personel_zamanlama_aralik', '0 16 L 12 *'),
+('delete_tables_on_deactivate', '0'),
+('nvi_tc_dogrulama_aktif', '1'),
+('nvi_adres_dogrulama_aktif', '0'),
+('hareket_canli_saklama_suresi_gun', '7'),
+('hareket_arsiv_saklama_suresi_gun', '180'),
+('personel_dosya_adi_yil_ay_btk', '0'),
+('personel_dosya_adi_yil_ay_yedek', '1'),
+('debug_mode', '0'),
+('btk_config_admin_user', 'btkadmin'), -- Varsayılan modül yöneticisi adı
+('btk_config_admin_pass_hash', '$2y$10$IfH7q9E2.N10Gv/Qz19xWuX.PbjH.jPzIpj4Q0nUqLzY/4yBikUzG'); -- 'P@$$wOrd123' için hash. Kullanıcı bunu değiştirmeli.
+
+-- Tablo: mod_btk_yetki_turleri (Seçilen Yetki Türleri)
+CREATE TABLE IF NOT EXISTS `mod_btk_secilen_yetki_turleri` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `yetki_kodu` VARCHAR(50) NOT NULL UNIQUE,
+    `yetki_kodu` VARCHAR(100) NOT NULL UNIQUE, -- BTK tarafından verilen kod veya modül içi bir kod
     `yetki_adi` VARCHAR(255) NOT NULL,
-    `grup` VARCHAR(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `aktif` TINYINT(1) DEFAULT 1,
+    `rapor_dosya_onek` VARCHAR(50) DEFAULT NULL -- örn: ISS, AIH
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Admin Tarafından Seçilen Aktif Ana BTK Yetki Türleri
-CREATE TABLE IF NOT EXISTS `mod_btk_secili_yetki_turleri` (
+-- Tablo: mod_btk_abone_rehber
+CREATE TABLE IF NOT EXISTS `mod_btk_abone_rehber` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `yetki_kodu` VARCHAR(50) NOT NULL UNIQUE,
-    `aktif` BOOLEAN NOT NULL DEFAULT 0,
-    FOREIGN KEY (`yetki_kodu`) REFERENCES `mod_btk_yetki_turleri_referans`(`yetki_kodu`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `operator_kod` VARCHAR(50) NOT NULL,
+    `musteri_id` INT NOT NULL, -- WHMCS tblclients.id
+    `hizmet_id` INT NOT NULL, -- WHMCS tblhosting.id
+    `hat_no` VARCHAR(255) DEFAULT NULL, -- Genellikle hizmet ID veya özel bir numara
+    `hat_durum` CHAR(1) DEFAULT 'A', -- A: Aktif, P: Pasif, I: İptal, D: Dondurulmuş
+    `hat_durum_kodu` VARCHAR(10) DEFAULT NULL, -- BTK'nın istediği kod
+    `hat_aciklama` TEXT DEFAULT NULL,
+    `hizmet_tipi` VARCHAR(50) DEFAULT NULL, -- WIFI, FIBER vb.
+    `musteri_tipi` VARCHAR(50) DEFAULT NULL, -- G-SIRKET, B-BIREYSEL
+    `abone_baslangic` DATETIME DEFAULT NULL,
+    `abone_bitis` DATETIME DEFAULT NULL,
+    `abone_adi` VARCHAR(100) DEFAULT NULL,
+    `abone_soyadı` VARCHAR(100) DEFAULT NULL,
+    `abone_tc_kimlik_no` VARCHAR(11) DEFAULT NULL,
+    `abone_yabanci_kimlik_no` VARCHAR(11) DEFAULT NULL,
+    `abone_pasaport_no` VARCHAR(50) DEFAULT NULL,
+    `abone_unvan` TEXT DEFAULT NULL,
+    `abone_vergi_numarasi` VARCHAR(20) DEFAULT NULL,
+    `abone_mersis_numarasi` VARCHAR(20) DEFAULT NULL,
+    `abone_cinsiyet` CHAR(1) DEFAULT NULL, -- E, K
+    `abone_uyruk` VARCHAR(50) DEFAULT NULL,
+    `abone_baba_adi` VARCHAR(100) DEFAULT NULL,
+    `abone_ana_adi` VARCHAR(100) DEFAULT NULL,
+    `abone_anne_kizlik_soyadi` VARCHAR(100) DEFAULT NULL,
+    `abone_dogum_yeri` VARCHAR(100) DEFAULT NULL,
+    `abone_dogum_tarihi` DATE DEFAULT NULL,
+    `abone_meslek` VARCHAR(100) DEFAULT NULL,
+    `abone_tarife` VARCHAR(100) DEFAULT NULL,
+    `abone_kimlik_cilt_no` VARCHAR(10) DEFAULT NULL,
+    `abone_kimlik_kutuk_no` VARCHAR(10) DEFAULT NULL,
+    `abone_kimlik_sayfa_no` VARCHAR(10) DEFAULT NULL,
+    `abone_kimlik_il` VARCHAR(50) DEFAULT NULL,
+    `abone_kimlik_ilce` VARCHAR(50) DEFAULT NULL,
+    `abone_kimlik_mahalle_koy` VARCHAR(100) DEFAULT NULL,
+    `abone_kimlik_tipi` VARCHAR(50) DEFAULT NULL,
+    `abone_kimlik_seri_no` VARCHAR(20) DEFAULT NULL,
+    `abone_kimlik_verildigi_yer` VARCHAR(100) DEFAULT NULL,
+    `abone_kimlik_verildigi_tarih` DATE DEFAULT NULL,
+    `abone_kimlik_aidiyeti` VARCHAR(50) DEFAULT NULL, -- KENDISI, ES, COCUK
+    -- Yerleşim Yeri Adresi
+    `abone_adres_yerlesim_il` VARCHAR(50) DEFAULT NULL,
+    `abone_adres_yerlesim_ilce` VARCHAR(50) DEFAULT NULL,
+    `abone_adres_yerlesim_mahalle` VARCHAR(100) DEFAULT NULL,
+    `abone_adres_yerlesim_cadde` TEXT DEFAULT NULL,
+    `abone_adres_yerlesim_dis_kapi_no` VARCHAR(20) DEFAULT NULL,
+    `abone_adres_yerlesim_ic_kapi_no` VARCHAR(20) DEFAULT NULL,
+    `abone_adres_yerlesim_posta_kodu` VARCHAR(10) DEFAULT NULL,
+    `abone_adres_yerlesim_adres_kodu` VARCHAR(20) DEFAULT NULL, -- UAVT Adres Kodu
+    -- Tesis Adresi
+    `abone_adres_tesis_il` VARCHAR(50) DEFAULT NULL,
+    `abone_adres_tesis_ilce` VARCHAR(50) DEFAULT NULL,
+    `abone_adres_tesis_mahalle` VARCHAR(100) DEFAULT NULL,
+    `abone_adres_tesis_cadde` TEXT DEFAULT NULL,
+    `abone_adres_tesis_dis_kapi_no` VARCHAR(20) DEFAULT NULL,
+    `abone_adres_tesis_ic_kapi_no` VARCHAR(20) DEFAULT NULL,
+    `abone_adres_tesis_posta_kodu` VARCHAR(10) DEFAULT NULL,
+    `abone_adres_tesis_adres_kodu` VARCHAR(20) DEFAULT NULL, -- UAVT Adres Kodu
+    `abone_adres_irtibat_tel_no_1` VARCHAR(20) DEFAULT NULL,
+    `abone_adres_irtibat_tel_no_2` VARCHAR(20) DEFAULT NULL,
+    `abone_adres_e_mail` VARCHAR(255) DEFAULT NULL,
+    -- Kurumsal Yetkili Bilgileri
+    `kurum_yetkili_adi` VARCHAR(100) DEFAULT NULL,
+    `kurum_yetkili_soyadi` VARCHAR(100) DEFAULT NULL,
+    `kurum_yetkili_tckimlik_no` VARCHAR(11) DEFAULT NULL,
+    `kurum_yetkili_telefon` VARCHAR(20) DEFAULT NULL,
+    `kurum_adres` TEXT DEFAULT NULL,
+    -- Aktivasyon ve Güncelleme Bilgileri
+    `aktivasyon_bayi_adi` VARCHAR(100) DEFAULT NULL,
+    `aktivasyon_bayi_adresi` TEXT DEFAULT NULL,
+    `aktivasyon_kullanici` VARCHAR(100) DEFAULT NULL,
+    `guncelleyen_bayi_adi` VARCHAR(100) DEFAULT NULL,
+    `guncelleyen_bayi_adresi` TEXT DEFAULT NULL,
+    `guncelleyen_kullanici` VARCHAR(100) DEFAULT NULL,
+    -- ISS Özel Alanları
+    `statik_ip` TEXT DEFAULT NULL,
+    `iss_hiz_profili` VARCHAR(100) DEFAULT NULL,
+    `iss_kullanici_adi` VARCHAR(100) DEFAULT NULL,
+    `iss_pop_bilgisi` TEXT DEFAULT NULL,
+    `tesis_koordinat_lat` VARCHAR(50) DEFAULT NULL, -- Google Maps için Enlem
+    `tesis_koordinat_lon` VARCHAR(50) DEFAULT NULL, -- Google Maps için Boylam
+    `tc_kimlik_dogrulama_durumu` TINYINT(1) DEFAULT 0, -- 0: Doğrulanmadı, 1: Doğrulandı, 2: Hatalı
+    `tc_kimlik_dogrulama_zamani` DATETIME DEFAULT NULL,
+    `adres_kodu_dogrulama_durumu` TINYINT(1) DEFAULT 0, -- 0: Doğrulanmadı, 1: Doğrulandı, 2: Hatalı
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX `idx_musteri_id` (`musteri_id`),
+    INDEX `idx_hizmet_id` (`hizmet_id`),
+    INDEX `idx_abone_tc_kimlik_no` (`abone_tc_kimlik_no`),
+    INDEX `idx_abone_vergi_numarasi` (`abone_vergi_numarasi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- BTK EK-1 Hat Durum Kodları Referans Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_ek1_hat_durum_kodlari` (
+-- Tablo: mod_btk_abone_hareket_canli (Güncel Hareketler)
+CREATE TABLE IF NOT EXISTS `mod_btk_abone_hareket_canli` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `kod` VARCHAR(10) NOT NULL UNIQUE,
-    `aciklama` VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `abone_rehber_id` INT DEFAULT NULL, -- mod_btk_abone_rehber.id ile ilişki
+    `operator_kod` VARCHAR(50) NOT NULL,
+    `musteri_id` INT NOT NULL,
+    `hizmet_id` INT NOT NULL,
+    `hat_no` VARCHAR(255) DEFAULT NULL,
+    `musteri_hareket_kodu` VARCHAR(10) NOT NULL, -- BTK tarafından tanımlanan hareket kodu
+    `musteri_hareket_aciklama` VARCHAR(255) DEFAULT NULL,
+    `musteri_hareket_zamani` DATETIME NOT NULL,
+    `eski_deger` TEXT DEFAULT NULL, -- Değişiklik öncesi değer (JSON veya text)
+    `yeni_deger` TEXT DEFAULT NULL, -- Değişiklik sonrası değer (JSON veya text)
+    `kaynak` VARCHAR(100) DEFAULT NULL, -- Hareketi tetikleyen (hook, manuel, cron vb.)
+    `gonderim_durumu` TINYINT(1) DEFAULT 0, -- 0: Gönderilmedi, 1: Gönderildi, 2: Hatalı Gönderim
+    `gonderim_deneme_sayisi` INT DEFAULT 0,
+    `son_gonderim_denemesi` DATETIME DEFAULT NULL,
+    `gonderildigi_dosya_adi` TEXT DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_hareket_abone_rehber_id` (`abone_rehber_id`),
+    INDEX `idx_hareket_musteri_id` (`musteri_id`),
+    INDEX `idx_hareket_hizmet_id` (`hizmet_id`),
+    INDEX `idx_musteri_hareket_zamani` (`musteri_hareket_zamani`),
+    INDEX `idx_gonderim_durumu` (`gonderim_durumu`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- BTK EK-2 Müşteri Hareket Kodları Referans Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_ek2_musteri_hareket_kodlari` (
+-- Tablo: mod_btk_abone_hareket_arsiv (Arşivlenmiş Hareketler)
+CREATE TABLE IF NOT EXISTS `mod_btk_abone_hareket_arsiv` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `kod` VARCHAR(10) NOT NULL UNIQUE,
-    `aciklama` VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `abone_rehber_id` INT DEFAULT NULL,
+    `operator_kod` VARCHAR(50) NOT NULL,
+    `musteri_id` INT NOT NULL,
+    `hizmet_id` INT NOT NULL,
+    `hat_no` VARCHAR(255) DEFAULT NULL,
+    `musteri_hareket_kodu` VARCHAR(10) NOT NULL,
+    `musteri_hareket_aciklama` VARCHAR(255) DEFAULT NULL,
+    `musteri_hareket_zamani` DATETIME NOT NULL,
+    `eski_deger` LONGTEXT DEFAULT NULL, -- Arşiv için LONGTEXT olabilir
+    `yeni_deger` LONGTEXT DEFAULT NULL, -- Arşiv için LONGTEXT olabilir
+    `kaynak` VARCHAR(100) DEFAULT NULL,
+    `gonderildigi_dosya_adi` TEXT DEFAULT NULL,
+    `arsivlenme_tarihi` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_arsiv_musteri_id` (`musteri_id`),
+    INDEX `idx_arsiv_hizmet_id` (`hizmet_id`),
+    INDEX `idx_arsiv_musteri_hareket_zamani` (`musteri_hareket_zamani`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- BTK EK-3 Hizmet Tipleri Referans Tablosu (Rapor içindeki HIZMET_TIPI alanı için)
-CREATE TABLE IF NOT EXISTS `mod_btk_ek3_hizmet_tipleri` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `hizmet_tipi_kodu` VARCHAR(50) NOT NULL UNIQUE,
-    `hizmet_tipi_aciklamasi` VARCHAR(255) NOT NULL,
-    `ana_yetki_grup` VARCHAR(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE INDEX idx_ek3_ana_yetki_grup ON mod_btk_ek3_hizmet_tipleri(ana_yetki_grup);
-
--- BTK EK-4 Kimlik Tipleri Referans Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_ek4_kimlik_tipleri` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `kod` VARCHAR(10) NOT NULL UNIQUE,
-    `aciklama` VARCHAR(255) NOT NULL,
-    `ulke_kodu_gerekli` BOOLEAN DEFAULT FALSE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- BTK EK-5 Meslek Kodları Referans Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_ek5_meslek_kodlari` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `kod` VARCHAR(10) NOT NULL UNIQUE,
-    `aciklama` VARCHAR(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Ürün Grubu - Ana BTK Yetki Türü ve EK-3 Hizmet Tipi Eşleştirme Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_product_group_mappings` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `gid` INT NOT NULL UNIQUE,
-    `ana_btk_yetki_kodu` VARCHAR(50) NOT NULL,
-    `ek3_hizmet_tipi_kodu` VARCHAR(50) NOT NULL,
-    FOREIGN KEY (`ana_btk_yetki_kodu`) REFERENCES `mod_btk_yetki_turleri_referans`(`yetki_kodu`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`ek3_hizmet_tipi_kodu`) REFERENCES `mod_btk_ek3_hizmet_tipleri`(`hizmet_tipi_kodu`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Adres Referans Tabloları
-CREATE TABLE IF NOT EXISTS `mod_btk_adres_il` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `il_adi` VARCHAR(255) NOT NULL UNIQUE,
-    `plaka_kodu` VARCHAR(2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `mod_btk_adres_ilce` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `il_id` INT NOT NULL,
-    `ilce_adi` VARCHAR(255) NOT NULL,
-    FOREIGN KEY (`il_id`) REFERENCES `mod_btk_adres_il`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    UNIQUE KEY `il_ilce_unique` (`il_id`, `ilce_adi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS `mod_btk_adres_mahalle` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `ilce_id` INT NOT NULL,
-    `mahalle_adi` VARCHAR(255) NOT NULL,
-    `posta_kodu` VARCHAR(10) DEFAULT NULL,
-    FOREIGN KEY (`ilce_id`) REFERENCES `mod_btk_adres_ilce`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ISS POP Noktaları Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_iss_pop_noktalari` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `pop_adi` VARCHAR(255) NOT NULL,
-    `yayin_yapilan_ssid` VARCHAR(255) NOT NULL,
-    `ip_adresi` VARCHAR(255) DEFAULT NULL,
-    `cihaz_turu` VARCHAR(100) DEFAULT NULL,
-    `cihaz_markasi` VARCHAR(100) DEFAULT NULL,
-    `cihaz_modeli` VARCHAR(100) DEFAULT NULL,
-    `pop_tipi` VARCHAR(100) DEFAULT NULL,
-    `il_id` INT DEFAULT NULL,
-    `ilce_id` INT DEFAULT NULL,
-    `mahalle_id` INT DEFAULT NULL,
-    `tam_adres` TEXT DEFAULT NULL,
-    `koordinatlar` VARCHAR(100) DEFAULT NULL,
-    `aktif_pasif_durum` BOOLEAN NOT NULL DEFAULT 1,
-    `eklenme_tarihi` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `guncellenme_tarihi` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`il_id`) REFERENCES `mod_btk_adres_il`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`ilce_id`) REFERENCES `mod_btk_adres_ilce`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`mahalle_id`) REFERENCES `mod_btk_adres_mahalle`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    UNIQUE KEY `ssid_ilce_popadi_unique` (`yayin_yapilan_ssid`, `ilce_id`, `pop_adi`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Personel Departmanları Referans Tablosu
+-- Tablo: mod_btk_personel_departmanlari (ÖNCE TANIMLANMALI)
 CREATE TABLE IF NOT EXISTS `mod_btk_personel_departmanlari` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `departman_adi` VARCHAR(255) NOT NULL UNIQUE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `departman_adi` VARCHAR(255) NOT NULL UNIQUE,
+    `teknik_ekip` TINYINT(1) DEFAULT 0 -- 1 ise Google Maps için personel listesinde görünür
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Personel Bilgileri Tablosu
+-- Varsayılan Departmanları Ekle
+INSERT IGNORE INTO `mod_btk_personel_departmanlari` (`departman_adi`, `teknik_ekip`) VALUES
+('Yönetim Kurulu', 0),
+('Genel Müdürlük', 0),
+('Hukuk Müşavirliği', 0),
+('Mali ve İdari İşler Departmanı', 0),
+('Muhasebe ve Finans Birimi', 0),
+('İnsan Kaynakları Birimi', 0),
+('Satın Alma ve Lojistik Birimi', 0),
+('Bilgi Teknolojileri Departmanı', 1),
+('Yazılım Geliştirme Birimi', 0),
+('Sistem ve Ağ Yönetimi Birimi', 1),
+('Veritabanı Yönetimi Birimi', 0),
+('Bilgi Güvenliği Birimi', 0),
+('Teknik Destek ve Saha Operasyonları Birimi', 1),
+('Satış ve Pazarlama Departmanı', 0),
+('Kurumsal Satış Birimi', 0),
+('Bireysel Satış Birimi', 0),
+('Pazarlama ve İletişim Birimi', 0),
+('Çağrı Merkezi ve Müşteri Hizmetleri Departmanı', 0),
+('Proje Yönetimi Ofisi', 0),
+('İş Geliştirme Departmanı', 0),
+('Diğer', 0);
+
+-- Tablo: mod_btk_personel
 CREATE TABLE IF NOT EXISTS `mod_btk_personel` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `whmcs_admin_id` INT UNIQUE DEFAULT NULL,
+    `whmcs_admin_id` INT DEFAULT NULL, -- tbladmins.id
     `firma_unvani` VARCHAR(255) DEFAULT NULL,
-    `ad` VARCHAR(100) DEFAULT NULL,
-    `soyad` VARCHAR(100) DEFAULT NULL,
-    `tckn` VARCHAR(11) DEFAULT NULL,
-    `unvan` VARCHAR(100) DEFAULT NULL,
-    `departman_id` INT DEFAULT NULL,
-    `mobil_tel` VARCHAR(20) DEFAULT NULL,
-    `sabit_tel` VARCHAR(20) DEFAULT NULL,
-    `email` VARCHAR(255) DEFAULT NULL,
+    `adi` VARCHAR(100) DEFAULT NULL,
+    `soyadi` VARCHAR(100) DEFAULT NULL,
+    `tc_kimlik_no` VARCHAR(11) DEFAULT NULL,
+    `unvan_gorev` VARCHAR(100) DEFAULT NULL,
+    `calistigi_birim` VARCHAR(100) DEFAULT NULL,
+    `mobil_telefonu` VARCHAR(20) DEFAULT NULL,
+    `sabit_telefonu` VARCHAR(20) DEFAULT NULL,
+    `e_posta_adresi` VARCHAR(255) DEFAULT NULL,
     `ev_adresi` TEXT DEFAULT NULL,
     `acil_durum_kisi_iletisim` TEXT DEFAULT NULL,
     `ise_baslama_tarihi` DATE DEFAULT NULL,
     `isten_ayrilma_tarihi` DATE DEFAULT NULL,
     `is_birakma_nedeni` TEXT DEFAULT NULL,
-    `gorev_bolgesi_ilce_id` INT DEFAULT NULL,
-    `btk_listesine_eklensin` BOOLEAN NOT NULL DEFAULT 1,
-    `tckn_dogrulama_durumu` ENUM('Dogrulanmadi', 'Dogrulandi', 'Dogrulanamadi', 'GecersizTCKN', 'Hata') DEFAULT 'Dogrulanmadi',
-    `tckn_dogrulama_zamani` TIMESTAMP NULL DEFAULT NULL,
-    `tckn_dogrulama_mesaji` TEXT DEFAULT NULL,
-    FOREIGN KEY (`departman_id`) REFERENCES `mod_btk_personel_departmanlari`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`gorev_bolgesi_ilce_id`) REFERENCES `mod_btk_adres_ilce`(`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    `btk_listesine_eklensin` TINYINT(1) DEFAULT 1,
+    `tc_kimlik_dogrulama_durumu` TINYINT(1) DEFAULT 0,
+    `tc_kimlik_dogrulama_zamani` DATETIME DEFAULT NULL,
+    `departman_id` INT DEFAULT NULL,
+    `gorev_bolgesi_il` VARCHAR(100) DEFAULT NULL,
+    `gorev_bolgesi_ilce` VARCHAR(100) DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CONSTRAINT `fk_personel_departman` FOREIGN KEY (`departman_id`) REFERENCES `mod_btk_personel_departmanlari`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+    INDEX `idx_personel_whmcs_admin_id` (`whmcs_admin_id`),
+    INDEX `idx_personel_tc_kimlik_no` (`tc_kimlik_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- ABONE REHBER Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_abone_rehber` (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `whmcs_client_id` INT DEFAULT NULL,
-    `whmcs_service_id` INT DEFAULT NULL UNIQUE,
-    `operator_kod` VARCHAR(3) NOT NULL,
-    `musteri_id` VARCHAR(255) NOT NULL,
-    `hat_no` VARCHAR(50) NOT NULL,
-    `hat_durum` CHAR(1) DEFAULT NULL,
-    `hat_durum_kodu` VARCHAR(10) DEFAULT NULL,
-    `hat_durum_kodu_aciklama` VARCHAR(255) DEFAULT NULL,
-    `musteri_hareket_kodu` VARCHAR(10) DEFAULT NULL,
-    `musteri_hareket_aciklama` VARCHAR(255) DEFAULT NULL,
-    `musteri_hareket_zamani` VARCHAR(14) DEFAULT NULL,
-    `hizmet_tipi` VARCHAR(50) DEFAULT NULL, -- EK-3 Hizmet Tipi Kodu
-    `musteri_tipi` VARCHAR(20) DEFAULT NULL,
-    `abone_baslangic` VARCHAR(14) DEFAULT NULL,
-    `abone_bitis` VARCHAR(14) DEFAULT NULL,
-    `abone_adi` VARCHAR(100) DEFAULT NULL, `abone_soyadi` VARCHAR(100) DEFAULT NULL, `abone_tc_kimlik_no` VARCHAR(11) DEFAULT NULL, `abone_pasaport_no` VARCHAR(50) DEFAULT NULL, `abone_unvan` VARCHAR(250) DEFAULT NULL, `abone_vergi_numarasi` VARCHAR(20) DEFAULT NULL, `abone_mersis_numarasi` VARCHAR(50) DEFAULT NULL, `abone_cinsiyet` CHAR(1) DEFAULT NULL, `abone_uyruk` VARCHAR(3) DEFAULT NULL, `abone_baba_adi` VARCHAR(100) DEFAULT NULL, `abone_ana_adi` VARCHAR(100) DEFAULT NULL, `abone_anne_kizlik_soyadi` VARCHAR(100) DEFAULT NULL, `abone_dogum_yeri` VARCHAR(100) DEFAULT NULL, `abone_dogum_tarihi` VARCHAR(8) DEFAULT NULL, `abone_meslek` VARCHAR(50) DEFAULT NULL, `abone_tarife` VARCHAR(100) DEFAULT NULL, `abone_kimlik_cilt_no` VARCHAR(10) DEFAULT NULL, `abone_kimlik_kutuk_no` VARCHAR(10) DEFAULT NULL, `abone_kimlik_sayfa_no` VARCHAR(10) DEFAULT NULL, `abone_kimlik_il` VARCHAR(100) DEFAULT NULL, `abone_kimlik_ilce` VARCHAR(100) DEFAULT NULL, `abone_kimlik_mahalle_koy` VARCHAR(100) DEFAULT NULL, `abone_kimlik_tipi` VARCHAR(10) DEFAULT NULL, `abone_kimlik_seri_no` VARCHAR(20) DEFAULT NULL, `abone_kimlik_verildigi_yer` VARCHAR(100) DEFAULT NULL, `abone_kimlik_verildigi_tarih` VARCHAR(8) DEFAULT NULL, `abone_kimlik_aidiyeti` CHAR(1) DEFAULT NULL,
-    `yerlesim_il_id` INT DEFAULT NULL, `yerlesim_ilce_id` INT DEFAULT NULL, `yerlesim_mahalle_id` INT DEFAULT NULL, `yerlesim_cadde` VARCHAR(255) DEFAULT NULL, `yerlesim_dis_kapi_no` VARCHAR(50) DEFAULT NULL, `yerlesim_ic_kapi_no` VARCHAR(50) DEFAULT NULL, `yerlesim_posta_kodu` VARCHAR(10) DEFAULT NULL, `yerlesim_adres_kodu_uavt` VARCHAR(50) DEFAULT NULL,
-    `tesis_il_id` INT DEFAULT NULL, `tesis_ilce_id` INT DEFAULT NULL, `tesis_mahalle_id` INT DEFAULT NULL, `tesis_cadde` VARCHAR(255) DEFAULT NULL, `tesis_dis_kapi_no` VARCHAR(50) DEFAULT NULL, `tesis_ic_kapi_no` VARCHAR(50) DEFAULT NULL, `tesis_posta_kodu` VARCHAR(10) DEFAULT NULL, `tesis_adres_kodu_uavt` VARCHAR(50) DEFAULT NULL,
-    `irtibat_tel_no_1` VARCHAR(20) DEFAULT NULL, `irtibat_tel_no_2` VARCHAR(20) DEFAULT NULL, `abone_email` VARCHAR(255) DEFAULT NULL,
-    `kurum_yetkili_adi` VARCHAR(100) DEFAULT NULL, `kurum_yetkili_soyadi` VARCHAR(100) DEFAULT NULL, `kurum_yetkili_tckimlik_no` VARCHAR(11) DEFAULT NULL, `kurum_yetkili_telefon` VARCHAR(20) DEFAULT NULL, `kurum_adres` TEXT DEFAULT NULL,
-    `aktivasyon_bayi_adi` VARCHAR(255) DEFAULT NULL, `aktivasyon_bayi_adresi` TEXT DEFAULT NULL, `aktivasyon_kullanici` VARCHAR(100) DEFAULT NULL, `guncelleyen_bayi_adi` VARCHAR(255) DEFAULT NULL, `guncelleyen_bayi_adresi` TEXT DEFAULT NULL, `guncelleyen_kullanici` VARCHAR(100) DEFAULT NULL,
-    `statik_ip` VARCHAR(255) DEFAULT NULL, 
-    `iss_hiz_profili` VARCHAR(100) DEFAULT NULL, `iss_kullanici_adi` VARCHAR(255) DEFAULT NULL, `iss_pop_bilgisi_sunucu` VARCHAR(255) DEFAULT NULL, `iss_pop_noktasi_id` INT DEFAULT NULL, 
-    `gsm_onceki_hat_numarasi` VARCHAR(20) DEFAULT NULL, `gsm_dondurulma_tarihi` VARCHAR(14) DEFAULT NULL, `gsm_kisitlama_tarihi` VARCHAR(14) DEFAULT NULL, `gsm_yurtdisi_aktif` CHAR(1) DEFAULT NULL, `gsm_sesli_arama_aktif` CHAR(1) DEFAULT NULL, `gsm_rehber_aktif` CHAR(1) DEFAULT NULL, `gsm_clir_ozelligi_aktif` CHAR(1) DEFAULT NULL, `gsm_data_aktif` CHAR(1) DEFAULT NULL, `gsm_eskart_bilgisi` VARCHAR(50) DEFAULT NULL, `gsm_icci` VARCHAR(30) DEFAULT NULL, `gsm_imsi` VARCHAR(20) DEFAULT NULL, `gsm_dual_gsm_no` VARCHAR(20) DEFAULT NULL, `gsm_fax_no` VARCHAR(20) DEFAULT NULL, `gsm_vpn_kisakod_arama_aktif` CHAR(1) DEFAULT NULL, `gsm_servis_numarasi` VARCHAR(20) DEFAULT NULL, `gsm_bilgi_1` VARCHAR(255) DEFAULT NULL, `gsm_bilgi_2` VARCHAR(255) DEFAULT NULL, `gsm_bilgi_3` VARCHAR(255) DEFAULT NULL, `gsm_alfanumerik_baslik` VARCHAR(50) DEFAULT NULL,
-    `sabit_onceki_hat_numarasi` VARCHAR(20) DEFAULT NULL, `sabit_dondurulma_tarihi` VARCHAR(14) DEFAULT NULL, `sabit_kisitlama_tarihi` VARCHAR(14) DEFAULT NULL, `sabit_yurtdisi_aktif` CHAR(1) DEFAULT NULL, `sabit_sesli_arama_aktif` CHAR(1) DEFAULT NULL, `sabit_rehber_aktif` CHAR(1) DEFAULT NULL, `sabit_clir_ozelligi_aktif` CHAR(1) DEFAULT NULL, `sabit_data_aktif` CHAR(1) DEFAULT NULL, `sabit_sehirlerarasi_aktif` CHAR(1) DEFAULT NULL, `sabit_santral_binasi` VARCHAR(255) DEFAULT NULL, `sabit_santral_tipi` VARCHAR(50) DEFAULT NULL, `sabit_sebeke_hizmet_numarasi` VARCHAR(20) DEFAULT NULL, `sabit_pilot_numara` VARCHAR(20) DEFAULT NULL, `sabit_ddi_hizmet_numarasi` VARCHAR(20) DEFAULT NULL, `sabit_gorunen_numara` VARCHAR(20) DEFAULT NULL, `sabit_referans_no` VARCHAR(50) DEFAULT NULL, `sabit_ev_isyeri` CHAR(1) DEFAULT NULL, `sabit_abone_id` VARCHAR(50) DEFAULT NULL, `sabit_servis_numarasi` VARCHAR(20) DEFAULT NULL, `sabit_dahili_no` VARCHAR(10) DEFAULT NULL, `sabit_alfanumerik_baslik` VARCHAR(50) DEFAULT NULL,
-    `aih_hiz_profil` VARCHAR(100) DEFAULT NULL, `aih_hizmet_saglayici` VARCHAR(255) DEFAULT NULL, `aih_pop_bilgi` VARCHAR(255) DEFAULT NULL, `aih_ulke_a` VARCHAR(3) DEFAULT NULL, `aih_sinir_gecis_noktasi_a` VARCHAR(255) DEFAULT NULL, `aih_abone_adres_tesis_ulke_b` VARCHAR(3) DEFAULT NULL, `aih_abone_adres_tesis_il_b` VARCHAR(100) DEFAULT NULL, `aih_abone_adres_tesis_ilce_b` VARCHAR(100) DEFAULT NULL, `aih_abone_adres_tesis_mahalle_b` VARCHAR(255) DEFAULT NULL, `aih_abone_adres_tesis_cadde_b` VARCHAR(255) DEFAULT NULL, `aih_abone_adres_tesis_dis_kapi_no_b` VARCHAR(50) DEFAULT NULL, `aih_abone_adres_tesis_ic_kapi_no_b` VARCHAR(50) DEFAULT NULL, `aih_sinir_gecis_noktasi_b` VARCHAR(255) DEFAULT NULL, `aih_devre_adlandirmasi` VARCHAR(255) DEFAULT NULL, `aih_devre_guzergah` TEXT DEFAULT NULL,
-    `uydu_onceki_hat_numarasi` VARCHAR(20) DEFAULT NULL, `uydu_dondurulma_tarihi` VARCHAR(14) DEFAULT NULL, `uydu_kisitlama_tarihi` VARCHAR(14) DEFAULT NULL, `uydu_yurtdisi_aktif` CHAR(1) DEFAULT NULL, `uydu_sesli_arama_aktif` CHAR(1) DEFAULT NULL, `uydu_rehber_aktif` CHAR(1) DEFAULT NULL, `uydu_clir_ozelligi_aktif` CHAR(1) DEFAULT NULL, `uydu_data_aktif` CHAR(1) DEFAULT NULL, `uydu_uydu_adi` VARCHAR(100) DEFAULT NULL, `uydu_terminal_id` VARCHAR(50) DEFAULT NULL, `uydu_enlem_bilgisi` VARCHAR(50) DEFAULT NULL, `uydu_boylam_bilgisi` VARCHAR(50) DEFAULT NULL, `uydu_hiz_profili` VARCHAR(100) DEFAULT NULL, `uydu_pop_bilgisi` VARCHAR(255) DEFAULT NULL, `uydu_remote_bilgisi` VARCHAR(255) DEFAULT NULL, `uydu_anauydu_firma` VARCHAR(255) DEFAULT NULL, `uydu_uydutelefon_no` VARCHAR(20) DEFAULT NULL, `uydu_telefon_serino` VARCHAR(50) DEFAULT NULL, `uydu_telefon_imeino` VARCHAR(20) DEFAULT NULL, `uydu_telefon_marka` VARCHAR(100) DEFAULT NULL, `uydu_telefon_model` VARCHAR(100) DEFAULT NULL, `uydu_telefon_simkartno` VARCHAR(30) DEFAULT NULL, `uydu_telefonu_internet_kullanimi` CHAR(1) DEFAULT NULL, `uydu_alfanumerik_baslik` VARCHAR(50) DEFAULT NULL,
-    `tesis_koordinat_enlem` VARCHAR(50) DEFAULT NULL,
-    `tesis_koordinat_boylam` VARCHAR(50) DEFAULT NULL,
-    `tckn_dogrulama_durumu` ENUM('Dogrulanmadi', 'Dogrulandi', 'Dogrulanamadi', 'GecersizTCKN', 'Hata', 'NVIPasaport') DEFAULT 'Dogrulanmadi',
-    `tckn_dogrulama_zamani` TIMESTAMP NULL DEFAULT NULL,
-    `tckn_dogrulama_mesaji` TEXT DEFAULT NULL,
-    `son_guncellenme_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `olusturulma_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`yerlesim_il_id`) REFERENCES `mod_btk_adres_il`(`id`) ON DELETE SET NULL ON UPDATE CASCADE, FOREIGN KEY (`yerlesim_ilce_id`) REFERENCES `mod_btk_adres_ilce`(`id`) ON DELETE SET NULL ON UPDATE CASCADE, FOREIGN KEY (`yerlesim_mahalle_id`) REFERENCES `mod_btk_adres_mahalle`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`tesis_il_id`) REFERENCES `mod_btk_adres_il`(`id`) ON DELETE SET NULL ON UPDATE CASCADE, FOREIGN KEY (`tesis_ilce_id`) REFERENCES `mod_btk_adres_ilce`(`id`) ON DELETE SET NULL ON UPDATE CASCADE, FOREIGN KEY (`tesis_mahalle_id`) REFERENCES `mod_btk_adres_mahalle`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`iss_pop_noktasi_id`) REFERENCES `mod_btk_iss_pop_noktalari`(`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`hat_durum_kodu`) REFERENCES `mod_btk_ek1_hat_durum_kodlari`(`kod`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`musteri_hareket_kodu`) REFERENCES `mod_btk_ek2_musteri_hareket_kodlari`(`kod`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`hizmet_tipi`) REFERENCES `mod_btk_ek3_hizmet_tipleri`(`hizmet_tipi_kodu`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`abone_kimlik_tipi`) REFERENCES `mod_btk_ek4_kimlik_tipleri`(`kod`) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (`abone_meslek`) REFERENCES `mod_btk_ek5_meslek_kodlari`(`kod`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE INDEX idx_rehber_client_id ON mod_btk_abone_rehber(whmcs_client_id);
-CREATE INDEX idx_rehber_service_id ON mod_btk_abone_rehber(whmcs_service_id);
-CREATE INDEX idx_rehber_hat_no ON mod_btk_abone_rehber(hat_no(10)); -- HAT_NO uzun olabilir, prefix index
-CREATE INDEX idx_rehber_tckn ON mod_btk_abone_rehber(abone_tc_kimlik_no);
-CREATE INDEX idx_rehber_hizmet_tipi ON mod_btk_abone_rehber(hizmet_tipi);
-CREATE INDEX idx_rehber_musteri_tipi ON mod_btk_abone_rehber(musteri_tipi);
-CREATE INDEX idx_rehber_hat_durum ON mod_btk_abone_rehber(hat_durum);
-
-
--- ABONE HAREKET Canlı Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_abone_hareket_live` (
-    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `rehber_kayit_id` BIGINT NOT NULL, -- mod_btk_abone_rehber.id (Hangi rehber kaydıyla ilgili hareket)
-    `musteri_hareket_kodu` VARCHAR(10) NOT NULL, -- EK-2 Müşteri Hareket Kodu
-    `musteri_hareket_aciklama` VARCHAR(255) NOT NULL,
-    `musteri_hareket_zamani` VARCHAR(14) NOT NULL, -- YYYYMMDDHHMMSS
-    -- Hareket anındaki TÜM rehber verisinin bir kopyası (JSON veya ayrı sütunlar)
-    -- Ya da sadece değişen alanlar ve eski/yeni değerleri. BTK tam satır bekler.
-    `hareket_abone_verisi_json` MEDIUMTEXT DEFAULT NULL, -- Rapor için oluşturulacak tam ABN satırını JSON olarak saklayabiliriz.
-    `gonderildi_flag` BOOLEAN NOT NULL DEFAULT 0,
-    `cnt_numarasi` VARCHAR(2) DEFAULT NULL,
-    `gonderilen_dosya_adi` VARCHAR(255) DEFAULT NULL,
-    `gonderim_zamani` TIMESTAMP NULL DEFAULT NULL,
-    `kayit_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`rehber_kayit_id`) REFERENCES `mod_btk_abone_rehber`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (`musteri_hareket_kodu`) REFERENCES `mod_btk_ek2_musteri_hareket_kodlari`(`kod`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE INDEX idx_hareket_rehber_kayit_id ON mod_btk_abone_hareket_live(rehber_kayit_id);
-CREATE INDEX idx_hareket_gonderildi_flag ON mod_btk_abone_hareket_live(gonderildi_flag);
-CREATE INDEX idx_hareket_zaman_kod ON mod_btk_abone_hareket_live(musteri_hareket_zamani, musteri_hareket_kodu);
-
-
--- ABONE HAREKET Arşiv Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_abone_hareket_archive` LIKE `mod_btk_abone_hareket_live`;
-ALTER TABLE `mod_btk_abone_hareket_archive` ADD `arsivlenme_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
--- Arşiv tablosundan FOREIGN KEY'leri kaldırmak isteyebiliriz, eğer ana kayıtlar silinirse sorun olmasın diye.
--- Ancak ON DELETE CASCADE olduğu için rehber kaydı silinince hareketler de silinir.
--- Eğer rehber kaydı hiç silinmeyecekse (sadece durumu değişecekse) FK'lar kalabilir.
--- ALTER TABLE `mod_btk_abone_hareket_archive` DROP FOREIGN KEY `mod_btk_abone_hareket_live_ibfk_1`; (Constraint adı farklı olabilir)
--- ALTER TABLE `mod_btk_abone_hareket_archive` DROP FOREIGN KEY `mod_btk_abone_hareket_live_ibfk_2`;
-
-
--- FTP Gönderim Logları Tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_ftp_logs` (
+-- Tablo: mod_btk_gonderim_gecmisi (FTP Gönderim Kayıtları)
+CREATE TABLE IF NOT EXISTS `mod_btk_gonderim_gecmisi` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `dosya_adi` VARCHAR(255) NOT NULL,
-    `rapor_turu` ENUM('REHBER', 'HAREKET', 'PERSONEL') NOT NULL,
-    `yetki_turu_grup` VARCHAR(50) DEFAULT NULL,
-    `ftp_sunucu_tipi` ENUM('ANA', 'YEDEK') NOT NULL,
+    `rapor_turu` VARCHAR(50) NOT NULL, -- REHBER, HAREKET, PERSONEL
+    `ftp_sunucu_tipi` VARCHAR(10) NOT NULL, -- BTK, YEDEK
     `gonderim_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `durum` ENUM('Basarili', 'Basarisiz', 'Bekliyor', 'Skipped') NOT NULL DEFAULT 'Bekliyor',
+    `dosya_boyutu_byte` BIGINT DEFAULT NULL,
+    `durum` VARCHAR(50) DEFAULT 'Basarili', -- Basarili, Hatali
     `hata_mesaji` TEXT DEFAULT NULL,
-    `cnt_numarasi` VARCHAR(2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE INDEX idx_ftp_logs_dosya_adi ON mod_btk_ftp_logs(dosya_adi);
-CREATE INDEX idx_ftp_logs_rapor_ftp_durum ON mod_btk_ftp_logs(rapor_turu, ftp_sunucu_tipi, durum);
+    `icerik_hash` VARCHAR(64) DEFAULT NULL,
+    `cnt_degeri` INT DEFAULT 1,
+    INDEX `idx_dosya_adi` (`dosya_adi`),
+    INDEX `idx_gonderim_zamani` (`gonderim_zamani`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Genel Modül Logları Tablosu
+-- Tablo: mod_btk_logs (Modül Logları)
 CREATE TABLE IF NOT EXISTS `mod_btk_logs` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `log_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `log_seviyesi` ENUM('INFO', 'WARNING', 'HATA', 'DEBUG', 'CRITICAL') NOT NULL DEFAULT 'INFO',
-    `islem` VARCHAR(255) DEFAULT NULL,
-    `mesaj` MEDIUMTEXT,
-    `kullanici_id` INT DEFAULT NULL,
-    `ip_adresi` VARCHAR(45) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE INDEX idx_logs_seviye_islem ON mod_btk_logs(log_seviyesi, islem(191)); -- islem için prefix index
-CREATE INDEX idx_logs_zaman ON mod_btk_logs(log_zamani);
+    `log_tarihi` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `log_seviyesi` VARCHAR(20) DEFAULT 'INFO', -- INFO, WARNING, ERROR, DEBUG
+    `log_mesaji` TEXT NOT NULL,
+    `kaynak_fonksiyon` VARCHAR(255) DEFAULT NULL,
+    `kullanici_id` INT DEFAULT NULL -- İşlemi yapan admin ID
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- WHMCS hizmeti ile POP noktası eşleştirme tablosu
-CREATE TABLE IF NOT EXISTS `mod_btk_service_pop_mapping` (
+-- Tablo: mod_btk_iss_pop_noktalari
+CREATE TABLE IF NOT EXISTS `mod_btk_iss_pop_noktalari` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `whmcs_service_id` INT NOT NULL UNIQUE,
-    `iss_pop_noktasi_id` INT NOT NULL,
-    `guncellenme_zamani` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (`iss_pop_noktasi_id`) REFERENCES `mod_btk_iss_pop_noktalari`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-CREATE INDEX idx_service_pop_service_id ON mod_btk_service_pop_mapping(whmcs_service_id);
+    `pop_adi` VARCHAR(255) NOT NULL,
+    `yayin_yapilan_ssid` VARCHAR(255) DEFAULT NULL,
+    `sunucu_bilgisi_eslestirme` VARCHAR(255) DEFAULT NULL,
+    `adres_il` VARCHAR(100) DEFAULT NULL,
+    `adres_ilce` VARCHAR(100) DEFAULT NULL,
+    `adres_mahalle` VARCHAR(150) DEFAULT NULL,
+    `adres_detay` TEXT DEFAULT NULL,
+    `koordinat_lat` VARCHAR(50) DEFAULT NULL,
+    `koordinat_lon` VARCHAR(50) DEFAULT NULL,
+    `aktif` TINYINT(1) DEFAULT 1,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY `unique_pop_ssid_ilce` (`yayin_yapilan_ssid`, `adres_ilce`),
+    INDEX `idx_pop_il` (`adres_il`),
+    INDEX `idx_pop_ilce` (`adres_ilce`),
+    INDEX `idx_pop_mahalle` (`adres_mahalle`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tablo: mod_btk_adres_il
+CREATE TABLE IF NOT EXISTS `mod_btk_adres_il` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `il_adi` VARCHAR(255) NOT NULL UNIQUE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tablo: mod_btk_adres_ilce
+CREATE TABLE IF NOT EXISTS `mod_btk_adres_ilce` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `il_id` INT NOT NULL,
+    `ilce_adi` VARCHAR(255) NOT NULL,
+    FOREIGN KEY (`il_id`) REFERENCES `mod_btk_adres_il`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    UNIQUE KEY `unique_il_ilce` (`il_id`, `ilce_adi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tablo: mod_btk_adres_mahalle
+CREATE TABLE IF NOT EXISTS `mod_btk_adres_mahalle` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `ilce_id` INT NOT NULL,
+    `mahalle_adi` VARCHAR(255) NOT NULL,
+    `posta_kodu` VARCHAR(10) DEFAULT NULL,
+    FOREIGN KEY (`ilce_id`) REFERENCES `mod_btk_adres_ilce`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    UNIQUE KEY `unique_ilce_mahalle` (`ilce_id`, `mahalle_adi`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -1,544 +1,453 @@
 <?php
-/**
- * WHMCS BTK Raporlama Modülü - Ana Modül Dosyası
- * (Tüm fonksiyonların içleri doldurulmuş, en kapsamlı sürüm)
- */
 
 if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
 
-// Gerekli yardımcı dosyaları ve sınıfları dahil et
-$baseLibPath = __DIR__ . '/lib/';
-$helperLoaded = false;
-if (file_exists($baseLibPath . 'BtkHelper.php')) { 
-    require_once $baseLibPath . 'BtkHelper.php'; 
-    if (class_exists('BtkHelper')) $helperLoaded = true;
-} 
+use WHMCS\Database\Capsule;
+// WHMCS Smarty sınıfını dahil et
+$whmcsRootDir = dirname(__DIR__, 3); // modules/addons/btkreports -> modules/addons -> modules -> WHMCS KÖK
 
-if (!$helperLoaded) {
-    if(function_exists('logActivity')) logActivity("BTK Reports Critical Error: BtkHelper.php not found in btkreports.php!", 0);
-    else error_log("BTK Reports Critical Error: BtkHelper.php not found in btkreports.php!");
+if (file_exists($whmcsRootDir . '/includes/smarty/Smarty.class.php')) {
+    require_once $whmcsRootDir . '/includes/smarty/Smarty.class.php';
+} elseif (file_exists($whmcsRootDir . '/vendor/smarty/smarty/libs/Smarty.class.php')) {
+    require_once $whmcsRootDir . '/vendor/smarty/smarty/libs/Smarty.class.php';
+} else {
+    logActivity("BTK Raporlama Modülü: Smarty sınıfı bulunamadı. WHMCS Path: " . $whmcsRootDir, 0);
+    // Smarty olmadan arayüz gösterilemeyeceği için burada kritik bir durum oluşabilir.
+    // Ancak modülün diğer fonksiyonları (cron vb.) çalışmaya devam edebilir.
 }
 
-if (file_exists($baseLibPath . 'NviSoapClient.php')) { require_once $baseLibPath . 'NviSoapClient.php'; }
-else { if ($helperLoaded) BtkHelper::logAction('Modül Başlatma Hatası', 'CRITICAL', 'NviSoapClient.php bulunamadı.'); }
-
-if (file_exists($baseLibPath . 'ExcelExporter.php')) { require_once $baseLibPath . 'ExcelExporter.php'; }
-else { if ($helperLoaded) BtkHelper::logAction('Modül Başlatma Hatası', 'CRITICAL', 'ExcelExporter.php bulunamadı.'); }
-
-$composerAutoloadPath = __DIR__ . '/vendor/autoload.php';
-if (file_exists($composerAutoloadPath)) { require_once $composerAutoloadPath; }
-else { if ($helperLoaded) BtkHelper::logAction('Modül Başlatma Hatası', 'UYARI', 'Composer autoload.php bulunamadı! Cron zamanlaması ve bazı Excel işlemleri çalışmayabilir.'); }
-
-
-use WHMCS\Database\Capsule;
-use WHMCS\Utility\CSRF;
 
 /**
- * Modül yapılandırma fonksiyonu.
+ * Define addon module configuration parameters.
+ *
+ * @return array
  */
-function btkreports_config() {
+function btkreports_config()
+{
     return [
         'name' => 'BTK Raporlama Modülü',
-        'description' => 'BTK yasal raporlama yükümlülükleri için WHMCS eklenti modülü.',
-        'version' => '6.0.0',
-        'author' => '[Üstadım & Sizin Adınız/Şirketiniz Gelecek]',
-        'fields' => [] 
+        'description' => 'BTK için yasal raporları oluşturma ve yönetme modülü. (Geliştiren: KABLOSUZONLINE)',
+        'author' => '<a href="https://www.kablosuzonline.com.tr/wisp/" target="_blank">KABLOSUZONLINE</a>',
+        'language' => 'turkish',
+        'version' => '0.5.3', // Versiyonu güncel tutun
+        'fields' => [
+            'docs_link' => [
+                'FriendlyName' => 'Dökümantasyon',
+                'Type' => 'button',
+                'Description' => '<a href="https://github.com/kablosuzonline/WHMS-BTK-MODUL/blob/main/WHMS-BTK-MODUL/README.md" target="_blank" class="btn btn-info">Kullanım Kılavuzu ve Sürüm Notları</a>',
+            ],
+            'initial_setup_info' => [
+                'FriendlyName' => 'İlk Kurulum Notları',
+                'Type' => 'info',
+                'Description' => 'Modülün tam fonksiyonel çalışabilmesi için, lütfen "Eklentiler > BTK Raporlama Modülü" menüsünden "Yapılandırma" sayfasına giderek gerekli tüm ayarları (Operatör Bilgileri, FTP Ayarları, Yetki Türleri vb.) yapınız. Modül varsayılan yönetici kullanıcı adı "btkadmin" ve şifresi "P@$$wOrd123" olarak ayarlanmıştır. Lütfen bu bilgileri ilk fırsatta Yapılandırma sayfasından değiştiriniz. Adres verilerinin yüklenmesi aktivasyon sırasında biraz zaman alabilir.',
+            ],
+        ]
     ];
 }
 
 /**
- * Modül etkinleştirme fonksiyonu.
+ * Activate a module.
+ *
+ * @return array Optional success/failure message
  */
-function btkreports_activate() {
-    global $helperLoaded;
+function btkreports_activate()
+{
     try {
-        $sqlInstallFile = __DIR__ . '/sql/install.sql';
-        if (file_exists($sqlInstallFile)) {
-            $sqlQueries = explode(';', file_get_contents($sqlInstallFile));
-            foreach ($sqlQueries as $query) { $query = trim($query); if (!empty($query)) { Capsule::connection()->statement($query); }}
-        } else { return ['status' => 'error', 'description' => 'Kurulum SQL dosyası (install.sql) bulunamadı.']; }
+        @set_time_limit(0);
+        @ini_set('memory_limit', '1024M');
+        @ini_set('mysql.connect_timeout', '300');
+        @ini_set('default_socket_timeout', '300');
 
-        $sqlInitialDataFile = __DIR__ . '/sql/initial_reference_data.sql';
-        if (file_exists($sqlInitialDataFile)) {
-            $sqlQueries = explode(';', file_get_contents($sqlInitialDataFile));
-            foreach ($sqlQueries as $query) { $query = trim($query); if (!empty($query)) { Capsule::connection()->statement($query); }}
-            if ($helperLoaded) BtkHelper::logAction('Modül Aktivasyonu', 'Başarılı', 'Başlangıç verileri SQL dosyası (initial_reference_data.sql) başarıyla işlendi.');
-        } else { if ($helperLoaded) BtkHelper::logAction('Modül Aktivasyonu', 'Uyarı', 'Başlangıç verileri SQL dosyası (initial_reference_data.sql) bulunamadı.'); }
-        
-        if ($helperLoaded) {
-            BtkHelper::set_btk_setting('module_db_version', btkreports_config()['version']);
-            BtkHelper::logAction('Modül Aktivasyonu', 'Başarılı', 'BTK Raporlama Modülü başarıyla etkinleştirildi.');
-        }
-        return ['status' => 'success', 'description' => 'BTK Raporlama Modülü başarıyla etkinleştirildi. Lütfen modül ayarlarını yapılandırın.'];
-    } catch (Exception $e) {
-        $errorMessage = 'Modül etkinleştirilirken hata oluştu: ' . $e->getMessage();
-        if ($helperLoaded) BtkHelper::logAction('Modül Aktivasyonu', 'HATA', $errorMessage, null, ['trace' => $e->getTraceAsString()]);
-        else error_log("BTK Reports Activation Error: " . $errorMessage);
-        return ['status' => 'error', 'description' => $errorMessage];
-    }
-}
-
-/**
- * Modül devre dışı bırakma fonksiyonu.
- */
-function btkreports_deactivate() {
-    global $helperLoaded;
-    try {
-        $deleteData = '0';
-        if ($helperLoaded) {
-            $deleteDataSetting = BtkHelper::get_btk_setting('delete_data_on_deactivate');
-            if ($deleteDataSetting !== null) { $deleteData = $deleteDataSetting; }
-        }
-
-        if ($deleteData === '1') {
-            $tablesToDelete = [
-                'mod_btk_service_pop_mapping', 'mod_btk_abone_hareket_archive', 'mod_btk_abone_hareket_live',
-                'mod_btk_abone_rehber', 'mod_btk_ftp_logs', 'mod_btk_logs', 'mod_btk_personel',
-                'mod_btk_personel_departmanlari', 'mod_btk_iss_pop_noktalari',
-                'mod_btk_adres_mahalle', 'mod_btk_adres_ilce', 'mod_btk_adres_il',
-                'mod_btk_product_group_mappings', 'mod_btk_secili_yetki_turleri',
-                'mod_btk_yetki_turleri_referans', 'mod_btk_ek1_hat_durum_kodlari', /* YENİ */
-                'mod_btk_ek2_musteri_hareket_kodlari', /* YENİ */ 'mod_btk_ek3_hizmet_tipleri', /* YENİ */
-                'mod_btk_ek4_kimlik_tipleri', /* YENİ */ 'mod_btk_ek5_meslek_kodlari', /* YENİ */
-                'mod_btk_settings'
-            ];
-            foreach ($tablesToDelete as $table) {
-                if (Capsule::schema()->hasTable($table)) { Capsule::schema()->drop($table); }
+        $sql_file_install = __DIR__ . '/sql/install.sql';
+        if (file_exists($sql_file_install)) {
+            $sql_commands_install = file_get_contents($sql_file_install);
+            $sql_array_install = array_filter(array_map('trim', preg_split("/;\s*(?:\r\n|\n|\r)/", $sql_commands_install)));
+            foreach ($sql_array_install as $command) {
+                if (!empty($command)) {
+                    Capsule::statement($command);
+                }
             }
-            if ($helperLoaded) BtkHelper::logAction('Modül Deaktivasyonu', 'Başarılı', 'Tüm veriler silindi.');
-            return ['status' => 'success', 'description' => 'BTK Raporlama Modülü devre dışı bırakıldı ve tüm verileri silindi.'];
+            logActivity("BTK Raporlama Modülü: install.sql başarıyla çalıştırıldı.", 0);
         } else {
-            if ($helperLoaded) BtkHelper::logAction('Modül Deaktivasyonu', 'Başarılı', 'Veriler korundu.');
-            return ['status' => 'success', 'description' => 'BTK Raporlama Modülü devre dışı bırakıldı. Veriler korundu.'];
+            return ['status' => 'error', 'description' => 'Kurulum SQL dosyası (install.sql) bulunamadı: ' . $sql_file_install];
         }
-    } catch (Exception $e) {
-        $errorMessage = 'Modül devre dışı bırakılırken hata oluştu: ' . $e->getMessage();
-         if ($helperLoaded) BtkHelper::logAction('Modül Deaktivasyonu', 'HATA', $errorMessage, null, ['trace' => $e->getTraceAsString()]);
-        else error_log("BTK Reports Deactivation Error: " . $errorMessage);
-        return ['status' => 'error', 'description' => $errorMessage];
+
+        $sql_file_reference = __DIR__ . '/sql/initial_reference_data.sql';
+        if (file_exists($sql_file_reference)) {
+            $sql_commands_reference = file_get_contents($sql_file_reference);
+            $sql_commands_reference = preg_replace('/^\xEF\xBB\xBF/', '', $sql_commands_reference);
+            $sql_array_reference = array_filter(array_map('trim', preg_split("/;\s*(?:\r\n|\n|\r)/", $sql_commands_reference)));
+            logActivity("BTK Raporlama Modülü: initial_reference_data.sql dosyasındaki " . count($sql_array_reference) . " komut çalıştırılmaya başlanıyor...", 0);
+            $executed_count = 0;
+            $batch_size = 500;
+            $current_batch_commands_string = ""; // Komutları biriktir
+            $commands_in_batch = 0;
+
+            foreach ($sql_array_reference as $command_ref) {
+                if (!empty($command_ref)) {
+                    $current_batch_commands_string .= $command_ref . ";\n";
+                    $commands_in_batch++;
+                    if ($commands_in_batch >= $batch_size) {
+                        try {
+                            Capsule::unprepared($current_batch_commands_string); // Biriktirilmiş komutları çalıştır
+                            $executed_count += $commands_in_batch;
+                        } catch (\Exception $e_ref_batch) {
+                            logActivity("BTK Raporlama Modülü: initial_reference_data.sql toplu komut çalıştırılırken hata: " . $e_ref_batch->getMessage(), 0);
+                        }
+                        $current_batch_commands_string = "";
+                        $commands_in_batch = 0;
+                        @set_time_limit(60);
+                    }
+                }
+            }
+            if (!empty($current_batch_commands_string)) {
+                 try {
+                    Capsule::unprepared($current_batch_commands_string);
+                    $executed_count += $commands_in_batch;
+                } catch (\Exception $e_ref_batch) {
+                     logActivity("BTK Raporlama Modülü: initial_reference_data.sql son toplu komut çalıştırılırken hata: " . $e_ref_batch->getMessage(), 0);
+                }
+            }
+            logActivity("BTK Raporlama Modülü: initial_reference_data.sql dosyasından yaklaşık " . $executed_count . " komut işlendi.", 0);
+        } else {
+            logActivity("BTK Raporlama Modülü: Adres referans veri SQL dosyası (initial_reference_data.sql) bulunamadı.", 0);
+        }
+        return ['status' => 'success', 'description' => 'BTK Raporlama Modülü başarıyla etkinleştirildi.'];
+    } catch (\Exception $e) {
+        logActivity("BTK Raporlama Modülü Aktivasyon Hatası: " . $e->getMessage() . " - Satır: " . $e->getLine() . " - Dosya: " . $e->getFile(), 0);
+        return ['status' => "error", 'description' => "Modül etkinleştirilirken bir hata oluştu: " . $e->getMessage()];
     }
 }
 
 /**
- * Modül admin arayüzü çıktı fonksiyonu.
+ * Deactivate a module.
+ */
+function btkreports_deactivate()
+{
+    try {
+        // Helper'ı include etmeden önce var olup olmadığını kontrol et
+        if (file_exists(__DIR__ . '/lib/BtkHelper.php')) {
+            require_once __DIR__ . '/lib/BtkHelper.php';
+            $btkHelper = new BtkHelper([]);
+            $delete_tables = $btkHelper->get_config('delete_tables_on_deactivate');
+        } else {
+            // Helper yoksa, tabloları silme ayarına ulaşılamaz, varsayılan olarak silme.
+            $delete_tables = '0'; // Güvenli varsayılan
+            logActivity("BTK Raporlama Modülü: BtkHelper.php bulunamadı, devre dışı bırakmada tablolar korunacak.", 0);
+        }
+
+
+        if ($delete_tables == '1') {
+            try { Capsule::statement('SET FOREIGN_KEY_CHECKS=0;'); } catch (\Exception $exfk) { /* noop */ }
+            $tables_to_drop = [
+                'mod_btk_abone_hareket_canli', 'mod_btk_abone_hareket_arsiv', 'mod_btk_personel',
+                'mod_btk_adres_mahalle', 'mod_btk_adres_ilce', 'mod_btk_config',
+                'mod_btk_secilen_yetki_turleri', 'mod_btk_abone_rehber', 'mod_btk_personel_departmanlari',
+                'mod_btk_gonderim_gecmisi', 'mod_btk_logs', 'mod_btk_iss_pop_noktalari',
+                'mod_btk_adres_il'
+            ];
+            foreach ($tables_to_drop as $table_name) {
+                if (Capsule::schema()->hasTable($table_name)) {
+                    Capsule::schema()->drop($table_name);
+                }
+            }
+            try { Capsule::statement('SET FOREIGN_KEY_CHECKS=1;'); } catch (\Exception $exfk) { /* noop */ }
+            $message = 'BTK Raporlama Modülü başarıyla devre dışı bırakıldı ve ilgili veritabanı tabloları silindi.';
+        } else {
+            $message = 'BTK Raporlama Modülü başarıyla devre dışı bırakıldı. Veritabanı tabloları korunmuştur.';
+        }
+        unset($_SESSION['btk_admin_authed']);
+        return ['status' => 'success', 'description' => $message];
+    } catch (\Exception $e) {
+        logActivity("BTK Raporlama Modülü Devre Dışı Bırakma Hatası: " . $e->getMessage(), 0);
+        try { Capsule::statement('SET FOREIGN_KEY_CHECKS=1;'); } catch (\Exception $exfk) { /* noop */ }
+        return ['status' => "error", 'description' => "Modül devre dışı bırakılırken bir hata oluştu: " . $e->getMessage()];
+    }
+}
+
+/**
+ * Upgrade a module.
+ */
+function btkreports_upgrade($vars)
+{
+    $currentVersion = $vars['version']; // Modülün DB'deki mevcut versiyonu (eğer saklanıyorsa) veya dosyadaki eski versiyonu
+    $newVersion = btkreports_config()['version']; // Dosyadaki yeni versiyon
+
+    logActivity("BTK Raporlama Modülü: Güncelleme fonksiyonu çalıştırıldı. Eski Sürüm: $currentVersion, Yeni Sürüm: $newVersion", 0);
+
+    // Örnek güncelleme mantığı (versiyona göre)
+    // if (version_compare($currentVersion, '0.6.0', '<')) {
+    //     // 0.6.0 için gerekli veritabanı değişikliklerini yap
+    //     try {
+    //          // Örneğin yeni bir ayar eklenmişse install.sql'den ilgili INSERT'i alıp çalıştırabiliriz
+    //          Capsule::table('mod_btk_config')->updateOrInsert(
+    //              ['setting' => 'yeni_ayar_ornegi'],
+    //              ['value' => 'varsayilan_deger']
+    //          );
+    //         logActivity("BTK Raporlama Modülü: v0.6.0 güncellemesi yapıldı.",0);
+    //     } catch (\Exception $e) {
+    //         logActivity("BTK Raporlama Modülü: v0.6.0 güncellemesi sırasında hata: " . $e->getMessage(),0);
+    //         return ['status' => 'error', 'description' => 'v0.6.0 güncellemesi sırasında hata: ' . $e->getMessage()];
+    //     }
+    // }
+    // Her zaman install.sql'i çalıştırmak yerine, sadece eksik tabloları ve sütunları kontrol edip eklemek daha güvenlidir.
+    // Ancak şimdilik basit bir başarı mesajı dönelim.
+    return ['status' => 'success', 'description' => 'BTK Raporlama Modülü güncelleme işlemi tamamlandı. Yeni Sürüm: ' . $newVersion];
+}
+
+/**
+ * Admin Area Output.
  */
 function btkreports_output($vars) {
-    global $helperLoaded;
     $modulelink = $vars['modulelink'];
-    $action = isset($_REQUEST['action']) ? preg_replace("/[^a-zA-Z0-9_]/", "", trim($_REQUEST['action'])) : 'index';
-    $LANG = $vars['_lang'] ?? [];
-    $adminId = $helperLoaded ? BtkHelper::getCurrentAdminId() : null;
-
-    if (!$helperLoaded) { 
-        echo '<div class="alert alert-danger"><strong>Kritik Hata:</strong> BTK Raporlama Modülü temel yardımcı kütüphanesi (BtkHelper.php) yüklenemedi veya bulunamadı. Lütfen modül dosyalarını kontrol edin. Modül işlevsiz.</div>'; 
-        return; 
+    $LANG = $vars['_lang'];
+    if (empty($LANG) && file_exists(__DIR__ . '/lang/turkish.php')) {
+        include __DIR__ . '/lang/turkish.php';
+        $LANG = $_LANG;
     }
+
+    $action = isset($_REQUEST['action']) ? trim($_REQUEST['action']) : '';
+    $page = isset($_REQUEST['page']) ? trim($_REQUEST['page']) : 'index';
 
     $smarty = new Smarty();
     $smarty->assign('modulelink', $modulelink);
     $smarty->assign('LANG', $LANG);
-    $smarty->assign('assets_url', '../modules/addons/btkreports/assets');
-    $smarty->assign('module_version_placeholder', btkreports_config()['version']);
-    $smarty->assign('setting_version_placeholder', BtkHelper::get_btk_setting('module_db_version', btkreports_config()['version']));
-    $smarty->assign('setting_surum_notlari_link_placeholder', BtkHelper::get_btk_setting('surum_notlari_link', '../modules/addons/btkreports/README.md'));
-    
-    $systemUrl = rtrim(BtkHelper::get_btk_setting('SystemURL', $vars['systemurl']), '/');
-    $smarty->assign('logo_url', $systemUrl . '/modules/addons/btkreports/logo.png');
-    
-    if (class_exists('WHMCS\Utility\CSRF')) { $smarty->assign('csrfToken', CSRF::generateToken()); }
-    else { $smarty->assign('csrfToken', ''); }
+    $smarty->assign('version', $vars['version']);
+    $smarty->assign('customadminpath', get_admin_folder_name()); // WHMCS admin klasör adını template'e gönder
 
-    $menuItems = [
-        'index' => ['label' => $LANG['dashboardtitle'] ?? 'Ana Sayfa', 'icon' => 'fas fa-tachometer-alt'],
-        'config' => ['label' => $LANG['configtitle'] ?? 'Genel Ayarlar', 'icon' => 'fas fa-cogs'],
-        'personel' => ['label' => $LANG['personeltitle'] ?? 'Personel Yönetimi', 'icon' => 'fas fa-users'],
-        'isspop' => ['label' => $LANG['isspoptitle'] ?? 'ISS POP Yönetimi', 'icon' => 'fas fa-broadcast-tower'],
-        'product_group_mappings' => ['label' => $LANG['productgroupmappingstitle'] ?? 'Ürün Grubu Eşleştirme', 'icon' => 'fas fa-link'],
-        'generatereports' => ['label' => $LANG['generatereportstitle'] ?? 'Manuel Raporlar', 'icon' => 'fas fa-rocket'],
-        'viewlogs' => ['label' => $LANG['viewlogstitle'] ?? 'Günlük Kayıtları', 'icon' => 'fas fa-history'],
-    ];
-    $smarty->assign('btkModuleMenuItems', $menuItems);
-    $smarty->assign('currentModulePageAction', $action);
+    $action_result = isset($_SESSION['btk_action_result']) ? $_SESSION['btk_action_result'] : null;
+    if ($action_result) {
+        $smarty->assign('action_result_type', $action_result['type']);
+        $message_text = isset($LANG[$action_result['message_key']]) ? $LANG[$action_result['message_key']] : $action_result['message_key'];
+        // Parametreleri işle (eğer varsa)
+        if (isset($action_result['params']) && is_array($action_result['params']) && !empty($message_text)) {
+            // Dil dosyasında {param_name} gibi placeholder'lar varsa:
+            // foreach ($action_result['params'] as $key => $value) {
+            //    $message_text = str_replace('{' . $key . '}', $value, $message_text);
+            // }
+            // Veya vsprintf için: (parametreler sıralı olmalı)
+            // $message_text = vsprintf($message_text, $action_result['params']);
+        }
+        $smarty->assign('action_result_message', $message_text);
+        unset($_SESSION['btk_action_result']);
+    }
 
-    echo '<div id="btkReportsModuleContainer" class="btk-module-container">';
-    try {
-        $smartyMenu = new Smarty();
-        $smartyMenu->assign('modulelink', $modulelink); $smartyMenu->assign('LANG', $LANG);
-        $smartyMenu->assign('btkModuleMenuItems', $menuItems); $smartyMenu->assign('currentModulePageAction', $action);
-        $smartyMenu->assign('logo_url', $systemUrl . '/modules/addons/btkreports/logo.png');
-        $smartyMenu->assign('assets_url', '../modules/addons/btkreports/assets');
-        echo $smartyMenu->fetch(__DIR__ . '/templates/admin/shared/admin_header_menu.tpl');
-    } catch (SmartyException $e) { BtkHelper::logAction('Smarty Hatası (Menu)', 'Hata', $e->getMessage() . ' Şablon: admin_header_menu.tpl', $adminId); echo '<div class="alert alert-danger">Modül menüsü yüklenirken hata.</div>';}
+    if (!file_exists(__DIR__ . '/lib/BtkHelper.php')) {
+        echo "Hata: BtkHelper.php dosyası bulunamadı. Modül çalışamaz.";
+        return;
+    }
+    require_once __DIR__ . '/lib/BtkHelper.php';
+    $btkHelper = new BtkHelper($vars); // $vars'ı helper'a constructor ile gönder
 
-    if (isset($_SESSION['BtkReportsFlashMessage'])) { $flash = $_SESSION['BtkReportsFlashMessage']; if (isset($flash['type']) && isset($flash['message'])) { $smarty->assign($flash['type'] === 'success' ? 'successMessage' : ($flash['type'] === 'error' ? 'errorMessage' : 'infoMessage'), $flash['message']); } unset($_SESSION['BtkReportsFlashMessage']); }
-    if (isset($_SESSION['BtkReportsFormErrorData'])) { $smarty->assign('form_data', $_SESSION['BtkReportsFormErrorData']); unset($_SESSION['BtkReportsFormErrorData']); }
-    if (isset($_GET['success']) && $_GET['success'] == 1 && $action === 'config' && isset($LANG['settingssavedsucceed'])) { $smarty->assign('successMessage', $LANG['settingssavedsucceed']);}
+    // Config sayfasına özel erişim kontrolü
+    if ($page == 'config') {
+        if (!isset($_SESSION['btk_admin_authed']) || $_SESSION['btk_admin_authed'] !== true) {
+            $auth_error_message_key = '';
+            if ($action == 'authenticate_config_access') {
+                $submitted_username = isset($_POST['btk_username']) ? trim($_POST['btk_username']) : '';
+                $submitted_password = isset($_POST['btk_password']) ? $_POST['btk_password'] : '';
+                $stored_username = $btkHelper->get_config('btk_config_admin_user');
+                $stored_password_hash = $btkHelper->get_config('btk_config_admin_pass_hash');
+                $default_user = 'btkadmin'; // install.sql'deki varsayılan
+                $default_pass_hash = '$2y$10$IfH7q9E2.N10Gv/Qz19xWuX.PbjH.jPzIpj4Q0nUqLzY/4yBikUzG'; // 'P@$$wOrd123'
 
-    $templateFile = 'index.tpl'; 
-// --- BÖLÜM 1/3 Sonu ---
-// ... btkreports.php Bölüm 1/3 içeriğinin sonu (Smarty atamaları ve menü sonrası) ...
-
-    $templateFile = 'index.tpl'; // Varsayılan şablon
-    
-    // $action parametresini loglayalım (güvenlik için htmlspecialchars)
-    // BtkHelper::logAction('Modül Sayfa İsteği', 'DEBUG', "İstenen action: '" . htmlspecialchars($action) . "'", $adminId, $_REQUEST);
-
-    switch ($action) {
-        case 'config':
-            btk_page_config($smarty, $modulelink, $LANG);
-            $templateFile = 'config.tpl';
-            break;
-        case 'save_config':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-                if (class_exists('WHMCS\Utility\CSRF')) CSRF::verify(); 
-                $result = btk_action_save_config($_POST, $LANG); 
-                $_SESSION['BtkReportsFlashMessage'] = $result; 
-                if (isset($result['status']) && $result['status'] === 'error') { 
-                    $_SESSION['BtkReportsFormErrorData'] = $_POST; 
+                if ((empty($stored_username) || empty($stored_password_hash)) && ($submitted_username === $default_user && password_verify($submitted_password, $default_pass_hash))) {
+                    $_SESSION['btk_admin_authed'] = true;
+                    $_SESSION['btk_action_result'] = ['type' => 'info', 'message_key' => 'btk_info_change_default_password'];
+                } elseif (!empty($stored_username) && $submitted_username === $stored_username && !empty($stored_password_hash) && password_verify($submitted_password, $stored_password_hash)) {
+                    $_SESSION['btk_admin_authed'] = true;
+                } else {
+                    $auth_error_message_key = 'btk_auth_error_invalid_credentials';
                 }
             }
-            header("Location: " . $modulelink . "&action=config"); 
-            exit;
-            // break; // exit sonrası break gereksiz
+            if (!isset($_SESSION['btk_admin_authed']) || $_SESSION['btk_admin_authed'] !== true) {
+                if(!empty($auth_error_message_key) && isset($LANG[$auth_error_message_key])) $smarty->assign('auth_error', $LANG[$auth_error_message_key]);
+                $smarty->assign('csrfToken', generate_token('plain'));
+                $smarty->display(__DIR__ . '/templates/admin/confirm_password.tpl');
+                return;
+            }
+        }
+    }
 
-        case 'personel':
-            $currentFilters = [];
-            $filterParams = ['s_ad', 's_soyad', 's_tckn', 's_email', 's_departman_id', 's_btk_listesine_eklensin', 's_aktif_calisan'];
-            if (isset($_REQUEST['filter']) && $_REQUEST['filter'] == '1') { 
-                foreach ($filterParams as $param) { 
-                    if (isset($_REQUEST[$param]) && $_REQUEST[$param] !== '') { 
-                        $currentFilters[$param] = trim($_REQUEST[$param]); 
-                    }
-                } 
-                $_SESSION['BtkReportsPersonelFilters'] = $currentFilters; 
-            } elseif (isset($_REQUEST['clearfilter']) && $_REQUEST['clearfilter'] == '1') { 
-                unset($_SESSION['BtkReportsPersonelFilters']); 
-                // Filtre temizlendikten sonra sayfayı yeniden yükle (GET parametreleri olmadan)
-                header("Location: " . $modulelink . "&action=personel"); 
+    // Ayarları Kaydetme İşlemi
+    if ($action == 'save_settings' && $page == 'config' && isset($_SESSION['btk_admin_authed']) && $_SESSION['btk_admin_authed'] === true) {
+        check_token("WHMCS.admin.default"); // WHMCS'in kendi CSRF token kontrolü
+
+        $save_success = true;
+        $save_message_key = '';
+
+        $new_admin_user = isset($_POST['btk_config_admin_user']) ? trim($_POST['btk_config_admin_user']) : '';
+        if (empty($new_admin_user)) {
+            $save_success = false;
+            $save_message_key = 'btk_error_admin_user_required';
+        } else {
+            $btkHelper->set_config('btk_config_admin_user', $new_admin_user);
+        }
+
+        $new_admin_pass = isset($_POST['btk_config_new_admin_pass']) ? $_POST['btk_config_new_admin_pass'] : '';
+        $confirm_admin_pass = isset($_POST['btk_config_confirm_admin_pass']) ? $_POST['btk_config_confirm_admin_pass'] : '';
+        if (!empty($new_admin_pass)) {
+            if (strlen($new_admin_pass) < 8) {
+                 $save_success = false;
+                 $save_message_key = 'btk_error_password_too_short';
+            } elseif ($new_admin_pass === $confirm_admin_pass) {
+                $hashed_password = password_hash($new_admin_pass, PASSWORD_DEFAULT);
+                $btkHelper->set_config('btk_config_admin_pass_hash', $hashed_password);
+            } else {
+                $save_success = false;
+                $save_message_key = 'btk_error_password_mismatch';
+            }
+        }
+
+        if ($save_success) { // Sadece erişim ayarları başarılıysa diğerlerini de kaydetmeyi dene
+            $checkbox_settings = ['ftp_use_ssl_btk', 'ftp_use_passive_btk', 'ftp_yedek_aktif', 'ftp_use_ssl_yedek', 'ftp_use_passive_yedek', 'delete_tables_on_deactivate', 'nvi_tc_dogrulama_aktif', 'nvi_adres_dogrulama_aktif', 'personel_dosya_adi_yil_ay_btk', 'personel_dosya_adi_yil_ay_yedek', 'debug_mode'];
+            $text_settings = ['operator_kodu', 'operator_adi', 'operator_unvani', 'ftp_host_btk', 'ftp_port_btk', 'ftp_user_btk', 'ftp_path_rehber_btk', 'ftp_path_hareket_btk', 'ftp_path_personel_btk', 'ftp_host_yedek', 'ftp_port_yedek', 'ftp_user_yedek', 'ftp_path_rehber_yedek', 'ftp_path_hareket_yedek', 'ftp_path_personel_yedek', 'cron_rehber_zamanlama', 'cron_hareket_zamanlama', 'cron_personel_zamanlama_haziran', 'cron_personel_zamanlama_aralik', 'hareket_canli_saklama_suresi_gun', 'hareket_arsiv_saklama_suresi_gun'];
+
+            foreach ($text_settings as $key) {
+                if (isset($_POST[$key])) {
+                    $btkHelper->set_config($key, trim($_POST[$key]));
+                }
+            }
+            foreach ($checkbox_settings as $key) {
+                $btkHelper->set_config($key, (isset($_POST[$key]) && $_POST[$key] == '1') ? '1' : '0');
+            }
+
+            if (isset($_POST['ftp_pass_btk_new']) && $_POST['ftp_pass_btk_new'] !== '' && $_POST['ftp_pass_btk_new'] !== '********') {
+                $btkHelper->set_config('ftp_pass_btk', encrypt(trim($_POST['ftp_pass_btk_new'])));
+            }
+            if (isset($_POST['ftp_pass_yedek_new']) && $_POST['ftp_pass_yedek_new'] !== '' && $_POST['ftp_pass_yedek_new'] !== '********') {
+                $btkHelper->set_config('ftp_pass_yedek', encrypt(trim($_POST['ftp_pass_yedek_new'])));
+            }
+
+            $secilen_yetkiler = isset($_POST['yetki_turleri']) && is_array($_POST['yetki_turleri']) ? $_POST['yetki_turleri'] : [];
+            $btkHelper->saveSecilenYetkiTurleri($secilen_yetkiler);
+
+            if (empty($save_message_key)) { // Eğer başka bir hata oluşmadıysa başarı mesajı ata
+                 $save_message_key = 'btk_settings_saved_successfully';
+            }
+        }
+        $_SESSION['btk_action_result'] = ['type' => $save_success ? 'success' : 'error', 'message_key' => $save_message_key];
+        header("Location: " . $modulelink . "&page=config");
+        exit;
+    }
+
+    // Sayfa içeriğini yükle
+    $template_file = '';
+    switch ($page) {
+        case 'config':
+            if (isset($_SESSION['btk_admin_authed']) && $_SESSION['btk_admin_authed'] === true) {
+                $settings = $btkHelper->get_all_configs();
+                $settings['ftp_pass_btk_display'] = !empty($btkHelper->get_config('ftp_pass_btk')) ? '********' : '';
+                $settings['ftp_pass_yedek_display'] = !empty($btkHelper->get_config('ftp_pass_yedek')) ? '********' : '';
+                $smarty->assign('settings', $settings);
+                $smarty->assign('current_year', date('Y'));
+                $smarty->assign('operator_yetki_turleri_options', $btkHelper->getYetkiTurleriOptions());
+                $smarty->assign('secili_yetki_kodlari', $btkHelper->getSeciliYetkiKodlari());
+                $smarty->assign('csrfToken', generate_token('plain')); // Form için CSRF token
+                $template_file = 'config.tpl';
+            }
+            // Else durumu zaten yukarıda ele alındı (confirm_password.tpl gösterilir)
+            break;
+        case 'generate_reports':
+            $smarty->assign('yetki_turleri', $btkHelper->getSeciliYetkilerFormatted());
+            $smarty->assign('csrfToken', generate_token('plain'));
+            $template_file = 'generate_reports.tpl';
+            break;
+        case 'view_logs':
+            if (isset($_POST['clearlogs_confirm']) && $_POST['clearlogs_confirm'] == 'yes') {
+                check_token("WHMCS.admin.default");
+                if ($btkHelper->clear_logs()) {
+                    $_SESSION['btk_action_result'] = ['type' => 'success', 'message_key' => 'btk_logs_cleared_successfully'];
+                } else {
+                    $_SESSION['btk_action_result'] = ['type' => 'error', 'message_key' => 'btk_error_clearing_logs'];
+                }
+                header("Location: " . $modulelink . "&page=view_logs");
                 exit;
-            } elseif (isset($_SESSION['BtkReportsPersonelFilters'])) { 
-                $currentFilters = $_SESSION['BtkReportsPersonelFilters']; 
             }
-            $smarty->assign('filters', $currentFilters); // Filtreleri şablona gönder
-            btk_page_personel($smarty, $modulelink, $LANG, $currentFilters);
-            $templateFile = 'personel.tpl';
+            $smarty->assign('log_entries', $btkHelper->get_logs(200)); // Son 200 log
+            $smarty->assign('csrfToken', generate_token('plain'));
+            $template_file = 'view_logs.tpl';
             break;
-        case 'save_personel':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-                if (class_exists('WHMCS\Utility\CSRF')) CSRF::verify(); 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_save_personel($_POST, $LANG); 
-            }
-            // Kaydetme sonrası, mevcut sayfa ve filtrelerle aynı sayfaya yönlendir
-            $redirectQuery = [];
-            if (isset($_POST['page']) && is_numeric($_POST['page'])) $redirectQuery['page'] = (int)$_POST['page'];
-            if (isset($_SESSION['BtkReportsPersonelFilters']) && !empty($_SESSION['BtkReportsPersonelFilters'])) {
-                $redirectQuery = array_merge($redirectQuery, $_SESSION['BtkReportsPersonelFilters']);
-                if (!empty($redirectQuery)) $redirectQuery['filter'] = '1'; // Filtre uygulandığını belirt
-            }
-            header("Location: " . $modulelink . "&action=personel" . (!empty($redirectQuery) ? '&' . http_build_query($redirectQuery) : '')); 
-            exit;
-            // break;
-
-        case 'delete_personel':
-            $personel_id_to_delete = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
-            $pageToReturnQuery = [];
-            if (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) $pageToReturnQuery['page'] = (int)$_REQUEST['page'];
-            if (isset($_SESSION['BtkReportsPersonelFilters']) && !empty($_SESSION['BtkReportsPersonelFilters'])) {
-                $pageToReturnQuery = array_merge($pageToReturnQuery, $_SESSION['BtkReportsPersonelFilters']);
-                 if (!empty($pageToReturnQuery)) $pageToReturnQuery['filter'] = '1';
-            }
-            
-            // GET istekleri için CSRF token doğrulaması
-            $csrfTokenName = 'btk_delete_personel_' . $personel_id_to_delete; // Her silme linki için unique token adı
-            if ($personel_id_to_delete > 0 && isset($_REQUEST['token']) && CSRF::verifyToken($csrfTokenName, $_REQUEST['token'])) { 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_delete_personel($personel_id_to_delete, $LANG); 
-            } else { 
-                $_SESSION['BtkReportsFlashMessage'] = ['type' => 'error', 'message' => ($LANG['invalidPersonelId'] ?? 'Geçersiz Personel ID.') . (!isset($_REQUEST['token']) || !CSRF::verifyToken($csrfTokenName, $_REQUEST['token']) ? ($LANG['csrfTokenError'] ?? ' Güvenlik tokeni eksik veya geçersiz.') : '')]; 
-            }
-            header("Location: " . $modulelink . "&action=personel" . (!empty($pageToReturnQuery) ? '&' . http_build_query($pageToReturnQuery) : '')); 
-            exit;
-            // break;
-
-        case 'isspop':
-            $currentIssPopFilters = [];
-            $filterIssPopParams = ['s_pop_adi', 's_yayin_yapilan_ssid', 's_il_id', 's_ilce_id', 's_aktif_pasif_durum'];
-             if (isset($_REQUEST['filter_isspop']) && $_REQUEST['filter_isspop'] == '1') { 
-                 foreach ($filterIssPopParams as $param) { if (isset($_REQUEST[$param]) && $_REQUEST[$param] !== '') { $currentIssPopFilters[$param] = trim($_REQUEST[$param]); }} 
-                 $_SESSION['BtkReportsIssPopFilters'] = $currentIssPopFilters; 
-             } elseif (isset($_REQUEST['clearfilter_isspop']) && $_REQUEST['clearfilter_isspop'] == '1') { 
-                 unset($_SESSION['BtkReportsIssPopFilters']); 
-                 header("Location: " . $modulelink . "&action=isspop"); exit;
-             } elseif (isset($_SESSION['BtkReportsIssPopFilters'])) { 
-                 $currentIssPopFilters = $_SESSION['BtkReportsIssPopFilters']; 
-             }
-            $smarty->assign('filters_isspop', $currentIssPopFilters);
-            btk_page_isspop($smarty, $modulelink, $LANG, $currentIssPopFilters);
-            $templateFile = 'iss_pop_management.tpl';
+        case 'personel':
+            // Personel işlemleri (ekleme/düzenleme/silme) burada ele alınabilir POST ile
+            $smarty->assign('personel_listesi', $btkHelper->getPersonelListesi());
+            $smarty->assign('departmanlar', $btkHelper->getDepartmanlarForDropdown());
+            $smarty->assign('csrfToken', generate_token('plain'));
+            $template_file = 'personel.tpl';
             break;
-        case 'save_isspop':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-                if (class_exists('WHMCS\Utility\CSRF')) CSRF::verify(); 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_save_isspop($_POST, $LANG); 
-            }
-            $redirectPage = isset($_POST['page_isspop']) && is_numeric($_POST['page_isspop']) ? '&page_isspop='.(int)$_POST['page_isspop'] : '';
-            if(isset($_SESSION['BtkReportsIssPopFilters']) && !empty($_SESSION['BtkReportsIssPopFilters'])) {
-                $redirectPage .= '&filter_isspop=1&' . http_build_query($_SESSION['BtkReportsIssPopFilters']);
-            }
-            header("Location: " . $modulelink . "&action=isspop" . $redirectPage); 
-            exit;
-            // break;
-        case 'delete_isspop':
-            $pop_id_to_delete = isset($_REQUEST['id']) ? (int)$_REQUEST['id'] : 0;
-            $pageToReturn = isset($_REQUEST['page_isspop']) && is_numeric($_REQUEST['page_isspop']) ? '&page_isspop='.(int)$_REQUEST['page_isspop'] : '';
-             if(isset($_SESSION['BtkReportsIssPopFilters']) && !empty($_SESSION['BtkReportsIssPopFilters'])) {
-                $pageToReturn .= '&filter_isspop=1&' . http_build_query($_SESSION['BtkReportsIssPopFilters']);
-            }
-            $csrfTokenNamePop = 'btk_delete_isspop_' . $pop_id_to_delete;
-            if ($pop_id_to_delete > 0 && isset($_REQUEST['token']) && CSRF::verifyToken($csrfTokenNamePop, $_REQUEST['token'])) { 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_delete_isspop($pop_id_to_delete, $LANG); 
-            } else { 
-                $_SESSION['BtkReportsFlashMessage'] = ['type' => 'error', 'message' => ($LANG['invalidPopId'] ?? 'Geçersiz POP ID.') . (!isset($_REQUEST['token']) || !CSRF::verifyToken($csrfTokenNamePop, $_REQUEST['token']) ? ($LANG['csrfTokenError'] ?? ' Güvenlik tokeni eksik veya geçersiz.') : '')]; 
-            }
-            header("Location: " . $modulelink . "&action=isspop" . $pageToReturn); 
-            exit;
-            // break;
-        case 'import_isspop_excel':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['excel_file'])) { 
-                if (class_exists('WHMCS\Utility\CSRF')) CSRF::verify(); 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_import_isspop_excel($_FILES['excel_file'], $LANG); 
-            }
-            header("Location: " . $modulelink . "&action=isspop"); 
-            exit;
-            // break;
-        case 'export_personel_excel': 
-            if (isset($_REQUEST['token']) && CSRF::verifyToken('btk_export_excel', $_REQUEST['token'])) { // Genel bir export tokeni
-                btk_action_export_excel('PERSONEL', $LANG, $modulelink); 
-            } else { 
-                $_SESSION['BtkReportsFlashMessage'] = ['type' => 'error', 'message' => $LANG['csrfTokenErrorExport'] ?? 'Geçersiz dışa aktarma güvenlik tokeni.']; 
-                header("Location: " . $modulelink . "&action=personel");
-            } 
-            exit; 
-            // break;
-        case 'export_isspop_excel': 
-            if (isset($_REQUEST['token']) && CSRF::verifyToken('btk_export_excel', $_REQUEST['token'])) { // Genel bir export tokeni
-                btk_action_export_excel('ISSPOP', $LANG, $modulelink); 
-            } else { 
-                $_SESSION['BtkReportsFlashMessage'] = ['type' => 'error', 'message' => $LANG['csrfTokenErrorExport'] ?? 'Geçersiz dışa aktarma güvenlik tokeni.']; 
-                header("Location: " . $modulelink . "&action=isspop");
-            } 
-            exit; 
-            // break;
-        case 'product_group_mappings': 
-            btk_page_product_group_mappings($smarty, $modulelink, $LANG); 
-            $templateFile = 'product_group_mappings.tpl'; 
+        case 'iss_pop_management':
+            // POP noktası işlemleri
+            $smarty->assign('pop_noktalari', $btkHelper->getPopNoktalari());
+            $smarty->assign('csrfToken', generate_token('plain'));
+            $template_file = 'iss_pop_management.tpl';
             break;
-        case 'save_product_group_mappings': 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') { 
-                if (class_exists('WHMCS\Utility\CSRF')) CSRF::verify(); 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_save_product_group_mappings($_POST, $LANG); 
-            } 
-            header("Location: " . $modulelink . "&action=product_group_mappings"); 
-            exit; 
-            // break;
-        case 'generatereports': 
-            btk_page_generate_reports($smarty, $modulelink, $LANG); 
-            $templateFile = 'generate_reports.tpl'; 
-            break;
-        case 'do_generate_report': 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['report_type'])) { 
-                if (class_exists('WHMCS\Utility\CSRF')) CSRF::verify(); 
-                $_SESSION['BtkReportsFlashMessage'] = btk_action_do_generate_report($_POST, $LANG); 
-            } 
-            header("Location: " . $modulelink . "&action=generatereports"); 
-            exit; 
-            // break;
-        case 'viewlogs': 
-            $currentLogFilters = [];
-            $filterLogParams = ['s_log_level', 's_log_islem', 's_log_mesaj', 's_log_date_from', 's_log_date_to', 's_ftp_dosya_adi', 's_ftp_rapor_turu', 's_ftp_durum'];
-             if (isset($_REQUEST['filter_log']) && $_REQUEST['filter_log'] == '1') { 
-                 foreach ($filterLogParams as $param) { if (isset($_REQUEST[$param]) && $_REQUEST[$param] !== '') { $currentLogFilters[$param] = trim($_REQUEST[$param]); }} 
-                 $_SESSION['BtkReportsLogFilters'] = $currentLogFilters; 
-             } elseif (isset($_REQUEST['clearfilter_log']) && $_REQUEST['clearfilter_log'] == '1') { 
-                 unset($_SESSION['BtkReportsLogFilters']);  
-                 header("Location: " . $modulelink . "&action=viewlogs"); exit;
-             } elseif (isset($_SESSION['BtkReportsLogFilters'])) { 
-                 $currentLogFilters = $_SESSION['BtkReportsLogFilters']; 
-             }
-            $smarty->assign('filters_log', $currentLogFilters);
-            btk_page_view_logs($smarty, $modulelink, $LANG, $currentLogFilters); 
-            $templateFile = 'view_logs.tpl'; 
-            break;
-        
-        // AJAX Actions
-        case 'get_ilceler': 
-        case 'get_mahalleler': 
-        case 'search_pop_ssids': 
-        case 'nvi_tckn_dogrula': 
-        case 'nvi_ykn_dogrula':
-        case 'test_ftp_connection':
-            header('Content-Type: application/json; charset=utf-8');
-            // AJAX POST istekleri için CSRF token'ı JS tarafında data objesine eklenmeli
-            // ve burada $request_data['token'] ile alınıp CSRF::verify() ile doğrulanmalı.
-            // Örnek: if ($_SERVER['REQUEST_METHOD'] === 'POST' && class_exists('WHMCS\Utility\CSRF') && isset($request_data['token'])) { CSRF::verifyToken('ajax_btk_general', $request_data['token']); }
-            echo json_encode(btk_handle_ajax_requests($action, $_REQUEST, $LANG), JSON_UNESCAPED_UNICODE);
-            exit;
-            // break; // exit sonrası break gereksiz
-
-        case 'index': 
+        case 'logout_config':
+             unset($_SESSION['btk_admin_authed']);
+             header("Location: " . $modulelink . "&page=config"); // confirm_password.tpl'e yönlendirir
+             exit;
+        case 'index':
         default:
-            btk_page_index($smarty, $modulelink, $LANG);
-            $templateFile = 'index.tpl';
+            $ftp_btk_status = $btkHelper->checkFtpConnection('btk');
+            $ftp_yedek_status = $btkHelper->checkFtpConnection('yedek');
+            $smarty->assign('ftp_btk_status', $ftp_btk_status);
+            $smarty->assign('ftp_yedek_status', $ftp_yedek_status);
+            $readme_content = $btkHelper->getReadmeContent();
+            $smarty->assign('readme_content', $readme_content);
+            $template_file = 'index.tpl';
             break;
     }
-// --- BÖLÜM 2/3 Sonu ---
-// ... btkreports.php Bölüm 2/3 içeriğinin sonu (switch ($action) bloğunun sonu) ...
 
-    if (isset($templateFile) && file_exists(__DIR__ . '/templates/admin/' . $templateFile)) {
-        try { 
-            $output = $smarty->fetch(__DIR__ . '/templates/admin/' . $templateFile); 
-            echo $output; 
-        }
-        catch (SmartyException $e) { 
-            if (class_exists('BtkHelper')) BtkHelper::logAction('Smarty Hatası', 'HATA', $e->getMessage() . ' Şablon: ' . $templateFile, $adminId); 
-            echo '<div class="alert alert-danger">Şablon yükleme hatası: ' . htmlspecialchars($e->getMessage()) . ' (Lütfen sistem loglarını kontrol edin)</div>'; 
-        }
-    } elseif (isset($templateFile)) { 
-        if (class_exists('BtkHelper')) BtkHelper::logAction('Şablon Hatası', 'HATA', 'Şablon dosyası bulunamadı: ' . $templateFile, $adminId); 
-        echo '<div class="alert alert-danger">İstenen şablon dosyası (' . htmlspecialchars($templateFile) . ') bulunamadı.</div>';
-    }
-    echo '</div>'; // btkReportsModuleContainer div kapanışı
-}
-
-// -------- SAYFA İÇERİĞİ HAZIRLAMA VE ACTION FONKSİYONLARI --------
-
-function btk_page_index(&$smarty, $modulelink, $LANG) {
-    $smarty->assign('page_title', $LANG['dashboardtitle'] ?? 'BTK Raporlama Ana Sayfa');
-    $ftpMainStatus = BtkHelper::checkFtpConnection('main');
-    $ftpBackupStatus = ['status' => 'info', 'message' => $LANG['backupFtpDisabled'] ?? 'Yedek FTP etkin değil.'];
-    $settings = BtkHelper::getAllBtkSettings(); // Ayarları bir kere çekelim
-    if (isset($settings['backup_ftp_enabled']) && $settings['backup_ftp_enabled'] === '1') {
-        $ftpBackupStatus = BtkHelper::checkFtpConnection('backup');
-    }
-    $smarty->assign('ftp_main_status', $ftpMainStatus);
-    $smarty->assign('ftp_backup_status', $ftpBackupStatus);
-    $smarty->assign('settings', $settings);
-
-    $aktifGruplar = BtkHelper::getAktifYetkiTurleri('array_grup_names_only');
-    $lastSubmissions = [];
-    if (!empty($aktifGruplar)) {
-        foreach($aktifGruplar as $grup) {
-            $lastRehber = BtkHelper::getLastSuccessfulReportInfo('REHBER', 'ANA', $grup);
-            $lastHareket = BtkHelper::getLastSuccessfulReportInfo('HAREKET', 'ANA', $grup);
-            $lastSubmissions[$grup]['REHBER'] = ['tarih_saat' => $lastRehber ? date("d.m.Y H:i:s", strtotime($lastRehber['gonderim_zamani'] . ' UTC')) : ($LANG['notSubmittedYet'] ?? '-'), 'dosya_adi' => $lastRehber['dosya_adi'] ?? '-', 'cnt' => $lastRehber['cnt_numarasi'] ?? '-'];
-            $lastSubmissions[$grup]['HAREKET'] = ['tarih_saat' => $lastHareket ? date("d.m.Y H:i:s", strtotime($lastHareket['gonderim_zamani'] . ' UTC')) : ($LANG['notSubmittedYet'] ?? '-'), 'dosya_adi' => $lastHareket['dosya_adi'] ?? '-', 'cnt' => $lastHareket['cnt_numarasi'] ?? '-'];
-        }
-    }
-    $lastPersonel = BtkHelper::getLastSuccessfulReportInfo('PERSONEL', 'ANA');
-    $lastSubmissions['PERSONEL'] = ['tarih_saat' => $lastPersonel ? date("d.m.Y H:i:s", strtotime($lastPersonel['gonderim_zamani'] . ' UTC')) : ($LANG['notSubmittedYet'] ?? '-'), 'dosya_adi' => $lastPersonel['dosya_adi'] ?? '-', 'cnt' => $lastPersonel['cnt_numarasi'] ?? '-'];
-    $smarty->assign('last_submissions', $lastSubmissions);
-    $smarty->assign('aktif_yetki_gruplari_for_index', $aktifGruplar);
-
-    $smarty->assign('next_rehber_cron_run', BtkHelper::getNextCronRunTime('rehber_cron_schedule'));
-    $smarty->assign('next_hareket_cron_run', BtkHelper::getNextCronRunTime('hareket_cron_schedule'));
-    $smarty->assign('next_personel_cron_run', BtkHelper::getNextCronRunTime('personel_cron_schedule'));
-    BtkHelper::logAction('Ana Sayfa Görüntülendi', 'INFO', null, BtkHelper::getCurrentAdminId());
-}
-
-function btk_page_config(&$smarty, $modulelink, $LANG) {
-    $smarty->assign('page_title', $LANG['configtitle'] ?? 'BTK Modül Ayarları');
-    $current_settings = BtkHelper::getAllBtkSettings();
-    $settings = $current_settings; 
-    $currentActionFromSmarty = $smarty->getVariable('currentModulePageAction')->value ?? 'config';
-
-    if (isset($_SESSION['BtkReportsFormErrorData']) && $currentActionFromSmarty === 'config') {
-        $form_data = $_SESSION['BtkReportsFormErrorData'];
-        $settings = array_merge($current_settings, $form_data); // Formdan gelenlerle DB'dekileri birleştir
-        // Şifreler için özel placeholder mantığı TPL'de handle ediliyor, burada sadece doluysa '********' yapalım.
-        $settings['main_ftp_pass'] = !empty($current_settings['main_ftp_pass']) ? '********' : ''; 
-        $settings['backup_ftp_pass'] = !empty($current_settings['backup_ftp_pass']) ? '********' : '';
-        
-        $checkboxKeys = ['main_ftp_ssl', 'backup_ftp_enabled', 'backup_ftp_ssl', 'send_empty_reports', 'delete_data_on_deactivate', 'debug_mode', 'personel_filename_add_year_month_main', 'personel_filename_add_year_month_backup', 'show_btk_info_if_empty_clientarea'];
-        foreach($checkboxKeys as $cbKey) { 
-            if (isset($form_data[$cbKey])) { $settings[$cbKey] = ($form_data[$cbKey] === 'on' || $form_data[$cbKey] === '1') ? '1' : '0'; }
-            elseif (isset($current_settings[$cbKey])) { $settings[$cbKey] = $current_settings[$cbKey]; }
-            else { $settings[$cbKey] = '0';}
-        }
-    } else { // Hata yoksa veya session'da form verisi yoksa, şifre alanları için placeholder'ı ayarla
-        $settings['main_ftp_pass_is_set'] = !empty($settings['main_ftp_pass']) ? '1' : '0'; // JS için
-        $settings['main_ftp_pass'] = !empty($settings['main_ftp_pass']) ? '********' : '';
-        $settings['backup_ftp_pass_is_set'] = !empty($settings['backup_ftp_pass']) ? '1' : '0'; // JS için
-        $settings['backup_ftp_pass'] = !empty($settings['backup_ftp_pass']) ? '********' : '';
-    }
-    $smarty->assign('settings', $settings);
-
-    $yetkiTurleriReferans = BtkHelper::getAllYetkiTurleriReferans();
-    $seciliYetkiTurleriDb = BtkHelper::getSeciliYetkiTurleri(); // Sadece aktif olanların kodlarını döner.
-    $displayYetkiTurleri = [];
-    if (is_array($yetkiTurleriReferans)) {
-        foreach ($yetkiTurleriReferans as $yt_obj) {
-            $yt = (array)$yt_obj; // Obje ise diziye çevir
-            $is_aktif = 0;
-            if (isset($form_data['yetkiler']) && is_array($form_data['yetkiler']) && array_key_exists($yt['yetki_kodu'], $form_data['yetkiler'])) { 
-                 $is_aktif = 1; 
-            } elseif (!isset($form_data) && isset($seciliYetkiTurleriDb[$yt['yetki_kodu']])) { 
-                $is_aktif = 1; // $seciliYetkiTurleriDb sadece aktif olanları içerir
+    if (!empty($template_file)) {
+        try {
+            $templatePath = __DIR__ . '/templates/admin/' . $template_file;
+            if (file_exists($templatePath)) {
+                $smarty->display($templatePath);
+            } else {
+                echo "Hata: Template dosyası bulunamadı: " . $templatePath;
+                logActivity("BTK Raporlama Modülü: Template dosyası bulunamadı - " . $templatePath, 0);
             }
-            $displayYetkiTurleri[] = ['kod' => $yt['yetki_kodu'], 'ad' => $yt['yetki_adi'], 'grup' => $yt['grup'] ?? '', 'aktif' => $is_aktif];
+        } catch (Exception $e) {
+            echo "Smarty Template Gösterim Hatası ({$template_file}): " . $e->getMessage();
+            logModuleCall('btkreports', $page.'_template_error', $template_file, $e->getMessage(), $e->getTraceAsString());
         }
     }
-    $smarty->assign('yetki_turleri', $displayYetkiTurleri);
-    BtkHelper::logAction('Genel Ayarlar Sayfası Görüntülendi', 'INFO', null, BtkHelper::getCurrentAdminId());
+} // btkreports_output fonksiyonunun sonu
+
+/**
+ * WHMCS Admin klasör adını almak için yardımcı fonksiyon.
+ * @return string Admin folder name
+ */
+function get_admin_folder_name() {
+    global $customadminpath; // WHMCS bu değişkeni genellikle global scope'a tanımlar.
+
+    if (!empty($customadminpath)) {
+        return rtrim($customadminpath, '/');
+    }
+
+    // Fallback: configuration.php dosyasından okumayı dene
+    // Bu yöntem daha az güvenilir ve sunucu yapılandırmasına bağlıdır.
+    $configFilePath = dirname(__DIR__, 3) . '/configuration.php';
+    if (file_exists($configFilePath)) {
+        // Hata raporlamasını geçici olarak bastır, dosya okuma hatası almamak için
+        $error_reporting_level = error_reporting();
+        error_reporting($error_reporting_level & ~E_NOTICE & ~E_WARNING);
+        $configContents = file_get_contents($configFilePath);
+        error_reporting($error_reporting_level); // Eski seviyeye geri dön
+
+        if ($configContents && preg_match('/\$customadminpath\s*=\s*\'([a-zA-Z0-9_]+)\';/', $configContents, $matches)) {
+            if (isset($matches[1])) {
+                return $matches[1];
+            }
+        }
+    }
+    return 'admin'; // En son varsayılan
 }
 
-function btk_action_save_config($postData, $LANG) {
-    $logKullaniciId = BtkHelper::getCurrentAdminId();
-    if (empty(trim($postData['operator_code']))) { BtkHelper::logAction('Ayar Kaydetme Hatası', 'UYARI', 'Operatör Kodu boş.', $logKullaniciId); return ['status' => 'error', 'message' => $LANG['operatorCodeRequired'] ?? 'Operatör Kodu zorunludur.']; }
-    if (empty(trim($postData['operator_name']))) { BtkHelper::logAction('Ayar Kaydetme Hatası', 'UYARI', 'Operatör Adı boş.', $logKullaniciId); return ['status' => 'error', 'message' => $LANG['operatorNameRequired'] ?? 'Operatör Adı zorunludur.']; }
-
-    $textSettings = ['operator_code', 'operator_name', 'operator_title', 'main_ftp_host', 'main_ftp_user', 'main_ftp_port', 'main_ftp_rehber_path', 'main_ftp_hareket_path', 'main_ftp_personel_path', 'backup_ftp_host', 'backup_ftp_user', 'backup_ftp_port', 'backup_ftp_rehber_path', 'backup_ftp_hareket_path', 'backup_ftp_personel_path', 'rehber_cron_schedule', 'hareket_cron_schedule', 'personel_cron_schedule', 'hareket_live_table_days', 'hareket_archive_table_days', 'surum_notlari_link', 'admin_records_per_page', 'log_records_per_page'];
-    foreach ($textSettings as $key) { if (isset($postData[$key])) BtkHelper::set_btk_setting($key, trim($postData[$key])); }
-    $checkboxSettings = ['main_ftp_ssl', 'backup_ftp_enabled', 'backup_ftp_ssl', 'send_empty_reports', 'delete_data_on_deactivate', 'debug_mode', 'personel_filename_add_year_month_main', 'personel_filename_add_year_month_backup', 'show_btk_info_if_empty_clientarea'];
-    foreach ($checkboxSettings as $key) { BtkHelper::set_btk_setting($key, isset($postData[$key]) && ($postData[$key] === 'on' || $postData[$key] === '1') ? '1' : '0'); }
-    // Şifreler sadece '********' placeholder'ından farklı bir değer girilmişse güncellenir.
-    if (isset($postData['main_ftp_pass']) && trim($postData['main_ftp_pass']) !== '********') { BtkHelper::set_btk_setting('main_ftp_pass', trim($postData['main_ftp_pass'])); }
-    if (isset($postData['backup_ftp_pass']) && trim($postData['backup_ftp_pass']) !== '********') { BtkHelper::set_btk_setting('backup_ftp_pass', trim($postData['backup_ftp_pass'])); }
-    BtkHelper::saveSeciliYetkiTurleri(isset($postData['yetkiler']) && is_array($postData['yetkiler']) ? $postData['yetkiler'] : []);
-    BtkHelper::logAction('Ayarlar Kaydedildi', 'BAŞARILI', 'Modül ayarları güncellendi.', $logKullaniciId);
-    return ['status' => 'success', 'message' => $LANG['settingssavedsucceed'] ?? 'Ayarlar başarıyla kaydedildi.'];
+// Modül hooklarını yükle
+if (file_exists(__DIR__ . '/hooks.php')) {
+    require_once __DIR__ . '/hooks.php';
 }
-
-function btk_page_personel(&$smarty, $modulelink, $LANG, $filters = []) {
-    $smarty->assign('page_title', $LANG['personeltitle'] ?? 'Personel Yönetimi');
-    $adminId = BtkHelper::getCurrentAdminId();
-    $page = isset($_REQUEST['page']) && is_numeric($_REQUEST['page']) ? (int)$_REQUEST['page'] : 1; if ($page < 1) $page = 1;
-    $limit = (int)BtkHelper::get_btk_setting('admin_records_per_page', 20); $offset = ($page - 1) * $limit;
-    $personelResult = BtkHelper::getPersonelList($filters, 'p.soyad', 'ASC', $limit, $offset);
-    $smarty->assign('personel_listesi', $personelResult['data']);
-    $smarty->assign('departmanlar', BtkHelper::getDepartmanList());
-    $smarty->assign('tum_ilceler_listesi', BtkHelper::getTumIlcelerWithIlAdi());
-    try { $smarty->assign('whmcs_admin_users_placeholder', Capsule::table('tbladmins')->where('disabled', 0)->orderBy('firstname')->get(['id', 'username', 'firstname', 'lastname'])->all()); }
-    catch (Exception $e) { BtkHelper::logAction('WHMCS Admin Listesi Çekme Hatası', 'HATA', $e->getMessage()); $smarty->assign('whmcs_admin_users_placeholder', []);}
-    $totalPages = ($limit > 0 && $personelResult['total_count'] > 0) ? ceil($personelResult['total_count'] / $limit) : 1;
-    $smarty->assign('current_page', $page); $smarty->assign('total_pages', $totalPages); $smarty->assign('total_items', $personelResult['total_count']);
-    $preservedFilters = $filters; if(isset($preservedFilters['filter'])) unset($preservedFilters['filter']);
-    $smarty->assign('pagination_params', !empty($preservedFilters) ? '&filter=1&' . http_build_query($preservedFilters) : '');
-    BtkHelper::logAction('Personel Sayfası Görüntülendi', 'INFO', "Sayfa: $page, Filtreler: " . json_encode($filters), $adminId);
-}
-
-function btk_action_save_personel($postData, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_delete_personel($personelId, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_page_isspop(&$smarty, $modulelink, $LANG, $filters = []) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_save_isspop($postData, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_delete_isspop($popId, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_import_isspop_excel($fileData, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_export_excel($reportType, $LANG, $modulelink) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_page_product_group_mappings(&$smarty, $modulelink, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_save_product_group_mappings($postData, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_page_generate_reports(&$smarty, $modulelink, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_action_do_generate_report($postData, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi) ... */ }
-function btk_page_view_logs(&$smarty, $modulelink, $LANG, $filters = []) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi, filtreler eklendi) ... */ }
-function btk_handle_ajax_requests($ajax_action, $request_data, $LANG) { /* ... (Bir önceki tam btkreports.php gönderimindeki gibi, FTP Test dahil) ... */ }
-
+// Modül sonu
 ?>
