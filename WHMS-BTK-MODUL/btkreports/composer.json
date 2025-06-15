@@ -1,0 +1,17 @@
+{
+    "name": "whmcs-addon/btk-reports",
+    "description": "WHMCS module for BTK reporting",
+    "type": "whmcs-addon",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.20",
+        "mtdowling/cron-expression": "^1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "WHMCS\\Module\\Addon\\BtkRaporlari\\": "app/"
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor"
+    }
+}
