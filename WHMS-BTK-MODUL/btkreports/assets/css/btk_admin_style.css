@@ -1,0 +1,229 @@
+/**
+ * WHMCS BTK Raporlama Modülü - Kapsamlı Admin CSS Stilleri
+ * modules/addons/btkreports/assets/css/btk_admin_style.css
+ * Bu dosya, modülün tüm admin arayüzü için genel ve özel stilleri içerir.
+ */
+
+/* --- Genel Modül ve Sayfa Stilleri --- */
+.btk-module-container {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #495057; /* Bootstrap varsayılan metin rengi */
+    line-height: 1.6;
+    padding: 15px 20px; /* Modül geneline bir iç boşluk */
+}
+
+.btk-admin-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dee2e6; /* Bootstrap border color */
+}
+
+.btk-page-title {
+    font-size: 24px; /* WHMCS başlıklarına yakın */
+    font-weight: 400; 
+    color: #333; /* Daha koyu başlık */
+}
+
+.btk-page-title img { 
+    height: 32px; 
+    vertical-align: -7px; /* Başlıkla daha iyi hizalama */
+    margin-right: 10px;
+}
+
+.btk-header-actions .btn,
+.btk-header-info .btn {
+    margin-left: 8px;
+    font-size: 13px;
+}
+
+.btk-header-info .label {
+    font-size: 12px; /* Daha küçük */
+    padding: 4px 8px;
+    margin-right: 5px;
+    border-radius: .2rem; /* Bootstrap 4 */
+}
+
+/* --- Modül İçi Sekmeli Menü Stilleri --- */
+.btk-module-nav-container {
+    margin-bottom: 25px; 
+}
+
+.btk-module-nav {
+    border-bottom: 1px solid #dee2e6; /* Bootstrap nav-tabs border */
+}
+
+.btk-module-nav li a {
+    color: #495057; /* Bootstrap nav-link color */
+    font-weight: 500;
+    padding: .6rem 1.2rem; 
+    border-radius: .25rem .25rem 0 0 !important; 
+    margin-right: 2px;
+    border: 1px solid transparent;
+    border-bottom: none; 
+    font-size: 14px;
+}
+
+.btk-module-nav li a:hover {
+    background-color: #e9ecef; /* Bootstrap nav-tabs hover */
+    border-color: #e9ecef #e9ecef #dee2e6;
+    color: #0056b3; /* WHMCS link hover rengi */
+}
+
+.btk-module-nav li.active a,
+.btk-module-nav li.active a:hover,
+.btk-module-nav li.active a:focus {
+    color: #fff; 
+    background-color: #007bff; /* WHMCS primary button rengi */
+    border-color: #007bff #007bff #fff; /* WHMCS active tab border */
+    font-weight: 500;
+}
+
+.btk-module-nav li a i.fas {
+    margin-right: 7px;
+    opacity: 0.8;
+}
+.btk-module-nav li.active a i.fas {
+    opacity: 1;
+}
+
+
+/* --- Panel/Widget Stilleri (Genel) --- */
+.btk-widget {
+    margin-bottom: 25px;
+    border: 1px solid #e3e6f0; /* Daha yumuşak bir çerçeve */
+    border-radius: .35rem; /* Bootstrap card radius */
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important; /* Bootstrap card shadow */
+    background-color: #fff;
+}
+
+.btk-widget .panel-heading {
+    background-color: #f8f9fc; /* Bootstrap card header bg */
+    border-bottom: 1px solid #e3e6f0;
+    padding: .75rem 1.25rem; /* Bootstrap card header padding */
+    border-top-left-radius: calc(.35rem - 1px);
+    border-top-right-radius: calc(.35rem - 1px);
+}
+
+.btk-widget .panel-heading .panel-title {
+    font-size: 1rem; /* Bootstrap card header font size */
+    font-weight: 500;
+    color: #5a5c69; /* Bootstrap card header text color */
+    display: flex;
+    align-items: center;
+    margin-bottom: 0; /* WHMCS panel-title'dan gelen mb'yi sıfırla */
+}
+
+.btk-widget .panel-heading .panel-title i.fas {
+    margin-right: .5rem;
+    font-size: 1rem; 
+    color: #4e73df; /* Bootstrap primary color (örnek) */
+}
+
+.btk-widget .panel-body {
+    padding: 1.25rem; /* Bootstrap card body padding */
+}
+
+/* --- Form Elemanları --- */
+.btk-widget .form-group { margin-bottom: 1rem; }
+.btk-widget .form-group label:not(.btk-switch) { font-weight: 500; color: #5a5c69; margin-bottom: .5rem; display: block; font-size: 0.9rem; }
+.btk-widget .form-group label.required:after { content:" *"; color:red; }
+.btk-widget .form-control, .btk-widget .form-control.input-sm { border-radius: .25rem; box-shadow: none; border: 1px solid #d1d3e2; height: calc(1.5em + .75rem + 2px); padding: .375rem .75rem; font-size: 1rem; line-height: 1.5; }
+.btk-widget .form-control.input-sm { height: calc(1.5em + .5rem + 2px); padding: .25rem .5rem; font-size: .875rem; }
+.btk-widget .form-control:focus { border-color: #bac8f3; box-shadow: 0 0 0 0.2rem rgba(78,115,223,.25); }
+.btk-widget select.form-control { padding-right: 2.25rem; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right .75rem center; background-size: 16px 12px; -webkit-appearance: none; -moz-appearance: none; appearance: none;}
+.btk-widget textarea.form-control { height: auto; min-height: 90px; }
+.btk-widget .input-group .input-group-btn .btn, .btk-widget .input-group .input-group-addon { height: calc(1.5em + .75rem + 2px); border-color: #d1d3e2; }
+.btk-widget .help-block { font-size: .8em; color: #858796; margin-top: .25rem; }
+.btk-widget .help-block a { color: #4e73df; }
+
+/* --- Toggle Switch Stilleri --- */
+.btk-switch { position: relative; display: inline-block; width: 48px; height: 24px; vertical-align: middle; margin-right: 8px; }
+.btk-switch input { opacity: 0; width: 0; height: 0; }
+.btk-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #adb5bd; -webkit-transition: .3s; transition: .3s; border-radius: 24px; }
+.btk-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; -webkit-transition: .3s; transition: .3s; border-radius: 50%; box-shadow: 0 0 2px rgba(0,0,0,0.3); }
+input:checked + .btk-slider { background-color: #28a745; } /* WHMCS success green */
+input:focus + .btk-slider { box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.35); }
+input:checked + .btk-slider:before { -webkit-transform: translateX(24px); -ms-transform: translateX(24px); transform: translateX(24px); }
+.btk-switch-panel-title { width: 40px; height: 20px; margin-right: 10px; } /* Daha küçük */
+.btk-switch-panel-title .btk-slider { border-radius: 20px; }
+.btk-switch-panel-title .btk-slider:before { height: 14px; width: 14px; left: 3px; bottom: 3px; }
+.btk-switch-panel-title input:checked + .btk-slider:before { transform: translateX(20px); }
+
+/* --- Bilgilendirme İkonları (Tooltip) --- */
+.btk-tooltip { cursor: help; color: #4e73df; margin-left: 5px; font-size: 0.9em; }
+.btk-tooltip:hover { color: #224abe; }
+
+/* --- config.tpl Özel Stilleri --- */
+.btk-yetki-list .btk-yetki-item { padding: 8px 0; display: flex; align-items: center; border-bottom: 1px dotted #e3e6f0; }
+.btk-yetki-list .row:last-of-type .col-md-6:nth-last-child(-n+2) .btk-yetki-item { border-bottom: none; }
+.btk-yetki-list .row:last-of-type .col-md-6:last-child .btk-yetki-item { border-bottom: none; }
+.btk-yetki-name { margin-left: 5px; font-weight: 400; color: #5a5c69; }
+#rehber_cron_schedule, #hareket_cron_schedule, #personel_cron_schedule { font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.9em;}
+
+/* --- index.tpl (Ana Sayfa) Özel Stilleri --- */
+.table-btk-status td { vertical-align: middle !important; padding: .75rem; }
+.table-btk-status .label { font-size: 0.8rem; padding: .35em .65em; }
+.table-btk-status .label i { margin-right: 3px; }
+.table-btk-status strong { color: #5a5c69; }
+.table-btk-reports th { font-weight: 500; background-color: #f8f9fc; text-align: left; }
+.table-btk-reports td { vertical-align: middle !important; }
+.table-btk-reports td.text-center, .table-btk-reports th.text-center { text-align: center; }
+
+/* --- Listeleme Tabloları Genel Stilleri (Personel, ISS POP vb.) --- */
+.table-btk-list { margin-top: 1rem; }
+.table-btk-list th { background-color: #f8f9fc; font-weight: 500; white-space: nowrap; border-bottom-width: 2px; }
+.table-btk-list td { vertical-align: middle; font-size: 0.9rem; }
+.table-btk-list .btn-xs { margin-right: 3px; margin-bottom: 3px; padding: .2rem .4rem; font-size: .75rem; }
+.nvi-status-dogrulandi { color: #1cc88a; /* Bootstrap success-green */ font-weight: bold; }
+.nvi-status-dogrulanamadi { color: #f6c23e; /* Bootstrap warning-yellow */ }
+.nvi-status-hata, .nvi-status-gecersiztckn { color: #e74a3b; /* Bootstrap danger-red */ }
+.nvi-result-container { font-size: 0.8em; margin-top: 3px; }
+
+/* --- Modal Pencere Stilleri --- */
+.modal-header { background-color: #f8f9fc; border-bottom: 1px solid #e3e6f0; padding: 1rem 1.25rem; }
+.modal-title { font-weight: 500; color: #5a5c69; font-size: 1.1rem; }
+.modal-body .form-group:last-child { margin-bottom: 0; }
+.modal-footer { border-top: 1px solid #e3e6f0; }
+
+/* --- Filtreleme Formları --- */
+.form-inline label { display: block; margin-bottom: .3rem; font-weight: 400; font-size: .85rem; color: #6e707e;}
+.form-inline .form-group { margin-bottom: .75rem; }
+.form-inline .form-control.input-sm { height: calc(1.5em + .5rem + 2px); padding: .25rem .5rem; font-size: .875rem; }
+
+/* --- Sayfalandırma (Pagination) --- */
+.pagination { margin-top: 0; justify-content: center; }
+.pagination > li > a, .pagination > li > span { color: #4e73df; }
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus { background-color: #4e73df; border-color: #4e73df; }
+
+/* --- Log Sayfası (view_logs.tpl) Stilleri --- */
+.log-level-hata td, .log-label-hata, .log-level-critical td, .log-label-critical, .log-level-basarisiz td, .log-label-basarisiz { background-color: #f8d7da !important; color: #721c24 !important; }
+.log-label-critical { font-weight: bold; }
+.log-level-warning td, .log-label-warning { background-color: #fff3cd !important; color: #856404 !important; }
+/* .log-level-info td, .log-label-info { background-color: #d1ecf1 !important; color: #0c5460 !important; } */
+.log-level-debug td, .log-label-debug { background-color: #f8f9fc !important; color: #5a5c69 !important; }
+.log-level-basarili td, .log-label-basarili { background-color: #d4edda !important; color: #155724 !important; }
+.log-label-skipped { background-color: #cce5ff !important; color: #004085 !important; }
+#moduleLogsTable td, #ftpLogsTable td { font-size: 12px; word-break: break-word; }
+#moduleLogsTable .label, #ftpLogsTable .label { font-size: 0.75rem; padding: .25em .5em; border-radius: .2rem;}
+
+/* --- Genel Buton Stilleri (WHMCS Blend temasına daha yakın) --- */
+.btn-primary { background-color: #4e73df; border-color: #4e73df; }
+.btn-primary:hover { background-color: #2e59d9; border-color: #2653d4; }
+.btn-success { background-color: #1cc88a; border-color: #1cc88a; }
+.btn-success:hover { background-color: #17a673; border-color: #148562; }
+.btn-info { background-color: #36b9cc; border-color: #36b9cc; }
+.btn-info:hover { background-color: #2c9faf; border-color: #2a96a5; }
+.btn-warning { background-color: #f6c23e; border-color: #f6c23e; color: #fff; } /* WHMCS sarısı yazı rengi beyaz */
+.btn-warning:hover { background-color: #f4b619; border-color: #f4b30d; color: #fff;}
+.btn-danger { background-color: #e74a3b; border-color: #e74a3b; }
+.btn-danger:hover { background-color: #e02d1b; border-color: #d52a1a; }
+.btn-default { background-color: #f8f9fc; border-color: #d1d3e2; color: #858796; }
+.btn-default:hover { background-color: #e2e6ea; border-color: #b1b3ba; }
+
+/* Yardımcı Sınıflar */
+.bottom-margin-5 { margin-bottom: 5px !important; } .bottom-margin-10 { margin-bottom: 10px !important; } .bottom-margin-15 { margin-bottom: 15px !important; } .bottom-margin-20 { margin-bottom: 20px !important; }
+.top-margin-5 { margin-top: 5px !important; } .top-margin-10 { margin-top: 10px !important; } .top-margin-15 { margin-top: 15px !important; } .top-margin-20 { margin-top: 20px !important; }
+.text-right { text-align: right !important; } .text-center { text-align: center !important; } .text-left { text-align: left !important; }
