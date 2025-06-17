@@ -1,129 +1,91 @@
-btkreports/                     # Modülün ana kök dizini (WHMCS modules/addons/ altında yer alır)
-├── index.php                 # GÜVENLİK & WHMCS TANIMA: WHMCS'in modülü bir eklenti olarak tanıması için gereklidir.
-│                             # Genellikle boştur veya ana admin sayfasına yönlendirme içerir, doğrudan erişimi engeller.
+btkreports/
+├── index.php                     # WHMCS'in modülü addon olarak tanıması için (genellikle boş veya yönlendirme içerir)
+├── btkreports.php                # Ana modül dosyası (config, activate, deactivate, upgrade, output fonksiyonları)
+├── logo.png                      # Modül logosu (WHMCS arayüzünde görünür)
+├── README.md                     # Modül hakkında genel bilgi, kurulum ve kullanım talimatları
+├── LICENSE.txt                   # Lisans bilgileri (varsa)
+├── version.php                   # Modül versiyon bilgisini tutan dosya (upgrade işlemleri için)
 │
-├── btkreports.php            # ANA MODÜL DOSYASI: Modülün kalbidir. WHMCS ile etkileşim kuran ana fonksiyonları içerir:
-│                             #  - btkreports_config(): Modül yapılandırma seçeneklerini WHMCS'e bildirir.
-│                             #  - btkreports_activate(): Modül aktive edildiğinde çalışır (DB tabloları oluşturma, başlangıç verileri).
-│                             #  - btkreports_deactivate(): Modül devre dışı bırakıldığında çalışır (DB tablolarını silme - ayara bağlı).
-│                             #  - btkreports_upgrade(): Modül güncellendiğinde çalışır (DB şema değişiklikleri vb.).
-│                             #  - btkreports_output(): Modülün admin arayüzünü oluşturur ve yönetir. Gelen 'action'
-│                             #    parametresine göre ilgili Controller'ı çağırır veya doğrudan Smarty şablonunu render eder.
-│                             #    Tüm admin sayfası istekleri ve form POST işlemleri için ana yönlendiricidir.
+├── app/                          # Uygulama mantığının ve çekirdek sınıfların bulunduğu klasör (PSR-4 autoloading için ideal)
+│   ├── Controllers/              # Admin arayüzü isteklerini işleyen controller sınıfları
+│   │   ├── Admin/
+│   │   │   ├── ConfigController.php
+│   │   │   ├── DashboardController.php
+│   │   │   ├── ReportController.php
+│   │   │   ├── PersonnelController.php
+│   │   │   ├── PopLocationController.php
+│   │   │   ├── LogController.php
+│   │   │   └── ProductMappingController.php
+│   │   └── ClientArea/           # Müşteri arayüzü için (gerekirse)
+│   │       └── DetailsController.php
+│   ├── Models/                   # Veritabanı tablolarıyla etkileşim için Eloquent veya benzeri ORM modelleri
+│   │   ├── Setting.php
+│   │   ├── AuthorizationType.php
+│   │   ├── SubscriberGuide.php     # mod_btk_abone_rehber
+│   │   ├── SubscriberActivity.php  # mod_btk_abone_hareket_canli / arsiv
+│   │   ├── Personnel.php           # mod_btk_personel
+│   │   ├── PersonnelDepartment.php
+│   │   ├── SentFile.php            # mod_btk_gonderilen_dosyalar
+│   │   ├── AddressIl.php
+│   │   ├── AddressIlce.php
+│   │   ├── AddressMahalle.php
+│   │   ├── PopLocation.php         # mod_btk_iss_pop_noktalari
+│   │   ├── ServiceDetail.php       # mod_btk_hizmet_detaylari
+│   │   ├── Log.php                 # mod_btk_logs
+│   │   └── ProductGroupMapping.php
+│   ├── Services/                 # İş mantığı servisleri (Rapor oluşturma, FTP, NVI vb.)
+│   │   ├── ReportGeneratorService.php
+│   │   ├── FtpService.php
+│   │   ├── NviVerificationService.php
+│   │   ├── ExcelExportService.php
+│   │   └── CronJobService.php
+│   ├── Helpers/                  # Genel yardımcı fonksiyonlar veya sınıflar
+│   │   └── BtkHelper.php
+│   ├── Exceptions/               # Modüle özel exception sınıfları
+│   │   └── FtpConnectionException.php
+│   └── Providers/                # Servis sağlayıcıları (DI container için, gerekirse)
+│       └── BtkServiceProvider.php
 │
-├── logo.png                  # MODÜL LOGOSU: WHMCS Eklentiler sayfasında ve modül arayüzünde görünür.
-│
-├── README.md                 # BİLGİLENDİRME: Modül hakkında genel bilgiler, kurulum talimatları, kullanım kılavuzu,
-│                             # sürüm notları ve geliştirici notlarını içerir.
-│
-├── LICENSE.txt               # LİSANS: Modülün lisans bilgilerini içerir (eğer varsa).
-│
-├── version.php               # VERSİYON TAKİBİ: Modülün mevcut versiyon numarasını tutar. `btkreports_upgrade()`
-│                             # fonksiyonu tarafından modül güncellemelerini yönetmek için kullanılır.
-│
-├── app/                      # UYGULAMA ÇEKİRDEĞİ (PSR-4 Autoloading için ideal yapı)
-│   │
-│   ├── Controllers/          # CONTROLLER KATMANI: HTTP isteklerini alır, iş mantığını (Servisler) çağırır,
-│   │   │                     # ve kullanıcıya yanıtı (genellikle bir View/Şablon) döndürür.
-│   │   ├── Admin/            # Admin paneli için Controller'lar
-│   │   │   ├── DashboardController.php   # Admin ana panelini (index.tpl) yönetir.
-│   │   │   ├── ConfigController.php      # Modül ayarlarını (config.tpl) yönetir, kaydeder, FTP testlerini yapar.
-│   │   │   ├── PersonnelController.php   # Personel listesini, ekleme/düzenleme formlarını (personel.tpl) yönetir.
-│   │   │   ├── ReportController.php      # Rapor oluşturma/gönderme arayüzünü (generate_reports.tpl) ve işlemlerini yönetir.
-│   │   │   ├── PopLocationController.php # ISS POP noktası yönetimi arayüzünü (iss_pop_management.tpl) ve işlemlerini yönetir.
-│   │   │   ├── LogController.php         # Log görüntüleme arayüzünü (view_logs.tpl) ve log silme işlemlerini yönetir.
-│   │   │   ├── ProductMappingController.php # Ürün grubu-yetki türü eşleştirme (product_group_mappings.tpl) yönetimi.
-│   │   │   ├── ClientInjectedFormController.php # `client_details_btk_form.tpl` için veri hazırlama ve kaydetme.
-│   │   │   └── ServiceInjectedFormController.php # `service_details_btk_form.tpl` için veri hazırlama ve kaydetme.
-│   │   └── ClientArea/       # Müşteri paneli için Controller'lar (eğer modülün müşteri panelinde özel sayfaları olacaksa)
-│   │       └── DetailsController.php # Müşterinin BTK bilgilerini görüntülemesi için veri hazırlar.
-│   │
-│   ├── Models/               # MODEL KATMANI: Veritabanı tablolarıyla etkileşim kuran sınıflar. Her tablo için bir model.
-│   │   │                     # WHMCS'in Capsule (Eloquent ORM) yapısını kullanır.
-│   │   ├── Setting.php                 # mod_btk_ayarlar
-│   │   ├── AuthorizationType.php       # mod_btk_yetki_turleri
-│   │   ├── SubscriberGuide.php         # mod_btk_abone_rehber
-│   │   ├── SubscriberActivity.php      # mod_btk_abone_hareket_canli / arsiv
-│   │   ├── Personnel.php               # mod_btk_personel
-│   │   ├── PersonnelDepartment.php     # mod_btk_personel_departmanlari
-│   │   ├── SentFile.php                # mod_btk_gonderilen_dosyalar
-│   │   ├── AddressIl.php               # mod_btk_adres_il
-│   │   ├── AddressIlce.php             # mod_btk_adres_ilce
-│   │   ├── AddressMahalle.php          # mod_btk_adres_mahalle
-│   │   ├── PopLocation.php             # mod_btk_iss_pop_noktalari
-│   │   ├── ServiceDetail.php           # mod_btk_hizmet_detaylari (operasyonel ek bilgiler)
-│   │   ├── Log.php                     # mod_btk_logs
-│   │   ├── ProductGroupMapping.php     # mod_btk_product_group_mappings
-│   │   ├── RefCountry.php              # mod_btk_ref_ulkeler
-│   │   ├── RefProfession.php           # mod_btk_ref_meslek_kodlari
-│   │   └── (Diğer Ref...php dosyaları) # Diğer BTK referans tabloları için modeller
-│   │
-│   ├── Services/             # SERVİS KATMANI: Modülün ana iş mantığını içerir. Controller'lar bu servisleri kullanır.
-│   │   ├── SubscriberGuideService.php  # Abone Rehber verilerini oluşturma, güncelleme, okuma.
-│   │   ├── SubscriberActivityService.php # Abone Hareket verilerini oluşturma, işaretleme, arşivleme.
-│   │   ├── PersonnelService.php        # Personel verilerini yönetme, WHMCS admin senkronizasyonu.
-│   │   ├── ReportGeneratorService.php  # .abn rapor dosyalarını oluşturma, formatlama, sıkıştırma.
-│   │   ├── ExcelExportService.php      # Personel listesini .xlsx formatında oluşturma.
-│   │   ├── FtpService.php              # FTP sunucularına bağlanma, dosya yükleme, klasör işlemleri.
-│   │   ├── NviVerificationService.php  # TCKN ve YKN SOAP doğrulaması.
-│   │   ├── CronJobService.php          # Zamanlanmış tüm görevlerin orkestrasyonu.
-│   │   ├── PopLocationService.php      # ISS POP noktası CRUD işlemleri.
-│   │   ├── ProductMappingService.php   # Ürün grubu - yetki türü eşleştirme işlemleri.
-│   │   ├── LogService.php              # Gelişmiş log okuma, filtreleme, silme işlemleri.
-│   │   ├── ClientDataService.php       # Müşteri profili BTK formu için veri hazırlama ve kaydetme.
-│   │   └── ServiceDataService.php      # Hizmet detayları BTK formu için veri hazırlama ve kaydetme.
-│   │
-│   ├── Helpers/              # YARDIMCI SINIFLAR/FONKSİYONLAR: Genel, tekrar kullanılabilir yardımcı araçlar.
-│   │   └── BtkHelper.php     # Ayar okuma/yazma, tarih formatlama, şifreleme, URL oluşturma vb.
-│   │
-│   └── Exceptions/           # ÖZEL İSTİSNALAR: Modüle özgü hata durumlarını yönetmek için.
-│       ├── FtpException.php
-│       ├── ReportGenerationException.php
-│       └── NviVerificationException.php
-│
-├── assets/                   # STATİK DOSYALAR: CSS, JavaScript, Resimler.
+├── assets/                       # Genel statik dosyalar (CSS, JS, Resimler)
 │   ├── css/
-│   │   ├── btk_admin_style.css     # Admin paneli arayüzü için ana stil dosyası.
-│   │   └── btk_client_style.css    # Müşteri paneli arayüzü için stil dosyası (gerekirse).
+│   │   └── btk_admin_style.css   # Modül admin arayüzü için özel stiller
 │   ├── js/
-│   │   └── btk_admin_scripts.js    # Admin paneli arayüzü için ana JavaScript dosyası.
-│   └── images/                 # Modül içinde kullanılacak diğer resimler (ikonlar vb.).
+│   │   └── btk_admin_scripts.js  # Modül admin arayüzü için özel JavaScript'ler
+│   └── images/                   # Diğer resim dosyaları (info ikonları vb.)
 │
-├── lang/                     # DİL DOSYALARI: Modülün çoklu dil desteği için.
-│   ├── english.php           # İngilizce dil dosyası (varsa).
-│   └── turkish.php           # Türkçe dil dosyası (ana dilimiz).
+├── lang/                         # Dil dosyaları
+│   ├── english.php
+│   └── turkish.php
 │
-├── templates/                # SMARTY ŞABLONLARI: Kullanıcı arayüzünü oluşturan dosyalar.
-│   ├── admin/                # Admin paneli şablonları
-│   │   ├── index.tpl                 # Modül ana gösterge paneli.
-│   │   ├── config.tpl                # Modül ayarları sayfası.
-│   │   ├── personel.tpl              # Personel yönetimi sayfası.
-│   │   ├── generate_reports.tpl      # Manuel rapor oluşturma ve gönderme sayfası.
-│   │   ├── iss_pop_management.tpl    # ISS POP noktası yönetimi sayfası.
-│   │   ├── view_logs.tpl             # İşlem kayıtlarını (logları) görüntüleme sayfası.
-│   │   ├── product_group_mappings.tpl # Ürün grubu - BTK yetki türü eşleştirme sayfası.
-│   │   ├── client_details_btk_form.tpl # Müşteri profiline enjekte edilecek BTK bilgi formu.
-│   │   ├── service_details_btk_form.tpl# Hizmet detaylarına enjekte edilecek BTK ve operasyonel bilgi formu.
-│   │   └── shared/                   # Admin şablonları için ortak parçalar
-│   │       ├── admin_header_menu.tpl # Modül içi ana navigasyon menüsü.
-│   │       └── alert_messages.tpl    # Başarı/hata/bilgi mesajlarını göstermek için ortak şablon.
-│   └── clientarea/           # Müşteri paneli şablonları
-│       ├── client_btk_details.tpl      # Müşterinin kendi BTK bilgilerini (sadece okuma) gördüğü sayfa/bölüm.
-│       └── service_btk_details.tpl     # Müşterinin hizmetine ait BTK bilgilerini (sadece okuma) gördüğü sayfa/bölüm.
+├── templates/                    # Smarty şablon dosyaları
+│   ├── admin/                    # Admin arayüzü şablonları
+│   │   ├── index.tpl             # Modül ana sayfası
+│   │   ├── config.tpl            # Ayarlar sayfası
+│   │   ├── personel.tpl          # Personel yönetimi sayfası
+│   │   ├── generate_reports.tpl  # Manuel rapor oluşturma/gönderme sayfası
+│   │   ├── iss_pop_management.tpl # ISS POP noktası yönetimi
+│   │   ├── view_logs.tpl         # Log görüntüleme sayfası
+│   │   ├── product_group_mappings.tpl # Ürün grubu - yetki türü eşleştirme
+│   │   ├── client_details_btk_form.tpl # Müşteri profiline enjekte edilecek form
+│   │   ├── service_details_btk_form.tpl # Hizmet detaylarına enjekte edilecek form
+│   │   └── shared/               # Admin şablonları için ortak parçalar
+│   │       ├── admin_header_menu.tpl # Modül içi navigasyon menüsü
+│   │       └── alert_messages.tpl    # Başarı/hata mesajları için
+│   └── clientarea/               # Müşteri arayüzü şablonları (gerekirse)
+│       ├── client_btk_details.tpl  # Müşterinin kendi BTK bilgilerini gördüğü sayfa
+│       └── service_btk_details.tpl # Müşterinin hizmetine ait BTK bilgilerini gördüğü sayfa
 │
-├── hooks.php                 # WHMCS HOOKS: WHMCS olaylarını dinleyerek modülün ilgili fonksiyonlarını tetikler
-│                             # (yeni abone, hizmet iptali, admin ekleme vb.). Servisleri çağırır.
+├── hooks.php                     # WHMCS hook fonksiyonlarını içerir
+├── cron/                         # Cron işlemleriyle ilgili dosyalar
+│   └── btkreports_cron.php       # Ana cron script'i
 │
-├── cron/                     # CRON İŞLEMLERİ: Zamanlanmış görevler için script'ler.
-│   └── btkreports_cron.php   # Ana cron script'i. `CronJobService`'i çağırır.
+├── sql/                          # Veritabanı kurulum ve güncelleme script'leri
+│   ├── install.sql               # Modül ilk kurulduğunda çalışacak SQL
+│   ├── initial_reference_data.sql # Başlangıç ve referans verilerini yükleyen SQL
+│   └── upgrade/                  # Modül güncellemeleri için SQL script'leri
+│       └── 1.1.0.sql
 │
-├── sql/                      # VERİTABANI SCRIPTLERİ: Kurulum, başlangıç verisi ve güncellemeler.
-│   ├── install.sql           # Modül ilk kurulduğunda çalışacak SQL (tüm tablo oluşturmaları).
-│   ├── initial_reference_data.sql # Başlangıç ve tüm BTK referans verilerini yükleyen SQL.
-│   └── upgrade/              # Modül güncellemeleri için SQL script'leri klasörü (örn: 1.1.0.sql).
+├── vendor/                       # Composer ile yönetilen harici kütüphaneler (PhpSpreadsheet vb.)
+│   └── autoload.php              # Composer autoload dosyası
 │
-├── vendor/                   # COMPOSER BAĞIMLILIKLARI: Harici kütüphanelerin (PhpSpreadsheet, CronExpression vb.) bulunduğu klasör.
-│   └── autoload.php          # Composer tarafından oluşturulan otomatik yükleyici dosyası.
-│
-└── composer.json             # COMPOSER YAPILANDIRMASI: Proje bağımlılıklarını (PhpSpreadsheet vb.) ve PSR-4 autoloading
-                              # ayarlarını (app/ klasörü için) tanımlar.
+└── composer.json                 # Proje bağımlılıklarını ve autoloading ayarlarını tanımlar (PhpSpreadsheet gibi kütüphaneler için)
