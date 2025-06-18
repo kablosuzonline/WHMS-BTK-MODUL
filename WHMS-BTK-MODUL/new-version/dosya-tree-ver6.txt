@@ -1,0 +1,44 @@
+WHMCS_BTK_Modulu_Projesi/ (Version 6.0.0) btkreports.php
+├── modules/
+│   └── addons/
+│       └── btkreports/
+│           ├── btkreports.php             # Ana modül dosyası, admin arayüzü yönlendirmeleri, AJAX işlemleri
+│           ├── hooks.php                  # WHMCS kancaları (event listeners)
+│           ├── btkreports_cron.php        # Periyodik rapor oluşturma ve FTP gönderimi
+│           │
+│           ├── lib/                       # Yardımcı kütüphane ve sınıflar
+│           │   ├── NviSoapClient.php      # NVI SOAP servisleriyle iletişim
+│           │   ├── BtkHelper.php          # Ana yardımcı fonksiyonlar (veri işleme, rapor formatlama, FTP vb.)
+│           │   └── ExcelExporter.php      # Personel listesi için Excel (.xlsx) oluşturma (PhpSpreadsheet)
+│           │
+│           ├── sql/
+│           │   ├── install.sql            # Veritabanı tablolarının oluşturulma scriptleri
+│           │   └── initial_reference_data.sql  # Başlangıç referans verileri (örn: BTK Yetki Türleri, EK listeleri)
+│           │
+│           ├── templates/
+│           │   └── admin/                 # Admin arayüzü şablonları (.tpl dosyaları)
+│           │       ├── index.tpl          # Modül Ana Sayfası (Dashboard)
+│           │       ├── config.tpl         # Modül Genel Ayarları
+│           │       ├── product_group_mappings.tpl # Ürün Grubu - BTK Yetki Eşleştirme
+│           │       ├── personel.tpl       # Personel Yönetimi
+│           │       ├── generate_reports.tpl # Manuel Rapor Oluşturma ve Gönderme
+│           │       ├── view_logs.tpl      # Modül Günlük Kayıtları (Loglar)
+│           │       ├── client_details_btk_form.tpl # Müşteri profiline enjekte edilecek BTK bilgi formu
+│           │       ├── service_details_btk_form.tpl # Hizmet detaylarına enjekte edilecek BTK bilgi formu
+│           │       └── confirm_password.tpl # Hassas işlemler için şifre onay formu (opsiyonel)
+│           │
+│           ├── assets/                    # CSS ve JavaScript dosyaları
+│           │   ├── css/
+│           │   │   └── btk_admin_style.css (HAZIR SORUNSUZ ŞEKİLDE ÇALIŞIYOR, YENİ TASRIMLARA GÖRE DEĞİŞLİK YAPILABİLİR) # Modüle özel CSS stilleri (sizin tema görsellerinize uygun)
+│           │   └── js/
+│           │       └── btk_admin_scripts.js (HAZIR SORUNSUZ ŞEKİLDE ÇALIŞIYOR,YENİ TASRIMLARA GÖRE DEĞİŞLİK YAPILABİLİR) # Modüle özel JavaScript fonksiyonları (örn: ON/OFF butonları)
+│           │
+│           ├── lang/
+│           │   └── turkish.php            # Türkçe dil dosyası
+│           │
+│           ├── README.md     (MODÜLÜN FİNAL SÜRÜMÜNDE OLUŞTURULSUN)             # Modül kurulum, yapılandırma ve kullanım kılavuzu
+│           │
+│           └── vendor/                    # Composer ile yüklenecek harici kütüphaneler
+│               └── autoload.php
+│               └── dragonmantank/cron-expression/ # Cron zamanlama ifadeleri için
+│               └── phpoffice/phpspreadsheet/    # Excel dosyası oluşturmak için
