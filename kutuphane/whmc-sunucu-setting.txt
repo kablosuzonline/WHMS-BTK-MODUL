@@ -1,0 +1,72 @@
+8.13.1
+WHMCS sürümünüz güncel!
+Sistem URL Kontrolü
+WHMCS kurulumunuz için Sistem URL'sini başarıyla yapılandırdınız.
+
+Web Sunucusu Destek Kontrolü
+Sisteminiz\”Apache\” web sunucusu çalıştırıyor.
+Özelleştirilebilir Yollar
+Tüm yerel uygulama depolama yolları doğru şekilde yapılandırılmıştır ve erişilebilir durumdadır.
+Güvenli olmayan İzin Kontrolü
+İzinler doğru yapılandırılmış.
+Varsayılan Dizinleri Özelleştirme
+Sisteminizde, WHMCS tarafından önerildiği üzere farklı dizin isimleri kullanılıyor.
+Hassas Dizin Kontrolü
+Hassas dizinlere web'den erişilemez.
+Varsayılan Şablon Kullanımı
+Sisteminiz, sürüm yükseltme işleminden etkilenmeyecek özelleştirilmiş bir tasarım şablonu kullanıyor.
+
+Cron PHP saat dilimi
+WHMCS cron komut dosyası ve kullanıcı arayüzü eşleşmesi tarafından kullanılan saat dilimi.
+
+Zamanlanmış Sistem Görevleri
+Zamanlanmış Sistem Görevleri son 24 saat içerisinde başarıyla tamamlanmıştır.
+
+PHP Hata Seviyeleri
+Sisteminiz gereksiz hata seviyelerini göstermeyecek şekilde yapılandırılmış.
+Gerekli PHP Modül ve uzantıları
+PHP kurulumunuz WHMCS'in sağlıklı çalışabilmesi için ihtiyaç duyabileceği tüm modül ve uzantılara sahip.
+
+Önerilen PHP Modül/uzantıları
+PHP kurulumunuz WHMCS'in ve diğer ilave modüllerin sağlıklı çalışabilmesi için ihtiyaç duyabileceği tüm modül ve uzantılara sahip.
+
+Gerekli PHP Fonksiyonları
+PHP kurulumunuz WHMCS'in sağlıklı çalışabilmesi için ihtiyaç duyabileceği tüm fonksiyonlara sahip.
+
+PHP Hafıza (Memory) Limiti
+Sisteminizdeki PHP memory_limit değeri önerilen 8192M değerini karşılıyor.
+PHP Session Desteği
+PHP session desteği aktif.
+
+Session autostart ayarı devredışı.
+
+PHP session kaydetme dizini /var/www/vhosts/kablosuzonline.com.tr/phpsessions yazılabilir.
+
+PHP Zaman Dilimi
+PHP yapılandırmanız doğru zaman dilimini kullanıyor.
+Kurulu cURL Sürümü
+Şu an sisteminizde cURL'in 7.68.0 sürümü yüklü. Bu sürüm, güvenli bir şifreleme listesi kullanır.
+cURL için SSL Desteği
+cURL için SSL destekleniyor
+
+cURL için Güvenli TLS Desteği
+cURL için Güvenli TLS 1.1 ve 1.2 destekleniyor
+
+Website SSL
+Siteniz için doğrulanmış bir SSL sertifikası tespit edildi.
+Veritabanı Sunucu Sürümü
+Şu an MariaDB veritabanının 10.3.3900.20.04.2 sürümünü kullanıyorsunuz. Bu sürüm, bünyesinde WHMCS'in ihtiyaç duyduğu tüm özellikleri barındırmaktadır.
+Otomatik Güncelleme Gereksinimleri
+Otomatik güncelleştirme için istenen tüm gereksinimler karşılanmış görünüyor. Güncellemeye başlamadan önce, en az 250MB boş disk alanına sahip olduğunuzdan emin olun.
+Destek Bilet Maskesi Kontrolü
+Destek bileti maskeniz yaklaşık 1000000 olası bilet numaralarını oluşturabilir ve bunların % 0 kullanımda olduğu.
+Etkinlik İşleme
+Olay işleme normal çalışıyor.
+CloudFlare® Proxy Kontrolü
+WHMCS bir CloudFlare proxy'nin arkasında çalışmıyor.
+OPcache Durumu
+OPcache devre dışı bırakıldı. WHMCS'de önbelleğe alınmış veri kullanımı ve PHP komut dosyası yürütme ile ilgili sorunları önlemek için OPcache'yi devre dışı bırakmanızı öneririz. Daha Fazla Bilgi.
+PHP Sürümü
+Sunucunuzun PHP Sürümü 8.4.8 WHMCS tarafından desteklenmektedir.
+
+PHP sürümünüz düzenli güncellemeler almaz, ancak WHMCS tarafından desteklenen en son sürümdür.
