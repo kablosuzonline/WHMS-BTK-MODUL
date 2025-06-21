@@ -1,0 +1,47 @@
+// --- BÖLÜM 1 / 1 BAŞI - (composer.json, PHP 8.4.8 Uyumlu - GÜNCEL)
+{
+    "name": "kablosuzonline/whmcs-btk-reports-module",
+    "description": "WHMCS eklentisi: BTK için yasal raporlama (ABONE REHBER, ABONE HAREKET, PERSONEL).",
+    "type": "whmcs-addon",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Kablosuz Online & AI İşbirliği",
+            "homepage": "https://www.kablosuzonline.com.tr"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.1", // PHP 8.1 ve üzerini destekler. Sunucunuz 8.4.8 olduğu için bu uyumludur.
+                       // Daha spesifik olarak "^8.1" veya sunucunuzdaki tam versiyona göre "^8.4" da yazılabilir
+                       // ancak ">=8.1" modülün biraz daha eski PHP 8.x versiyonlarında da çalışabilmesine olanak tanır
+                       // ve 8.4.8'i de kapsar. Sizin ortamınız 8.4.8 olduğu için bu gereksinimi karşılıyoruz.
+        "dragonmantank/cron-expression": "^3.3.3", // En son stabil versiyonu (PHP >=7.1 destekliyor)
+        "phpoffice/phpspreadsheet": "^2.0.0"      // PHP 8.1 ve üzeri için güncel stabil sürüm
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "platform-check": false 
+    },
+    "autoload": {
+        "psr-4": {
+            "WHMCS\\Module\\Addon\\BtkReports\\": "src/" 
+            // Eğer sınıflarımızı (BtkHelper, NviSoapClient, ExcelExporter) 
+            // "src/Lib/", "src/Services/" gibi bir yapıya taşırsak ve namespace kullanırsak
+            // bu şekilde autoloading daha şık olur. Şimdilik lib/ altından doğrudan require_once ile
+            // ilerlediğimiz için bu satırın aktif olması şart değil ama iyi bir pratiktir.
+            // Mevcut "lib/" yapısını koruyacaksak:
+            // "WHMCS\\Module\\Addon\\BtkReports\\Lib\\": "lib/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php -r \"file_exists('vendor/autoload.php') || exit(1);\""
+        ],
+        "post-update-cmd": [
+            "@php -r \"file_exists('vendor/autoload.php') || exit(1);\""
+        ]
+    }
+}
+// --- BÖLÜM 1 / 1 SONU - (composer.json, PHP 8.4.8 Uyumlu - GÜNCEL)
