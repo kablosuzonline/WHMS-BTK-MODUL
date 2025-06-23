@@ -1,0 +1,118 @@
+{*
+ * WHMCS BTK Raporlama Modülü - Ana Sayfa (Dashboard)
+ * Version: 6.0.1 BETA
+*}
+
+{if $successmessage}
+    <div class="alert alert-success text-center">
+        <i class="fas fa-check-circle"></i> {$successmessage}
+    </div>
+{/if}
+{if $errormessage}
+    <div class="alert alert-danger text-center">
+        <i class="fas fa-exclamation-circle"></i> {$errormessage}
+    </div>
+{/if}
+
+<div class="btk-dashboard">
+    <div class="page-header">
+        <h2><i class="fas fa-file-alt"></i> {$LANG.btkreports_modul_adi} <small>v{$version}</small></h2>
+    </div>
+
+    <ul class="nav nav-tabs btk-nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="{$modulelink}&action=dashboard" aria-controls="anasayfa" role="tab">{$LANG.btkreports_anasayfa}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=config" aria-controls="ayarlar" role="tab">{$LANG.btkreports_ayarlar}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=productgroupmap" aria-controls="eslestirme" role="tab">{$LANG.btkreports_urun_grup_eslestirme}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=personel" aria-controls="personel" role="tab">{$LANG.btkreports_personel_yonetimi}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=generatereports" aria-controls="raporlar" role="tab">{$LANG.btkreports_rapor_secimi_ve_islem}</a></li>
+        <li role="presentation"><a href="{$modulelink}&action=viewlogs" aria-controls="loglar" role="tab">{$LANG.btkreports_gunluk_kayitlari}</a></li>
+    </ul>
+
+    <div class="tab-content btk-tab-content">
+        <div role="tabpanel" class="tab-pane active" id="anasayfa">
+            <h4>{$LANG.btkreports_anasayfa_baslik|default:'Modül Durum Özeti'}</h4>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="btk-dashboard-panel">
+                        <h4>{$LANG.btkreports_anasayfa_modul_bilgileri|default:'Modül Bilgileri'}</h4>
+                        <p><strong>{$LANG.btkreports_anasayfa_surum|default:'Sürüm'}:</strong> {$version}</p>
+                        <p><a href="{$modulelink}&action=readme" target="_blank">{$LANG.btkreports_surum_notlari_link_aciklama|default:'Kullanım Kılavuzu ve Sürüm Notları'}</a></p>
+                        {* <p><strong>{$LANG.btk_last_cron_run|default:"Son Cron Çalışması"}:</strong> {$lastCronRunTime|default:"Veri Yok"}</p> *}
+                        {* Yukarıdaki cron bilgisi için PHP tarafında veri hazırlanmalı *}
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="btk-dashboard-panel">
+                        <h4>{$LANG.btkreports_anasayfa_ftp_durumu|default:'FTP Sunucu Durumu'}</h4>
+                        <p>
+                            <strong>{$LANG.btkreports_ana_ftp_sunucusu_bilgileri}:</strong>
+                            {if $ftpDurumu.ana.status === 'success'}
+                                <span class="status-aktif">{$LANG.btkreports_aktif} <i class="fas fa-check-circle"></i></span>
+                            {elseif $ftpDurumu.ana.status === 'error'}
+                                <span class="status-pasif">{$LANG.btkreports_pasif} <i class="fas fa-times-circle"></i></span>
+                                <small class="help-block">{$ftpDurumu.ana.message}</small>
+                            {else}
+                                {$LANG.btkreports_test_edilemedi|default:'Test Edilemedi'}
+                                <a href="{$modulelink}&action=config" class="btn btn-xs btn-default" style="margin-left:10px;">{$LANG.btkreports_ayarlara_git|default:'Ayarlara Git'}</a>
+                            {/if}
+                        </p>
+                        {if $currentConfig.ftp_yedek_aktif}
+                        <p>
+                            <strong>{$LANG.btkreports_yedek_ftp_sunucusu_bilgileri}:</strong>
+                             {if $ftpDurumu.yedek.status === 'success'}
+                                <span class="status-aktif">{$LANG.btkreports_aktif} <i class="fas fa-check-circle"></i></span>
+                            {elseif $ftpDurumu.yedek.status === 'error'}
+                                <span class="status-pasif">{$LANG.btkreports_pasif} <i class="fas fa-times-circle"></i></span>
+                                <small class="help-block">{$ftpDurumu.yedek.message}</small>
+                            {else}
+                                {$LANG.btkreports_test_edilemedi|default:'Test Edilemedi'}
+                                <a href="{$modulelink}&action=config" class="btn btn-xs btn-default" style="margin-left:10px;">{$LANG.btkreports_ayarlara_git|default:'Ayarlara Git'}</a>
+                            {/if}
+                        </p>
+                        {/if}
+                         <p style="margin-top:15px;"><a href="{$modulelink}&action=config" class="btn btn-sm btn-primary">{$LANG.btkreports_ftp_ayarlarini_guncelle|default:'FTP Ayarlarını Güncelle'}</a></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="btk-dashboard-panel">
+                        <h4>{$LANG.btkreports_anasayfa_hizli_islemler|default:'Hızlı İşlemler'}</h4>
+                        <p><a href="{$modulelink}&action=generatereports" class="btn btn-success btn-block">{$LANG.btkreports_rapor_olustur_gonder|default:'Manuel Rapor Oluştur/Gönder'}</a></p>
+                        <p><a href="{$modulelink}&action=viewlogs" class="btn btn-info btn-block">{$LANG.btkreports_loglari_goruntule|default:'İşlem Loglarını Görüntüle'}</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btk-dashboard-panel" style="margin-top: 20px;">
+                <h4>{$LANG.btkreports_anasayfa_genel_bilgilendirme|default:'Genel Bilgilendirme ve Kullanım'}</h4>
+                <p>{$LANG.btkreports_anasayfa_bilgi_1|default:'Bu modül, BTK yasal raporlama yükümlülüklerinizi WHMCS üzerinden yönetmenize yardımcı olmak için tasarlanmıştır.'}</p>
+                <p>{$LANG.btkreports_anasayfa_bilgi_2|default:'Lütfen öncelikle "Modül Genel Ayarları" bölümünden operatör ve FTP bilgilerinizi doğru bir şekilde yapılandırın.'}</p>
+                <p>{$LANG.btkreports_anasayfa_bilgi_3|default:'Ardından, "Ürün Grubu - BTK Yetki Eşleştirme" sayfasından WHMCS ürün gruplarınızı ilgili BTK yetki türleri ve hizmet tipleri ile eşleştirin.'}</p>
+                <p>{$LANG.btkreports_anasayfa_bilgi_4|default:'Personel bilgilerinizi "Personel Bilgileri" bölümünden yönetebilirsiniz.'}</p>
+                <p>{$LANG.btkreports_anasayfa_bilgi_5|default:'Müşteri ve hizmetlere ait detaylı BTK bilgilerini, ilgili müşteri profilindeki ve hizmet detaylarındaki "BTK Bilgileri" sekmelerinden girebilirsiniz (Bu sekmeler ilerleyen BETA sürümlerinde eklenecektir).'}</p>
+            </div>
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="ayarlar">
+            {* Ayarlar sayfası içeriği config.tpl'den gelecek, burası boş kalabilir veya yönlendirme yapılabilir *}
+            <p>{$LANG.btkreports_yukleniyor|default:'Ayarlar sayfası yükleniyor...'}</p>
+        </div>
+        {* Diğer sekmeler için de benzer paneller eklenecek *}
+    </div>
+</div>
+
+{* Dil değişkenlerini ve modül linkini JavaScript'e aktarmak için *}
+<script type="text/javascript">
+    var BtkLang = {
+        test_ediliyor: "{$LANG.btkreports_test_ediliyor}",
+        lutfen_bekleyin: "{$LANG.btkreports_lutfen_bekleyin}",
+        ftp_test_basarili: "{$LANG.btkreports_ftp_test_basarili}",
+        ftp_test_basarisiz: "{$LANG.btkreports_ftp_test_basarisiz}"
+        // İleride eklenecek diğer JS dil değişkenleri buraya
+    };
+    var btkModuleLink = "{$modulelink}"; // AJAX istekleri için modül linki
+</script>
+
+{* Modüle özel JavaScript dosyasını dahil et *}
+<script type="text/javascript" src="../modules/addons/btkreports/assets/js/btk_admin_scripts.js?v={$version}"></script>
