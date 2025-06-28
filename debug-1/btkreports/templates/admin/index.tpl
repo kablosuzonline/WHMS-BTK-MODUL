@@ -1,211 +1,197 @@
 {*
-    WHMCS BTK Raporlama Modülü - Ana Sayfa (Dashboard)
-    Dosya: templates/admin/index.tpl
+    WHMCS BTK Raporlama Modülü - Ana Sayfa (Dashboard) Şablonu
+    modules/addons/btkreports/templates/admin/index.tpl
+    (Nihai Sürüm - btk_page_index() ile tam uyumlu)
 *}
 
-{if $flashMessage}
-    {if $flashMessage.type == 'success'}
-        <div class="alert alert-success text-center" role="alert">
-            <i class="fas fa-check-circle"></i> {$flashMessage.message}
-        </div>
-    {elseif $flashMessage.type == 'error'}
-        <div class="alert alert-danger text-center" role="alert">
-            <i class="fas fa-exclamation-circle"></i> {$flashMessage.message}
-        </div>
-    {elseif $flashMessage.type == 'warning'}
-        <div class="alert alert-warning text-center" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> {$flashMessage.message}
-        </div>
-    {else}
-        <div class="alert alert-info text-center" role="alert">
-            <i class="fas fa-info-circle"></i> {$flashMessage.message}
-        </div>
-    {/if}
-{/if}
+{* CSS dosyası admin_header_menu.tpl tarafından yönetiliyor *}
+{* Sayfa başlığı ve menü admin_header_menu.tpl tarafından sağlanıyor *}
+{* Flash mesajlar admin_header_menu.tpl tarafından sağlanıyor *}
 
-<div class="row">
-    {* Sol Sütun - Modül Bilgileri ve FTP Durumu *}
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fas fa-cubes"></i> {$LANG.moduleInfoTitle}</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table table-condensed">
-                    <tbody>
-                        <tr>
-                            <td width="40%"><strong>{$LANG.moduleVersionLabel}</strong></td>
-                            <td>v{$module_version|default:'6.0.0'}</td> {* module_version değişkeni btkreports.php'den atanmalı *}
-                        </tr>
-                        <tr>
-                            <td><strong>{$LANG.releaseNotesLabel}</strong></td>
-                            <td>
-                                {if $readme_link_exists} {* btkreports.php'den atanmalı *}
-                                    <a href="{$readme_file_url}" target="_blank" class="btn btn-xs btn-info">
-                                        <i class="fas fa-file-alt"></i> {$LANG.viewReleaseNotesButton}
-                                    </a>
-                                {else}
-                                    {$LANG.releaseNotesNotFound}
-                                {/if}
-                            </td>
-                        </tr>
-                        {* Buraya başka modül genel bilgileri eklenebilir *}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+{* Ana Sayfa İçeriği *}
+<div class="btk-dashboard">
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fas fa-server"></i> {$LANG.ftpServerStatusTitle}</h3>
-            </div>
-            <div class="panel-body">
-                <div id="ftpStatusCheckArea">
-                    <p class="text-center"><i class="fas fa-spinner fa-spin"></i> {$LANG.checkingFtpStatus}</p>
+    {* Bilgi ve Durum Kutuları - 3'lü Grid Yapısı (Bootstrap) *}
+    <div class="row">
+        {* 1. Kutu: Modül Genel Bilgileri *}
+        <div class="col-md-4">
+            <div class="panel panel-default btk-widget">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fas fa-info-circle"></i> {$LANG.moduleInfoTitle|default:'Modül Bilgileri'}</h3>
                 </div>
-                {* FTP Durumları AJAX ile yüklenecek *}
-                <table class="table table-condensed" id="ftpStatusTable" style="display:none;">
-                    <thead>
-                        <tr>
-                            <th>{$LANG.ftpServerTypeLabel}</th>
-                            <th>{$LANG.ftpHostLabel}</th>
-                            <th>{$LANG.statusLabel}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{$LANG.ftpMainServerLabel}</td>
-                            <td id="mainFtpHost">{$settings.ftp_host_main|default:$LANG.notConfigured}</td>
-                            <td id="mainFtpStatus"><span class="label label-warning">{$LANG.statusPending}</span></td>
-                        </tr>
-                        {if $settings.ftp_use_backup == '1' || $settings.ftp_use_backup == 'on'}
-                        <tr>
-                            <td>{$LANG.ftpBackupServerLabel}</td>
-                            <td id="backupFtpHost">{$settings.ftp_host_backup|default:$LANG.notConfigured}</td>
-                            <td id="backupFtpStatus"><span class="label label-warning">{$LANG.statusPending}</span></td>
-                        </tr>
-                        {/if}
-                    </tbody>
-                </table>
-                 <button id="btnCheckFtpStatus" class="btn btn-sm btn-default btn-block">
-                    <i class="fas fa-sync-alt"></i> {$LANG.refreshFtpStatusButton}
-                </button>
+                <div class="panel-body">
+                    <p>{$LANG.moduleDescriptionText|default:'Bu modül, BTK yasal raporlama yükümlülüklerinizi WHMCS üzerinden yönetmenizi sağlar.'}</p>
+                    <ul class="list-unstyled">
+                        <li><strong>{$LANG.moduleversion|default:'Modül Sürümü'}:</strong> {$module_version_placeholder}</li>
+                        <li><strong>{$LANG.dbVersion|default:'Veritabanı Sürümü'}:</strong> {$setting_version_placeholder}</li>
+                        <li><strong>{$LANG.developedBy|default:'Geliştiren'}:</strong> {$LANG.developerName|default:'KablosuzOnline & Gemini AI'}</li>
+                    </ul>
+                    {if $setting_surum_notlari_link_placeholder && $setting_surum_notlari_link_placeholder != '#'}
+                    <p class="top-margin-10">
+                        <a href="{$setting_surum_notlari_link_placeholder}" class="btn btn-primary btn-sm" target="_blank">
+                            <i class="fas fa-file-alt"></i> {$LANG.surumNotlariDetayLink|default:'Tüm Sürüm Notlarını Görüntüle'}
+                        </a>
+                    </p>
+                    {/if}
+                </div>
+            </div>
+        </div>
+
+        {* 2. Kutu: BTK FTP Sunucu Bilgileri / Durumu *}
+        <div class="col-md-4">
+            <div class="panel panel-default btk-widget">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fas fa-server"></i> {$LANG.ftpServerStatusTitle|default:'FTP Sunucu Durumları'}</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-btk-status">
+                        <tbody>
+                            <tr>
+                                <td><strong>{$LANG.mainFtpServer|default:'Ana BTK FTP'}</strong></td>
+                                <td class="text-right">
+                                    {if $ftp_main_status.status == 'success'}
+                                        <span class="label label-success" title="{$ftp_main_status.message|escape:'html'}"><i class="fas fa-check-circle"></i> {$LANG.aktif}</span>
+                                    {elseif $ftp_main_status.status == 'error'}
+                                        <span class="label label-danger" title="{$ftp_main_status.message|escape:'html'}"><i class="fas fa-times-circle"></i> {$LANG.pasif}</span>
+                                    {else}
+                                         <span class="label label-warning" title="{$ftp_main_status.message|escape:'html'}"><i class="fas fa-question-circle"></i> {$LANG.bilinmiyor|default:'Bilinmiyor'}</span>
+                                    {/if}
+                                </td>
+                            </tr>
+                            {if $settings.backup_ftp_enabled == '1'}
+                                <tr>
+                                    <td><strong>{$LANG.backupFtpServer|default:'Yedek FTP'}</strong></td>
+                                    <td class="text-right">
+                                        {if $ftp_backup_status.status == 'success'}
+                                            <span class="label label-success" title="{$ftp_backup_status.message|escape:'html'}"><i class="fas fa-check-circle"></i> {$LANG.aktif}</span>
+                                        {elseif $ftp_backup_status.status == 'error'}
+                                            <span class="label label-danger" title="{$ftp_backup_status.message|escape:'html'}"><i class="fas fa-times-circle"></i> {$LANG.pasif}</span>
+                                        {else}
+                                            <span class="label label-warning" title="{$ftp_backup_status.message|escape:'html'}"><i class="fas fa-question-circle"></i> {$LANG.bilinmiyor|default:'Bilinmiyor'}</span>
+                                        {/if}
+                                    </td>
+                                </tr>
+                            {else}
+                                <tr>
+                                    <td><strong>{$LANG.backupFtpServer|default:'Yedek FTP'}</strong></td>
+                                    <td class="text-right"><span class="label label-default">{$LANG.ayarlardanEtkinlestirin|default:'Ayarlardan Etkin Değil'}</span></td>
+                                </tr>
+                            {/if}
+                        </tbody>
+                    </table>
+                    <p class="small text-muted">{$LANG.ftpStatusNote|default:'FTP bağlantı durumları periyodik olarak kontrol edilir veya ayarlar sayfasından test edilebilir.'}</p>
+                    <p class="text-right"><a href="{$modulelink}&action=config" class="btn btn-default btn-xs">{$LANG.goToFtpSettings|default:'FTP Ayarlarına Git'}</a></p>
+                </div>
+            </div>
+        </div>
+
+        {* 3. Kutu: Modül Kullanım Bilgileri *}
+        <div class="col-md-4">
+            <div class="panel panel-default btk-widget">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fas fa-question-circle"></i> {$LANG.moduleHelpTitle|default:'Modül Kullanım Bilgileri'}</h3>
+                </div>
+                <div class="panel-body">
+                    <p>{$LANG.moduleHelpText1|default:'Modülün doğru çalışması için lütfen öncelikle "Genel Ayarlar" bölümünden gerekli tüm yapılandırmaları yapın.'}</p>
+                    <p>{$LANG.moduleHelpText2|default:'Daha sonra "Ürün Grubu Eşleştirme" bölümünden WHMCS ürün gruplarınızı ilgili BTK kategorileri ile eşleştirin.'}</p>
+                    <p class="small text-muted">{$LANG.moduleHelpText3|default:'Müşteri ve hizmet bazlı BTK verilerini, ilgili müşteri özet sayfasındaki "BTK Bilgileri" sekmesinden ve hizmet detay sayfasındaki "BTK Hizmet Bilgileri" bölümünden yönetebilirsiniz.'}</p>
+                </div>
             </div>
         </div>
     </div>
 
-    {* Sağ Sütun - Son Gönderimler ve Hızlı Erişim *}
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fas fa-history"></i> {$LANG.lastSubmissionsTitle}</h3>
-            </div>
-            <div class="panel-body">
-                {* Bu kısım btkreports.php'den mod_btk_ftp_logs tablosundan çekilecek son kayıtlarla doldurulacak *}
-                <p><strong>{$LANG.rehberReportLabel}:</strong>
-                    {if $last_rehber_submission}
-                        {$last_rehber_submission.dosya_adi} ({$last_rehber_submission.gonderim_tarihi|date_format:"%d.%m.%Y %H:%M"} - CNT: {$last_rehber_submission.cnt})
-                        <span class="label label-{if $last_rehber_submission.durum == 'BASARILI'}success{else}danger{/if}">{$last_rehber_submission.durum}</span>
+    {* Son Rapor Gönderim Bilgileri ve Manuel Tetikleme - Yeni Satır *}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default btk-widget">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fas fa-paper-plane"></i> {$LANG.lastReportSubmissions|default:'Son Başarılı Rapor Gönderimleri (Ana FTP)'}</h3>
+                </div>
+                <div class="panel-body">
+                    {if $aktif_yetki_gruplari_for_index|@count > 0}
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-btk-reports">
+                                <thead>
+                                    <tr>
+                                        <th>{$LANG.yetkiTuruGrubu|default:'Yetki Grubu'}</th>
+                                        <th>{$LANG.reportType|default:'Rapor Türü'}</th>
+                                        <th>{$LANG.lastSubmissionDate|default:'Son Gönderim'}</th>
+                                        <th>{$LANG.lastSubmittedFile|default:'Dosya Adı'}</th>
+                                        <th>CNT</th>
+                                        <th class="text-center">{$LANG.actions|default:'İşlemler'}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {foreach from=$aktif_yetki_gruplari_for_index item=grup}
+                                        <tr>
+                                            <td rowspan="2" style="vertical-align: middle; border-bottom: 2px solid #ddd;"><strong>{$grup|escape:'html'}</strong></td>
+                                            <td>{$LANG.reportAboneRehber|default:'ABONE REHBER'}</td>
+                                            <td>{$last_submissions[$grup]['REHBER']['tarih_saat']}</td>
+                                            <td title="{$last_submissions[$grup]['REHBER']['dosya_adi']|escape:'html'}">{$last_submissions[$grup]['REHBER']['dosya_adi']|truncate:40:"...":true}</td>
+                                            <td><span class="label label-default">{$last_submissions[$grup]['REHBER']['cnt']}</span></td>
+                                            <td class="text-center">
+                                                <a href="{$modulelink}&action=generatereports&report_type=REHBER&yetki_grup={$grup|escape:'url'}" class="btn btn-xs btn-info" title="{$LANG.generateReportTooltip|default:'Bu raporu manuel oluştur/gönder'}">
+                                                    <i class="fas fa-cogs"></i> {$LANG.generateReport|default:'Oluştur'}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 2px solid #ddd;">
+                                            <td>{$LANG.reportAboneHareket|default:'ABONE HAREKET'}</td>
+                                            <td>{$last_submissions[$grup]['HAREKET']['tarih_saat']}</td>
+                                            <td title="{$last_submissions[$grup]['HAREKET']['dosya_adi']|escape:'html'}">{$last_submissions[$grup]['HAREKET']['dosya_adi']|truncate:40:"...":true}</td>
+                                            <td><span class="label label-default">{$last_submissions[$grup]['HAREKET']['cnt']}</span></td>
+                                            <td class="text-center">
+                                                <a href="{$modulelink}&action=generatereports&report_type=HAREKET&yetki_grup={$grup|escape:'url'}" class="btn btn-xs btn-info" title="{$LANG.generateReportTooltip|default:'Bu raporu manuel oluştur/gönder'}">
+                                                    <i class="fas fa-cogs"></i> {$LANG.generateReport|default:'Oluştur'}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {/foreach}
+                                    {* Personel Raporu Ayrı Satırda *}
+                                    <tr>
+                                        <td><strong>{$LANG.reportPersonelListesi|default:'PERSONEL LİSTESİ'}</strong></td>
+                                        <td><em>({$LANG.genelRapor|default:'Genel Rapor'})</em></td>
+                                        <td>{$last_submissions.PERSONEL.tarih_saat}</td>
+                                        <td title="{$last_submissions.PERSONEL.dosya_adi|escape:'html'}">{$last_submissions.PERSONEL.dosya_adi|truncate:40:"...":true}</td>
+                                        <td><span class="label label-default">{$last_submissions.PERSONEL.cnt}</span></td>
+                                        <td class="text-center">
+                                            <a href="{$modulelink}&action=generatereports&report_type=PERSONEL_LISTESI" class="btn btn-xs btn-info" title="{$LANG.generateReportTooltip|default:'Bu raporu manuel oluştur/gönder'}">
+                                                <i class="fas fa-cogs"></i> {$LANG.generateReport|default:'Oluştur'}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     {else}
-                        {$LANG.noSubmissionYet}
+                        <p class="text-center">{$LANG.noActiveAuthGroupsForReports|default:'Raporlama için aktif edilmiş BTK Yetki Türü Grubu bulunmamaktadır. Lütfen Genel Ayarlar\'dan seçim yapın.'}</p>
                     {/if}
-                </p>
-                <hr>
-                <p><strong>{$LANG.hareketReportLabel}:</strong>
-                    {if $last_hareket_submission}
-                        {$last_hareket_submission.dosya_adi} ({$last_hareket_submission.gonderim_tarihi|date_format:"%d.%m.%Y %H:%M"} - CNT: {$last_hareket_submission.cnt})
-                         <span class="label label-{if $last_hareket_submission.durum == 'BASARILI'}success{else}danger{/if}">{$last_hareket_submission.durum}</span>
-                    {else}
-                        {$LANG.noSubmissionYet}
-                    {/if}
-                </p>
-                <hr>
-                <p><strong>{$LANG.personelReportLabel}:</strong>
-                     {if $last_personel_submission}
-                        {$last_personel_submission.dosya_adi} ({$last_personel_submission.gonderim_tarihi|date_format:"%d.%m.%Y %H:%M"})
-                         <span class="label label-{if $last_personel_submission.durum == 'BASARILI'}success{else}danger{/if}">{$last_personel_submission.durum}</span>
-                    {else}
-                        {$LANG.noSubmissionYet}
-                    {/if}
-                </p>
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fas fa-cogs"></i> {$LANG.quickAccessTitle}</h3>
-            </div>
-            <div class="panel-body text-center">
-                <a href="{$modulelink}&action=config" class="btn btn-primary">
-                    <i class="fas fa-tools"></i> {$LANG.goToSettingsButton}
-                </a>
-                <a href="{$modulelink}&action=generate_reports" class="btn btn-success">
-                    <i class="fas fa-file-export"></i> {$LANG.goToGenerateReportButton}
-                </a>
-                <a href="{$modulelink}&action=view_logs" class="btn btn-info">
-                    <i class="fas fa-clipboard-list"></i> {$LANG.goToLogsButton}
-                </a>
+                    <hr>
+                    <h4>{$LANG.nextCronRunsTitle|default:'Sonraki Otomatik Raporlama Zamanları'}</h4>
+                    <ul class="list-inline">
+                        <li><strong>{$LANG.reportAboneRehber}:</strong> <span class="text-info">{$next_rehber_cron_run}</span></li>
+                        <li><strong>{$LANG.reportAboneHareket}:</strong> <span class="text-info">{$next_hareket_cron_run}</span></li>
+                        <li><strong>{$LANG.reportPersonelListesi}:</strong> <span class="text-info">{$next_personel_cron_run}</span></li>
+                    </ul>
+                     <div class="text-right top-margin-10">
+                        <a href="{$modulelink}&action=generatereports" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i> {$LANG.goToGenerateReportsPage|default:'Tüm Manuel Rapor İşlemleri'}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-{* BTK Sunucularına Veri Gönderim Modülü Hakkında Yardım ve Bilgilendirme - TemaAnaSayfa.png'deki bölüm *}
-<div class="panel panel-info">
-    <div class="panel-heading">
-        <h3 class="panel-title"><i class="fas fa-info-circle"></i> {$LANG.btkInfoTitle}</h3>
-    </div>
-    <div class="panel-body">
-        <p>{$LANG.btkInfoText1}</p>
-        <p>{$LANG.btkInfoText2}</p>
-        <p>{$LANG.btkInfoText3}</p>
-        <p>{$LANG.btkInfoText4}</p>
-    </div>
-</div>
-
-{*
-    AJAX ile FTP durumunu kontrol etmek için JavaScript.
-    Bu kısım btk_admin_scripts.js dosyasına taşınabilir veya burada kalabilir.
-*}
 <script type="text/javascript">
-    function checkFtpStatuses() {
-        $('#ftpStatusCheckArea').html('<p class="text-center"><i class="fas fa-spinner fa-spin"></i> {$LANG.checkingFtpStatus}</p>');
-        $('#ftpStatusTable').hide();
-
-        $.post("{$modulelink}&ajax=1&action=test_ftp_connection_all", {literal}{ csrfToken: getWhmcsCSRFToken() }{/literal}, function(data) {
-            $('#ftpStatusCheckArea').hide();
-            $('#ftpStatusTable').show();
-
-            if (data.main_status) {
-                var mainLabelClass = data.main_status.status === 'success' ? 'label-success' : 'label-danger';
-                $('#mainFtpStatus').html('<span class="label ' + mainLabelClass + '">' + data.main_status.message + '</span>');
-            } else {
-                 $('#mainFtpStatus').html('<span class="label label-danger">{$LANG.errorOccurred}</span>');
-            }
-
-            {if $settings.ftp_use_backup == '1' || $settings.ftp_use_backup == 'on'}
-            if (data.backup_status) {
-                var backupLabelClass = data.backup_status.status === 'success' ? 'label-success' : 'label-danger';
-                $('#backupFtpStatus').html('<span class="label ' + backupLabelClass + '">' + data.backup_status.message + '</span>');
-            } else {
-                $('#backupFtpStatus').html('<span class="label label-danger">{$LANG.errorOccurred}</span>');
-            }
-            {/if}
-        }, "json").fail(function() {
-            $('#ftpStatusCheckArea').hide();
-            $('#ftpStatusTable').show();
-            $('#mainFtpStatus').html('<span class="label label-danger">{$LANG.ajaxRequestFailed}</span>');
-            {if $settings.ftp_use_backup == '1' || $settings.ftp_use_backup == 'on'}
-            $('#backupFtpStatus').html('<span class="label label-danger">{$LANG.ajaxRequestFailed}</span>');
-            {/if}
-        });
-    }
-
     $(document).ready(function() {
-        checkFtpStatuses(); // Sayfa yüklendiğinde kontrol et
-
-        $('#btnCheckFtpStatus').click(function() {
-            checkFtpStatuses();
-        });
+        if (typeof $.fn.tooltip == 'function') {
+            $('.btk-tooltip').tooltip({
+                placement: 'top',
+                container: 'body',
+                html: true
+            });
+        }
     });
 </script>

@@ -79,9 +79,7 @@
         </tbody>
     </table>
 </div>
-// --- BÖLÜM 1 / 2 SONU - (iss_pop_management.tpl, POP Noktası Listesi ve Filtreleme/Ekleme Butonu)
 
-// --- BÖLÜM 2 / 2 BAŞI - (iss_pop_management.tpl, POP Ekleme/Düzenleme Modal Penceresi ve JavaScript)
 {* POP Ekleme/Düzenleme Modal Penceresi *}
 <div class="modal fade" id="addEditPopModal" tabindex="-1" role="dialog" aria-labelledby="addEditPopModalLabel">
     <div class="modal-dialog modal-lg" role="document">

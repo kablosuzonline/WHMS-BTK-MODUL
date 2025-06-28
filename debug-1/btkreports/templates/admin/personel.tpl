@@ -88,9 +88,7 @@
         <a href="{$modulelink}" class="btn btn-default btn-lg"><i class="fas fa-times"></i> {$LANG.cancelButton}</a>
     </div>
 </form>
-// --- BÖLÜM 1 / 2 SONU - (personel.tpl, Personel Listesi ve Filtreleme)
 
-// --- BÖLÜM 2 / 2 BAŞI - (personel.tpl, Personel Düzenleme Modal Penceresi)
 {* Personel Detaylı Düzenleme Modal Penceresi *}
 <div class="modal fade" id="editPersonelModal" tabindex="-1" role="dialog" aria-labelledby="editPersonelModalLabel">
     <div class="modal-dialog modal-lg" role="document">
