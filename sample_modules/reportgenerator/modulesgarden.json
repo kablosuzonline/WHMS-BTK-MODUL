@@ -1,0 +1,8 @@
+{
+  "database":{
+    "tables":[
+        "ReportGenerator_*"
+    ]
+
+  }
+}
