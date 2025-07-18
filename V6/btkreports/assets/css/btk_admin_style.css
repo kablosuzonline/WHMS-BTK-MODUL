@@ -1,0 +1,221 @@
+/**
+ * WHMCS BTK Raporlama Modülü - Yönetici Paneli Özel Stil Dosyası
+ * modules/addons/btkreports/assets/css/btk_admin_style.css
+ * (Nihai config.tpl tasarımı ve toggle switch'lerle tam uyumlu)
+ */
+
+/* --- Genel Modül Yapısı ve Panel Stilleri --- */
+.btk-module-container {
+    background-color: #f5f5f5; /* WHMCS Blend temasıyla uyumlu hafif gri arkaplan */
+    border-radius: 4px;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.btk-widget {
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.btk-widget .panel-heading {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.btk-widget .panel-heading .panel-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.btk-widget .panel-heading .panel-title i {
+    margin-right: 8px;
+    color: #555;
+}
+
+.btk-widget .panel-body {
+    padding: 20px;
+}
+
+/* Modül İçi Menü Stilleri */
+#btkReportsModuleContainer .btk-module-header {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#btkReportsModuleContainer .btk-module-header .module-logo img {
+    max-height: 40px;
+}
+#btkReportsModuleContainer .btk-module-header .module-title h2 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+    font-weight: 600;
+}
+#btkReportsModuleContainer .btk-module-nav {
+    margin-bottom: 20px;
+    border-bottom: 2px solid #337ab7; /* Mavi alt çizgi */
+}
+#btkReportsModuleContainer .btk-module-nav > li > a {
+    font-weight: 600;
+    color: #555;
+    transition: all 0.2s ease-in-out;
+}
+#btkReportsModuleContainer .btk-module-nav > li.active > a,
+#btkReportsModuleContainer .btk-module-nav > li.active > a:hover,
+#btkReportsModuleContainer .btk-module-nav > li.active > a:focus {
+    background-color: #337ab7;
+    border-color: #337ab7;
+    color: #fff;
+}
+#btkReportsModuleContainer .btk-module-nav > li > a:hover {
+    background-color: #f0f0f0;
+    color: #337ab7;
+}
+
+
+/* --- Toggle Switch Stilleri (İstenen Yapıya Göre) --- */
+.btk-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px; /* Genişlik */
+  height: 24px; /* Yükseklik */
+  vertical-align: middle;
+}
+
+.btk-switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.btk-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.btk-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px; /* İç topun yüksekliği */
+  width: 20px; /* İç topun genişliği */
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .btk-slider {
+  background-color: #28a745; /* WHMCS'in "success" rengi ile uyumlu */
+}
+
+input:focus + .btk-slider {
+  box-shadow: 0 0 1px #28a745;
+}
+
+input:checked + .btk-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.btk-slider.round {
+  border-radius: 24px;
+}
+
+.btk-slider.round:before {
+  border-radius: 50%;
+}
+
+
+/* --- config.tpl Özel Hizalama ve Stil Düzeltmeleri --- */
+
+/* form-horizontal uyumu için */
+.btk-module-container .form-horizontal .control-label.required:after {
+    content: " *";
+    color: #d9534f; /* Kırmızı */
+    font-weight: bold;
+}
+.btk-module-container .form-horizontal .help-block {
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: #737373;
+}
+
+/* Toggle switch'lerin yatay form düzeninde düzgün hizalanması */
+.btk-module-container .form-horizontal .btk-switch {
+    margin-top: 7px; /* Diğer form elemanlarıyla dikey hizalama için */
+}
+
+/* BTK Yetkilendirme Seçenekleri bölümü için özel stiller */
+.btk-yetki-item {
+    display: flex;
+    align-items: center; /* Dikey olarak ortala */
+    margin-bottom: 10px;
+    padding-left: 15px;
+}
+
+.btk-yetki-item .btk-switch {
+    flex-shrink: 0; /* Küçülmesini engelle */
+    margin-right: 10px;
+}
+
+.btk-yetki-item .btk-yetki-label-text {
+    font-weight: normal;
+    cursor: pointer;
+    flex-grow: 1; /* Geri kalan alanı doldur */
+    margin-bottom: 0; /* form-group'tan gelen alt boşluğu sıfırla */
+}
+
+.btk-yetki-item .btk-yetki-label-text i {
+    margin-left: 5px;
+    color: #777;
+}
+
+/* FTP Test sonuçları için stiller */
+#main_ftp_test_result, #backup_ftp_test_result {
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+/* --- Genel Bilgilendirme İkonu Stili --- */
+.btk-tooltip {
+    cursor: help;
+    color: #31708f; /* WHMCS bilgi rengi */
+    margin-left: 5px;
+}
+
+/* --- Diğer Sayfalar İçin Genel Stiller (personel, isspop vb.) --- */
+.table-btk-reports th {
+    background-color: #f9f9f9;
+}
+
+.btk-filter-panel {
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+.btk-filter-panel .panel-title {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.pagination-container {
+    text-align: right;
+}
