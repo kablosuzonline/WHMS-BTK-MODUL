@@ -1,0 +1,29 @@
+Gerçek Kişi Örnek İptal Metodu:	${host:port/integrationPath}/eKayitBasvuruOnayIptal
+Request:
+{  
+    "kurumKodu": "318",   
+    "detayListesi": [],  
+    "basvuruNo": "4502",  
+    "ipAdresi": "212.156.76.118",  
+    "isletmeciKodu": "130030",  
+    "tcKimlikNo": "27120004502",
+    "adinaIslemYapilanBilgileri": {  
+        "gercekKisi": {  
+            "adinaIslemYapilanTCKimlikNo": "27120004502",
+            "islemYapanTur": null,  
+            "adinaIslemYapilanAdi": null,  
+            "adinaIslemYapilanSoyadi": null  
+        },  
+        "tuzelKisi": null,  
+        "adinaIslemYapilanTur": "GERCEK"  
+    }
+} 
+
+
+Response:
+{  
+    "kurumKodu": "318",  
+    "detayListesi": null,  
+    "sonucAciklamasi": "İşlem Reddedildi.",  
+    "sonucKodu": "0000"  
+}  

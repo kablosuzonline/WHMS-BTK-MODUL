@@ -1,0 +1,33 @@
+Gerçek Kişi Örnek İptal Metodu:	${host:port/integrationPath}/eKayitBasvuruOnayKaydet
+Request:
+{  
+    "kurumKodu": "318",  
+    "dogrulanmisTelefonUlkeKodu": "90",  
+    "detayListesi": [],  
+    "basvuruNo": "4502",  
+    "ipAdresi": "212.156.76.118",  
+    "isletmeciKodu": "130030",  
+    "tcKimlikNo": "27120004502",  
+    "girisYontemi": 5,  
+    "dogrulanmisEPosta": "btk@btk.gov.tr",  
+    "adinaIslemYapilanBilgileri": {  
+        "gercekKisi": {  
+            "adinaIslemYapilanTCKimlikNo": "27120004502",  
+            "islemYapanTur": null,  
+            "adinaIslemYapilanAdi": null,  
+            "adinaIslemYapilanSoyadi": null  
+        },  
+        "tuzelKisi": null,  
+        "adinaIslemYapilanTur": "GERCEK"  
+    },  
+    "dogrulanmisTelefonBilgisi": "3124030000"  
+} 
+
+
+Response:
+{  
+    "kurumKodu": "318",  
+    "detayListesi": null,  
+    "sonucAciklamasi": "İşlem Onaylandı.",  
+    "sonucKodu": "0000"  
+}  

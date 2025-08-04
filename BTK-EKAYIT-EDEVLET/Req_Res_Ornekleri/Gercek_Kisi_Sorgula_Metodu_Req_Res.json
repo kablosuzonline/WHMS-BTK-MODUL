@@ -1,0 +1,700 @@
+Gerçek Kişi Örnek İptal Metodu:	${host:port/integrationPath}/eKayitBasvuruOnaySorgula
+Request:
+{  
+    "kurumKodu": "318",  
+    "ipAdresi": "212.156.76.118",  
+    "isletmeciTipiKodu": "0",  
+    "isletmeciKodu": "130030",  
+    "tcKimlikNo": "27120004502",   
+    "adinaIslemYapilanBilgileri": {  
+        "gercekKisi": {  
+            "adinaIslemYapilanTCKimlikNo": "27120004502",  
+            "islemYapanTur": null,  
+            "adinaIslemYapilanAdi": null,  
+            "adinaIslemYapilanSoyadi": null
+        },  
+        "tuzelKisi": null,  
+        "adinaIslemYapilanTur": "GERCEK"  
+    }
+} 
+
+
+Response:
+{  
+    "kurumKodu": "318",  
+    "detayListesi": null,  
+    "sonucAciklamasi": "İşlem Başarılı",  
+    "eKayitBasvuruOnayListesi": [{  
+        "detayListesi": null,  
+        "aciklama": null,  
+        "basvuruParametreListesi": [  
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ISLEM_TURU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_IL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_ILCE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_MAHALLE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_CADDE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_DIS_KAPI_NO",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_BINA_KODU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_IC_KAPI_NO",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_ADRES_KODU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TARIFE_ADI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ONCUL_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_SES",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_SMS",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_VERI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "EK_FAYDALAR",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_SES",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_SMS",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_VERI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TARIFE_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_SURESI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTSUZ_AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTLU_AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_ORTALAMA",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_AZAMI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_ASGARI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTNAME_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "HIZ_PROFILI_INDIRME",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "HIZ_PROFILI_GONDERME",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "FATURA_TIPI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ISLEM_BELGESI_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ON_BILGILENDIRME_FORMU_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "MESAFELI_SATIS_SOZLESMESI_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TICARI_ILETI_RET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYRINTILI_FATURA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "YURT_DISINDA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "YURT_DISINA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_888_898_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "REHBERLIK_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_2N_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_3N_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "KISISEL_VERI_ISLEME_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            }
+        ],  
+        "basvuruNo": "4502",  
+        "isletmeciKodu": "130030",  
+        "isletmeciAdi": "Bilgi Teknolojileri ve İletişim Kurumu",  
+        "basvuruDurumu": "ONAYBEKLIYOR",  
+        "hizmetTuruKodu": 7,  
+        "basvuruTarihi": "2022-08-02T21:10:38Z",  
+        "onaylamaTarihi": null,  
+        "hizmetNumarasi": "4502"  
+    }],
+	[{  
+        "detayListesi": null,  
+        "aciklama": null,  
+        "basvuruParametreListesi": [  
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ISLEM_TURU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_IL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_ILCE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_MAHALLE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_CADDE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_DIS_KAPI_NO",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_BINA_KODU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_IC_KAPI_NO",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_ADRES_KODU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TARIFE_ADI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ONCUL_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_SES",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_SMS",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_VERI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "EK_FAYDALAR",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_SES",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_SMS",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_VERI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TARIFE_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_SURESI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTSUZ_AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTLU_AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_ORTALAMA",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_AZAMI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_ASGARI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTNAME_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "HIZ_PROFILI_INDIRME",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "HIZ_PROFILI_GONDERME",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "FATURA_TIPI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ISLEM_BELGESI_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ON_BILGILENDIRME_FORMU_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "MESAFELI_SATIS_SOZLESMESI_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TICARI_ILETI_RET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYRINTILI_FATURA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "YURT_DISINDA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "YURT_DISINA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_888_898_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "REHBERLIK_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_2N_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_3N_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "KISISEL_VERI_ISLEME_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            }
+        ],  
+        "basvuruNo": "4502",  
+        "isletmeciKodu": "130030",  
+        "isletmeciAdi": "Bilgi Teknolojileri ve İletişim Kurumu",  
+        "basvuruDurumu": "IPTALEDILDI",  
+        "hizmetTuruKodu": 7,  
+        "basvuruTarihi": "2022-08-02T21:10:38Z",  
+        "onaylamaTarihi": "2022-08-02T22:10:38Z",  
+        "hizmetNumarasi": "4502"  
+    }],  
+	[{  
+        "detayListesi": null,  
+        "aciklama": null,  
+        "basvuruParametreListesi": [  
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ISLEM_TURU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_IL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_ILCE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_MAHALLE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_CADDE",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_DIS_KAPI_NO",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_BINA_KODU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_IC_KAPI_NO",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ABONE_ADRES_TESIS_ADRES_KODU",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TARIFE_ADI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ONCUL_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_SES",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_SMS",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYLIK_VERI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "EK_FAYDALAR",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_SES",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_SMS",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "PAKET_ASIM_VERI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TARIFE_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_SURESI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTSUZ_AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTLU_AYLIK_UCRET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_ORTALAMA",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_AZAMI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUT_CAYMA_ASGARI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TAAHHUTNAME_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "HIZ_PROFILI_INDIRME",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "HIZ_PROFILI_GONDERME",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "FATURA_TIPI",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ISLEM_BELGESI_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "ON_BILGILENDIRME_FORMU_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "MESAFELI_SATIS_SOZLESMESI_PDF_URL",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "TICARI_ILETI_RET",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "AYRINTILI_FATURA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "YURT_DISINDA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "YURT_DISINA_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_888_898_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "REHBERLIK_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_2N_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "_3N_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            },
+            {  
+                "value": "Parametrenin İlgili String Değeri",  
+                "key": "KISISEL_VERI_ISLEME_ACIK",  
+                "group": "BASVURU_PARAMETRE"  
+            }
+        ],  
+        "basvuruNo": "4502",  
+        "isletmeciKodu": "130030",  
+        "isletmeciAdi": "Bilgi Teknolojileri ve İletişim Kurumu",  
+        "basvuruDurumu": "ONAYLANDI",  
+        "hizmetTuruKodu": 7,  
+        "basvuruTarihi": "2022-08-02T21:10:38Z",  
+        "onaylamaTarihi": "2022-08-02T22:10:38Z",  
+        "hizmetNumarasi": "4502"  
+    }],  
+    "sonucKodu": "0000"  
+}  
