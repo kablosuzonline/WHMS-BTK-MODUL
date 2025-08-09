@@ -1,0 +1,26 @@
+{
+    "name": "kablosuzonline/btkreports",
+    "description": "BTK, CEVHER, E-Fatura ve NVI KPS entegrasyonlarını barındıran, tam kapsamlı bir yasal ve operasyonel yönetim platformu.",
+    "type": "whmcs-addon",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "KablosuzOnline & Gemini AI",
+            "email": "teknik@kablosuzonline.com.tr"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "~1.25.2",
+        "dragonmantank/cron-expression": "^3.3",
+        "robrichards/wse-php": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BtkReports\\": "lib/BtkReports/"
+        }
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "platform-check": false
+    }
+}
