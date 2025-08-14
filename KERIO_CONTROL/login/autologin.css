@@ -1,0 +1,20 @@
+
+#main-container,
+#sso-container,
+#lower-message-container {
+display: none;
+}
+
+.upperMessage {
+color: black;
+font-size: 13px;
+font-weight: bold;
+text-align: center;
+}
+#up-spacer {
+height: 10%;
+}
+
+#probeImg {
+visibility: hidden;
+}

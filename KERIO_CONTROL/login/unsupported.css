@@ -1,0 +1,12 @@
+#container {
+display: none;
+}
+#continue-container {
+text-align: center;
+padding: 1em 2em;
+}
+#continue-container a,
+#continue-container a:link,
+#continue-container a:visited {
+color: #BB0D00;
+}
