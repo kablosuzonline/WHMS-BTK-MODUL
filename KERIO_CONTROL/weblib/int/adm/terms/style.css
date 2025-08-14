@@ -1,0 +1,17 @@
+body {
+font-size: 11px;
+font-family: Tahoma, Arial;
+}
+
+.chapter {
+padding: 6px;
+}
+.chapter h2 {
+font-size: 16px;
+}
+.chapter div.simplesect h2 {
+font-size: 14px;
+}
+.chapter a {
+font-size: 11px;
+}

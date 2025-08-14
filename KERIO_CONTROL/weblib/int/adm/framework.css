@@ -1,0 +1,1001 @@
+
+
+.kerio .admTitleBar {
+border-style: solid;
+border-bottom-color: transparent; 
+}
+.kerio .admTitleBar .x-toolbar {
+background: white;
+margin: 0px;
+}
+.kerio .admTitleBar .xtb-text {
+padding-top: 0px;
+}
+.kerio.br-sf4 .admTitleBar #k_admTitleBarCaption,
+.kerio.br-sf5 .admTitleBar #k_admTitleBarCaption,
+.kerio.br-chrome .admTitleBar #k_admTitleBarCaption {
+display: block;
+}
+.kerio .admTitleBar .link {
+width: 20px;
+height: 22px;
+margin: 0px;
+margin-top: 4px;
+}
+.kerio .admTitleBar .textLink {
+vertical-align: middle;
+line-height: 18px;
+width: auto;
+}
+.kerio .admTitleBar .flag {
+margin-right: 4px;
+}
+.kerio .userMenuFlag img {
+left: 1px;
+top: 0;
+}
+.kerio .admTitleBar .userMenu {
+margin-right: 8px;
+}
+.kerio.br-webkit .admTitleBar .userMenu {
+margin-top: 1px;
+}
+.kerio .helpAction .helpIcon {
+background-image: url('../lib/img/help.png?v=8629');
+background-repeat: no-repeat;
+background-size: 16px 16px;
+}
+.admTitleBar .userMenu.simpleButton .sbLeft,
+.admTitleBar .userMenu.simpleButton .sbCenter,
+.admTitleBar .userMenu.simpleButton .sbRight {
+background: none;
+}
+.kerio .admTitleBar #k_admTitleBarCaptionText {   
+font-size: 20px;
+position: relative;
+top: -9px;
+}
+.kerio .admTitleBar #k_admTitleBarAddInfo {   
+font-size: 11px;
+color: #999;
+padding-left: 17px;
+}
+.kerio .admTitleBar #k_admTitleBarAddInfo A { 
+color: #999;
+}
+.kerio .admTitleBar .loadingTitle {
+position: absolute;
+top: 8px;
+padding: 6px 0;
+background-color: white;
+-moz-opacity: 0.9;
+opacity: 0.9;
+filter: alpha(opacity=90);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=90)";
+}
+.kerio .admTitleBar .loadingTitle SPAN.loadingHeaderText {
+padding: 4px;
+}
+
+.kerio .mainScreen {
+background-color: #cedeff;
+padding: 10px;
+}
+.kerio .formInMainScreenBody {
+padding: 10px;
+border-width: 1px;
+}
+
+.kerio .mainScreen.rightToolbarCover {
+padding: 0px;
+}
+
+.kerio .admMenuTree {
+padding: 0;
+}
+
+.kerio .admTitleIcon {
+width: 32px;
+height: 32px;
+margin: 5px 2px 0px 6px;
+border: none 0px;
+}
+.kerio.br-ie .admTitleIcon {
+margin-top: 2px;
+margin-bottom: 1px;
+}
+.kerio.br-ie7 .admTitleIcon {
+margin-top: 4px;
+margin-bottom: 3px;
+}
+.kerio.br-webkit .admTitleIcon {
+margin-top: 4px;
+}
+
+.kerio .admMenuTree .nodeIcon.admIcon {
+background:url(img/menuIcons.png?v=8629) no-repeat transparent 0 0;
+}
+
+.kerio .nodeIcon.admIcon.accounts     { background-position:    0      0  ; }
+.kerio .nodeIcon.admIcon.users        { background-position:  -30px    0  ; }
+.kerio .nodeIcon.admIcon.groups       { background-position:  -60px    0  ; }
+
+.kerio .nodeIcon.admIcon.status       { background-position:    0    -30px; }
+.kerio .nodeIcon.admIcon.statistics   { background-position:  -30px  -30px; }
+.kerio .nodeIcon.admIcon.connections  { background-position:  -60px  -30px; }
+
+.kerio .nodeIcon.admIcon.settings         { background-position:    0     -60px; }
+.kerio .nodeIcon.admIcon.services         { background-position:  -30px   -60px; }
+.kerio .nodeIcon.admIcon.timeRanges       { background-position:  -60px   -60px; }
+.kerio .nodeIcon.admIcon.ipGroups         { background-position:  -90px   -60px; }
+.kerio .nodeIcon.admIcon.definitions      { background-position:  -120px  -60px; }
+.kerio .nodeIcon.admIcon.advancedOptions  { background-position:  -150px  -60px; }
+.kerio .nodeIcon.admIcon.certificates     { background-position:  -180px  -60px; }
+
+.kerio .nodeIcon.admIcon.logs         { background-position:    0    -90px; }
+.kerio .nodeIcon.admIcon.logConfig    { background-position:  -30px  -90px; }
+.kerio .nodeIcon.admIcon.logDebug     { background-position:  -60px  -90px; }
+.kerio .nodeIcon.admIcon.logError     { background-position:  -90px  -90px; }
+.kerio .nodeIcon.admIcon.logSecurity  { background-position: -120px  -90px; }
+.kerio .nodeIcon.admIcon.logWarning   { background-position: -150px  -90px; }
+.kerio .nodeIcon.admIcon.logOperation { background-position: -180px  -90px; }
+
+.kerio .nodeIcon.admIcon.contentFilter    { background-position:   0    -120px; }
+.kerio .nodeIcon.admIcon.antivirus        { background-position: -30px  -120px; }
+
+.kerio .nodeIcon.admIcon.domains   { background-position: 0  -150px; }
+
+.kerio .admTitleIcon.admIcon {
+background:url(img/menuIconsBig.png?v=8629) no-repeat transparent 0 0;
+}
+
+.kerio .admTitleIcon.admIcon.users        { background-position:    0      0  ; }
+.kerio .admTitleIcon.admIcon.groups       { background-position:  -50px    0  ; }
+
+.kerio .admTitleIcon.admIcon.statistics   { background-position:    0    -50px; }
+.kerio .admTitleIcon.admIcon.connections  { background-position:  -50px  -50px; }
+
+.kerio .admTitleIcon.admIcon.services         { background-position:     0   -100px; }
+.kerio .admTitleIcon.admIcon.timeRanges       { background-position:  -50px  -100px; }
+.kerio .admTitleIcon.admIcon.ipGroups         { background-position:  -100px -100px; }
+.kerio .admTitleIcon.admIcon.advancedOptions  { background-position:  -150px -100px; }
+.kerio .admTitleIcon.admIcon.certificates     { background-position:  -200px -100px; }
+
+.kerio .admTitleIcon.admIcon.logConfig    { background-position:    0   -150px; }
+.kerio .admTitleIcon.admIcon.logDebug     { background-position:  -50px -150px; }
+.kerio .admTitleIcon.admIcon.logError     { background-position: -100px -150px; }
+.kerio .admTitleIcon.admIcon.logSecurity  { background-position: -150px -150px; }
+.kerio .admTitleIcon.admIcon.logWarning   { background-position: -200px -150px; }
+.kerio .admTitleIcon.admIcon.logOperation { background-position: -250px -150px; }
+
+.kerio .admTitleIcon.admIcon.antivirus    { background-position:    0   -200px; }
+
+.kerio .admTitleIcon.admIcon.domains  { background-position: 0   -250px; }
+
+.kerio .mainMenu.x-tab-panel .admMenuTree .nodeIcon.admIcon {
+background:url(img/productMenuIcons.png?v=8629) no-repeat transparent 0 0;
+}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.users            {background-position:  0       0  ;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.groups           {background-position: -32px    0  ;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.statistics       {background-position:  0     -32px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.connections      {background-position: -33px  -33px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.services         {background-position:   0    -64px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.timeRanges       {background-position: -31px  -65px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.ipGroups         {background-position: -64px  -65px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.advancedOptions  {background-position: -96px  -67px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.certificates     {background-position:-129px  -65px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.logConfig        {background-position:   0    -98px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.logDebug         {background-position: -33px  -98px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.logError         {background-position: -65px  -98px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.logSecurity      {background-position: -98px  -98px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.logWarning       {background-position:-131px  -98px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.logOperation     {background-position:-164px  -98px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.antivirus        {background-position:   0   -131px;}
+.kerio .mainMenu.x-tab-panel .nodeIcon.admIcon.domains          {background-position:   0   -163px;}
+
+
+.kerio .multiTriggerField.notFound .x-form-text {
+background: #FF6666;
+color: white;
+}
+
+.kerio .multiTriggerField .findNext {
+background-image: url(img/logSearchNextTrigger.gif?v=8629);
+background-size: 102px 24px;
+}
+
+.kerio .multiTriggerField .findPrev {
+background-image: url(img/logSearchPrevTrigger.gif?v=8629);
+background-size: 102px 24px;
+}
+.kerio .multiTriggerField .findInProgress {
+position: absolute;
+background: transparent url(../../ext/extjs/resources/images/default/grid/grid-loading.gif?v=8629) no-repeat 0 1px;
+width: 18px;
+height: 18px;
+right: 17px;
+z-index: 1001;
+top: 1px;
+}
+.kerio .multiTriggerField .highlight {
+background: transparent;
+position: relative;
+}
+.kerio .multiTriggerField .searchFieldHighlightBg {
+background: #FFF url(../../ext/extjs/resources/images/default/form/text-bg.gif?v=8629) repeat-x 0 0;
+position: absolute;
+border: 1px solid #B5B8C8;
+visibility: hidden;
+top: 0;
+}
+.kerio .multiTriggerField .searchFieldHighlightFade {
+background-color: #FFFF00;
+border: 1px solid #B5B8C8;
+visibility: hidden;
+position: absolute;
+top: 0;
+left: 0;
+}
+.kerio .logCopyWarning {
+background: url(../../ext/extjs/resources/images/default/window/icon-warning.gif?v=8629) no-repeat top left;
+}
+.kerio .logCopyWarning DIV {
+padding-left: 35px;
+}
+
+.kerio .multiTriggerField .stopFind {
+background-image: url(../../ext/extjs/resources/images/default/form/clear-trigger.gif?v=8629);
+}
+
+.kerio .inputSpacer {
+padding-top: 20px;
+}
+.kerio .validOnSpacer {
+padding-top: 10px;
+}
+.kerio .timeRangeServerZone {
+padding-top: 5px;
+padding-bottom: 0px;
+margin-bottom: -5px;
+}
+
+.kerio .loading {
+background: url(../../ext/extjs/resources/images/default/grid/loading.gif?v=8629) no-repeat;
+}
+@media print {
+.kerio .mainScreen {
+background-color: white;
+padding: 0px;
+}
+}
+
+.kerio .urlGroupIcon.grpHeader {
+background: url(img/definitions.png?v=8629) no-repeat -204px 0;
+}
+.kerio .urlGroupIcon.grpHeader.invalid,
+.kerio .ruleInactive .urlGroupIcon.grpHeader.invalid {
+background-position: -204px -57px;
+}
+.kerio .ruleInactive .urlGroupIcon.grpHeader {
+background-position: -204px -76px;
+}
+.kerio .urlGroupIcon {
+background: url(img/definitions.png?v=8629) no-repeat -169px 0;
+}
+.kerio .urlGroupIcon.ugTypeGroup {
+background: url(img/definitions.png?v=8629) no-repeat -204px 0;
+}
+.kerio .ugTypeUrl.added {
+background-position: -170px -19px;
+}
+.kerio .ugTypeUrl.modified {
+background-position: -170px -38px;
+}
+.kerio .ugTypeGroup.added {
+background-position: -204px -19px;
+}
+.kerio .ugTypeGroup.modified {
+background-position: -204px -38px;
+}
+
+.kerio .timeRangeIcon.grpHeader {
+background: url(img/definitions.png?v=8629) no-repeat -272px 0;
+}
+.kerio .timeRangeIcon.grpHeader.invalid,
+.kerio .ruleInactive .timeRangeIcon.grpHeader.invalid {
+background-position: -272px -57px;
+}
+.kerio .ruleInactive .timeRangeIcon.grpHeader {
+background-position: -272px -76px;
+}
+.kerio .timeRangeIcon {
+background: url(img/definitions.png?v=8629) no-repeat -238px 0;
+}
+.kerio .timeRangeIcon.trTypeGroup {
+background: url(img/definitions.png?v=8629) no-repeat -272px 0;
+}
+.kerio .trTypeDaily.added,
+.kerio .trTypeWeekly.added,
+.kerio .trTypeAbsolute.added {
+background-position: -238px -19px;
+}
+.kerio .trTypeDaily.modified,
+.kerio .trTypeWeekly.modified,
+.kerio .trTypeAbsolute.modified {
+background-position: -238px -38px;
+}
+.kerio .trTypeGroup.added {
+background-position: -272px -19px;
+}
+.kerio .trTypeGroup.modified {
+background-position: -272px -38px;
+}
+
+.kerio .ipGroupIcon.grpHeader {
+background: url(img/definitions.png?v=8629) no-repeat -102px 0;
+}
+.kerio .ipGroupIcon.grpHeader.invalid,
+.kerio .ruleInactive .ipGroupIcon.grpHeader.invalid {
+background-position: -102px -57px;
+}
+.kerio .ruleInactive .ipGroupIcon.grpHeader {
+background-position: -102px -76px;
+}
+.kerio .ipGroupIcon.agTypeHost {
+background: url(img/definitions.png?v=8629) no-repeat 0 0;
+}
+.kerio .agTypeHost.added {
+background-position: 0 -19px;
+}
+.kerio .agTypeHost.modified {
+background-position: 0 -38px;
+}
+.kerio .ruleInactive .ipGroupIcon.agTypeHost {
+background-position: 0 -76px;
+}
+.kerio .ipGroupIcon.agTypeNetwork {
+background: url(img/definitions.png?v=8629) no-repeat -34px 0;
+}
+.kerio .agTypeNetwork.added {
+background-position: -34px -19px;
+}
+.kerio .agTypeNetwork.modified {
+background-position: -34px -38px;
+}
+.kerio .ruleInactive .ipGroupIcon.agTypeNetwork {
+background-position: -34px -76px;
+}
+.kerio .ipGroupIcon.agTypeRange {
+background: url(img/definitions.png?v=8629) no-repeat -68px 0;
+}
+.kerio .agTypeRange.added {
+background-position: -68px -19px;
+}
+.kerio .agTypeRange.modified {
+background-position: -68px -38px;
+}
+.kerio .ruleInactive .ipGroupIcon.agTypeRange {
+background-position: -68px -76px;
+}
+.kerio .ipGroupIcon.agTypeGroup {
+background: url(img/definitions.png?v=8629) no-repeat -102px 0;
+}
+.kerio .agTypeGroup.added {
+background-position: -102px -19px;
+}
+.kerio .agTypeGroup.modified {
+background-position: -102px -38px;
+}
+.kerio .ipGroupIcon.agTypeFirewall {
+background: url(img/definitions.png?v=8629) no-repeat -136px 0;
+}
+.kerio .agTypeFirewall.added {
+background-position: -136px -19px;
+}
+.kerio .agTypeFirewall.modified {
+background-position: -136px -38px;
+}
+.kerio .ruleInactive .ipGroupIcon.agTypeFirewall {
+background-position: -136px -76px;
+}
+
+.kerio #certificateList .cellIcon {
+background: url(img/gridIcons.png?v=8629) no-repeat 0 -420px;
+}
+.kerio #certificateList .cellIcon.certificate        { background-position: 0 -420px; }
+.kerio #certificateList .cellIcon.certificateRequest { background-position: 0 -439px; }
+.sslCert            { background-repeat: no-repeat; background-position: 0 0;}
+.sslCert.trusted    { background-image: url("img/trusted.png?v=8629"); }
+.sslCert.untrusted  { background-image: url("img/untrusted.png?v=8629"); }
+.sslCert.selfSigned { background-image: url("img/selfSigned.png?v=8629"); }
+.sslCert.request    { background-image: none; }
+.kerio .certificateTrustworthy.x-form-display-field {
+padding: 12px;
+border-bottom: 1px solid #99bbe8;
+}
+.certificateChain {
+margin: 10px;
+}
+.certificateChainForm .x-form {
+border: 1px solid #99bbe8;
+}
+.certificateChain li ul {
+padding-left: 3px;
+}
+.certificateChain li ul ul {  
+padding-left: 18px;
+}
+.certificateChain li {
+white-space: nowrap;
+line-height: 22px;
+}
+.certificateChain img {
+width: 16px;
+height: 16px;
+vertical-align: top;
+}
+.certificateChain img.corner {
+background: url(img/corner.png?v=8629) no-repeat 0 0;
+}
+.certificateChain img.icon {
+background: url(img/gridIcons.png?v=8629) no-repeat 0 -420px;
+margin: 2px 6px 0 0;
+}
+
+.kerio .welcomeDialog .title {
+font-size: 17px;
+font-weight: bold;
+}
+.kerio.br-ie .welcomeDialog .title DIV {
+line-height: 21px;
+margin-top: -2px;
+}
+.kerio .welcomeDialog .itemMovedDown {
+margin-top: 6px;
+}
+.kerio .welcomeDialog .itemMovedDown img {
+margin-top: 6px;
+}
+.kerio .welcomeDialog .trialReminderLicense {
+background: url(img/trialReminderLicense.png?v=8629) no-repeat 0 0;
+}
+.kerio .welcomeDialog .formRowsWithImage {
+padding-left: 280px;
+margin-top: 20px;
+}
+.kerio .welcomeDialog .unorderedListItem {
+background: url(img/dot.png?v=8629) no-repeat 0 0;
+margin-top: 2px;
+}
+
+.kerio .splashScreen {
+background: url(/admin/img/splashBackground.png?v=8629) no-repeat left top;
+position: relative;
+width: 524px;
+height: 369px;
+overflow: hidden; 
+}
+.kerio .splashScreen .x-panel-body {
+border: 0px none;
+}
+.kerio .splashScreen .productVersion,
+.kerio .splashScreen .rows.top,
+.kerio .splashScreen .rows.bottom,
+.kerio .splashScreen .copyright {
+width: 416px;
+padding: 0 54px;
+font-size: 11px;
+}
+.kerio .splashScreen .x-panel-bwrap {
+background-color: #CEDEFF;
+}
+.kerio .splashScreenContainer {
+padding: 1px;
+}
+.kerio .splashScreenContainer DIV {
+line-height: 17px;
+}
+.kerio.br-ie .splashScreenContainer DIV {
+line-height: 16px;
+}
+
+.kerio .splashScreen .row {
+width: 416px;
+clear: both;
+}
+.kerio .splashScreen .row.columns .caption {
+float: left;
+width: 256px;
+}
+.kerio .splashScreen .row.columns .value {
+margin-left: 256px;
+width: 160px;
+}
+.kerio .splashScreen .row.empty {
+line-height: 10px !important;
+}
+
+.kerio .splashScreen .rows {
+position: absolute;
+}
+.kerio .splashScreen .rows.productVersion {
+padding-top: 45px;
+padding-left: 310px;
+font-size: 12px;
+font-weight: bold;
+z-index: 5;
+}
+.kerio .splashScreen .rows.top {
+padding-top: 100px;
+z-index: 2;
+}
+.kerio .splashScreen .rows.bottom {
+bottom: 28px;
+z-index: 1;
+}
+.kerio .splashScreen .rows.copyright {
+bottom: 0px;
+font-size: 10px;
+z-index: 10;
+text-align: right;
+}
+
+.kerio .splashScreen .row.hidden {
+display: none;
+}
+.kerio .splashScreen .row.simple.right {
+text-align: right;
+}
+.kerio .splashScreen .row.simple.center {
+text-align: center;
+}
+.kerio .splashScreen .row.bold {
+font-weight: bold;
+}
+.kerio .splashScreen .row.red {
+color: red;
+}
+.kerio .splashScreen .row.legalNotices .textLink {
+color: gray;
+font-size: 10px;
+line-height: 12px;
+}
+.kerio .splashToolbar button {
+font-weight: bold;
+}
+
+
+.kerio .domainStatus .JoinStatusWaiting,
+.kerio .myKerioFieldset .statusWaiting .icon,
+.kerio .myKerioFieldset .statusNotAdded .icon {
+background-position: 0px -17px;
+}
+.kerio .domainStatus .JoinStatusConnected,
+.kerio .myKerioFieldset .statusReady .icon {
+background-position: 0px 2px;
+}
+.kerio .domainStatus .JoinStatusDisconnected,
+.kerio .myKerioFieldset .statusDisabled .icon,
+.kerio .appManagerFieldset .statusDisabled .icon {
+background-position: 0px -55px;
+}
+.kerio .domainStatus .JoinStatusError,
+.kerio .myKerioFieldset .statusDisconnected .icon,
+.kerio .appManagerFieldset .statusDisconnected .icon {
+background-position: 0px -36px;
+}
+.kerio .domainStatus {
+margin-bottom: 1em;
+}
+.kerio .myKerioStatus, .kerio .gfiAgentStatus {
+margin-top: 1em;
+margin-bottom: 1em;
+}
+.kerio .appManagerStatus {
+margin-top: 1em;
+}
+
+.kerio .logMessages .x-window-body,
+.kerio .logMessages .x-panel-body {
+background-color: transparent !important;
+border: none;
+}
+.kerio .logMessages .x-window-mc {
+border: none;
+}
+.kerio .logMessages .form {
+background-color: transparent;
+padding: 0;
+}
+.kerio .logMessages .baseGrid {
+background-color: white;
+border-width: 1px;
+}
+.kerio .logMessages .x-grid-group-hd div.x-grid-group-title {
+margin-left: 6px;
+}
+.kerio .logMessages .x-grid3-row {
+border-left-color: transparent;
+border-right-color: transparent;
+}
+.kerio.br-ie7 .logMessages .x-window-body {
+border-width: 0;
+}
+.supportIncident .loading {
+background: url('../../ext/extjs/resources/images/default/grid/loading.gif?v=8629') no-repeat scroll right 0;
+}
+
+.dashboard {
+overflow-x: hidden;
+overflow-y: auto;
+padding: 5px;
+}
+.dashboard.loadingIndicator {
+background-image: url(../../ext/extjs/resources/images/default/shared/blue-loading.gif?v=8629);
+background-position: center center;
+background-repeat: no-repeat;
+}
+
+.dashboard .tile,
+.dashboard .x-panel-dd-spacer {
+margin: 5px;
+}
+.dashboard .x-panel-dd-spacer {
+border: 2px dashed #99bbe8;
+}
+.dashboard .x-column > .x-panel-bwrap > .x-panel-body {
+border: 0;
+}
+.dashboard .tile > .x-panel-header {
+background: none #f5f5f5;
+border: #99bbe8 dotted;
+border-width: 1px 0;
+padding: 6px 3px 5px 20px;
+}
+.dashboard .tile .x-tool-gear {
+background: url(img/tool.png?v=8629) no-repeat 0 0;
+}
+.dashboard .tile .x-tool-gear-over {
+background-position: -15px 0;
+}
+.dashboard .tile > .x-panel-bwrap > .x-panel-body {
+border: 0;
+font-size: 11px;
+padding: 0 10px;
+}
+.dashboard .tile {
+border-width: 0 1px 1px;
+border-style: solid;
+border-color: transparent;
+}
+.dashboard .tile.mouseover {
+border-color: #99bbe8;
+}
+.dashboard .tile.mouseover > .x-panel-header {
+border-top: 1px solid #99bbe8;
+}
+.dashboard .tile.statusError .x-panel-header {
+background: url(img/dashboard.png?v=8629) #f5f5f5 no-repeat 0 0;
+}
+.dashboard .tile.statusError a.error {
+text-decoration: underline;
+color: red;
+}
+.dashboard .tile .inactive {
+color: #888786;
+}
+.dashboard .tile .formRowContainer .x-form-item {
+margin-bottom: 0;
+}
+.dashboard .thead .x-form-field,
+.dashboard .thead .x-form-field * {
+font-weight: bold;
+}
+.dashboard .trow {
+border-top: 1px solid #eeeeee;
+padding: 4px 0 0 0;
+}
+.dashboard .trow.trowFirst {
+border-top: 0;
+}
+.dashboard .trow .right,
+.dashboard .thead .right {
+text-align: right;
+padding-right: 20%;
+}
+.dashboard .trow .center,
+.dashboard .thead .center {
+text-align: center;
+}
+
+.dashboardTileGhost.x-panel-ghost .x-panel-header {
+border-color: #99bbe8;
+border-style: dotted;
+background: none #f0f0f0;
+padding: 6px 3px 5px 20px;
+}
+.dashboardTileGhost.x-panel-ghost ul {
+border-color: #99bbe8;
+border-style: dotted;
+background: none #e6eef0;
+}
+.dashboardTileGhost.x-panel-ghost {
+-moz-box-shadow: 5px 5px 5px rgba(100,100,100,0.2);
+-webkit-box-shadow: 5px 5px 5px rgba(100,100,100,0.2);
+box-shadow: 5px 5px 5px rgba(100,100,100,0.2);
+}
+
+.x-layout-split.mainMenuSplitter {
+display:none;
+}
+.mainMenu {
+height: 100%;
+background: #99bbe8 !important;
+}
+.k_topPane > .x-panel-bwrap > .x-panel-body {
+border-top: 0;
+border-right: 0;
+}
+
+.mainMenu > .x-form-display-field > .textLink {
+position: absolute;
+top: 50px;
+left: 0;
+display: block;
+width: 40px;
+height: 40px;
+background-repeat: no-repeat !important;
+background-position: 7px 0 !important;
+}
+.mainMenu .x-tab-panel-header {
+position: absolute;
+top: 0;
+left: 0;
+width: 40px;
+
+}
+.mainMenu .x-tab-panel-header ul {
+margin-top: 100px;
+display: block;
+width: 40px;
+border: 0;
+}
+.mainMenu .x-tab-panel-header ul li {
+padding: 0;
+margin: 0;
+width: 40px;
+height: 42px;
+display: inline-block;
+margin-bottom: 10px;
+background-repeat: no-repeat;
+background-image: url('img/menuTabsIcons.png?v=8629');
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.configuration {
+background-position: -40px 0;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.configuration.x-tab-strip-active {
+background-position: 0 0;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.logs {
+background-position: -40px -42px;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.logs.x-tab-strip-active {
+background-position: 0 -42px;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.status {
+background-position: -40px -84px;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.status.x-tab-strip-active {
+background-position: 0 -84px;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.accounts {
+background-position: -40px -126px;
+}
+.mainMenu .x-tab-panel-header ul li.admIcon.accounts.x-tab-strip-active {
+background-position: 0 -126px;
+}
+.mainMenu .x-tab-panel-header ul li a {
+display: block;
+width: 40px;
+height: 42px;
+padding: 0 !important;
+margin: 0;
+border: 0;
+background: transparent !important;
+}
+.mainMenu .x-tab-panel-header ul li a.x-tab-strip-close {
+display: none !important;
+}
+.mainMenu .x-tab-panel-header ul li a em {
+display: none;
+}
+.mainMenu .x-tab-panel-header ul li.x-tab-edge {
+display: none;
+}
+.mainMenu .x-tab-panel-bwrap,
+.mainMenu .x-tab-panel-body {
+height: 100%;
+}
+.mainMenu .x-tab-panel-body {
+border: 0;
+margin-left: 40px;
+background: #ffffff;
+}
+.mainMenu .x-tab-panel-body .x-panel-body {
+background: transparent;
+}
+.mainMenu .x-tree-node-leaf {
+height: 30px;
+border-bottom: 1px solid #dfe8f6;
+line-height: 30px;
+font-size: 12px;
+padding-left: 25px;
+}
+.mainMenu .x-tree-node-leaf.lastItem {
+border-bottom: 0 !important;
+}
+.mainMenu .x-tree-node-leaf.x-tree-selected {
+background-color: #dfe8f6 !important;
+}
+.mainMenu .titleNode {
+height: 15px;
+border-bottom: 1px solid #99bbe8;
+border-top: 1px solid #99bbe8;
+line-height: 15px;
+font-size: 10px;
+background: #cedeff;
+padding-left: 15px;
+font-weight: bold;
+cursor: default;
+}
+.mainMenu .x-tree-node-indent {
+display: none;
+}
+.mainMenu .x-tree-ec-icon {
+display: none;
+}
+.mainMenu .x-tree-node-el * {
+padding: 0;
+margin: 0;
+}
+.mainMenu .x-tree-root-node > .x-tree-node:first-child {
+padding-top: 13px;
+}
+.mainMenu .x-tree-root-node > .x-tree-node:last-child {
+padding-bottom: 15px;
+}
+.mainMenu .x-tree-node-leaf .x-tree-node-icon {
+margin-top: 5px;
+width: 22px;
+height: 22px;
+}
+.mainMenu .titleNode .x-tree-node-icon {
+display: none;
+}
+.mainMenu .x-tree-node a span {
+padding-right: 4px;
+}
+.htmlDialog .form {
+padding: 0;
+}
+.searchSpotlight {
+font-size: 11px;  
+}
+input.searchSpotlight {
+padding-right: 18px;
+}
+input.searchSpotlight::-ms-clear {
+width: 0;
+height: 0;
+}
+.searchSpotlight.x-form-field {
+background: url(../lib/img/search.png?v=8629) transparent no-repeat right center;
+border-color: lightgray;
+border-radius: 6px;
+}
+.searchSpotlight .x-combo-list-item {
+padding: 0;
+}
+.searchSpotlight .x-combo-list-item .keyword,
+.searchSpotlight .x-combo-list-item .hint {
+padding: 2px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.searchSpotlight .x-combo-list-item .keyword {
+float: left;
+border-right: 1px silver dotted;
+}
+.searchSpotlight .x-combo-list-item .hint {
+font-style: italic;
+padding-left: 6px;
+color: gray;
+}
+.searchSpotlight .x-combo-list-item .hint B {  
+color: black;
+font-weight: normal;
+}
+.searchSpotlight.searchHint {
+position: absolute;
+display: none;
+color: dimgrey;
+border: 1px solid lightgray;
+background-color: white;
+font-style: italic;
+padding-left: 6px;
+}
+#globalHighlighter {
+position: absolute;
+width: 10px;
+height: 10px;
+border: 3px solid firebrick;
+border-radius: 6px;
+}
+#globalHighlighter div {
+width: 100%;
+height: 100%;
+background-color: bisque;
+opacity: 0.1;
+filter: alpha(opacity=10);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=10)";
+}
+.myKerioFieldset.smallLogo {
+background: url(img/MyKerioVertical.png?v=8629) no-repeat transparent;
+background-size: 81px 104px !important;
+background-position: right top !important;
+padding-right: 91px;
+}
+.myKerioFieldset.bigLogo {
+background: url(img/MyKerio.png?v=8629) no-repeat transparent;
+background-size: 220px 79px;
+background-position: right top;
+padding-right: 230px;
+}
+.myKerioStatus, .appManagerStatus, .gfiAgentStatus {
+position: relative;
+display: block;
+padding-left: 20px;
+}
+.myKerioStatus .icon, .appManagerStatus .icon, .gfiAgentStatus .icon {
+position: absolute;
+top: 0;
+left: 0;
+display: block;
+width: 20px;
+height: 20px;
+background-image: url(img/dots.png?v=8629);
+background-repeat: no-repeat;
+}
+.readOnlyRow {
+cursor: not-allowed;
+opacity: 0.5;
+}
+.readOnlyRow * {
+font-style: italic !important;
+}
+.readOnlyRow .x-grid3-check-col {
+background-image: url(../lib/img/uncheckedDisabled.gif?v=8629);
+}
+.readOnlyRow .x-grid3-check-col-on {
+background-image: url(../lib/img/checkedDisabled.gif?v=8629);
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 2.5dppx) {
+.myKerioFieldset.smallLogo {
+background-image: url(img/MyKerioVertical@2x.png?v=8629);
+}
+.myKerioFieldset.bigLogo {
+background-image: url(img/MyKerio@2x.png?v=8629);
+}
+.kerio .helpAction .helpIcon {
+background-image: url('../lib/img/help@2x.png?v=8629');
+}
+.kerio .multiTriggerField .findNext {
+background-image: url(img/logSearchNextTrigger@2x.png?v=8629);
+}
+.kerio .multiTriggerField .findPrev {
+background-image: url(img/logSearchPrevTrigger@2x.png?v=8629);
+}
+}

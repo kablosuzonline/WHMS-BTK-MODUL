@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Callback</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script>
+function k_fireCallback() {
+var
+k_w = window,
+k_search = document.location.search;
+if (-1 !== k_search.indexOf('iframe=1')) {
+k_w = k_w.parent;
+}
+do {
+k_w = k_w.opener;
+try {
+if (k_w && k_w.kerio) {
+k_w.kerio.adm.k_fireOuterWebPageCallback(document.location.search);
+break;
+}
+}
+catch (e) {}
+} while (k_w);
+}
+</script>
+</head>
+<body onload="k_fireCallback();">
+</body>
+</html>
