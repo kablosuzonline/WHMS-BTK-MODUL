@@ -1,0 +1,172 @@
+
+.x-body-masked div {
+-webkit-overflow-scrolling: auto;
+}
+.x-masked div {
+-webkit-overflow-scrolling: auto!important;
+}
+
+.x-grid3-hd-inner {
+position: static;
+}
+.x-grid3-hd-btn,
+.lastVisibleColumn .x-grid3-hd-btn {
+right: auto;
+height: 22px;
+}
+.baseGrid,
+.x-combo-list-inner,
+.rowView {
+-webkit-tap-highlight-color: transparent;
+}
+.rowView .rowContent {
+-webkit-tap-highlight-color: rgba(0,0,0,0.2);
+}
+
+.touchScrolling,
+.touchScrolling div,
+.touchScrolling form {
+-webkit-overflow-scrolling: touch;
+}
+
+.baseTree {
+-webkit-touch-callout: none;
+}
+
+.permanentScrollbars {
+-webkit-overflow-scrolling: auto!important;
+}
+.permanentScrollbars::-webkit-scrollbar {
+width:4px;
+height:4px;
+background-color: #ddd;
+}
+.permanentScrollbars::-webkit-scrollbar-button:start:decrement,
+.permanentScrollbars::-webkit-scrollbar-button:end:increment {
+display:block;
+height:0;
+background-color:transparent;
+}
+.permanentScrollbars::-webkit-scrollbar-track-piece {
+-webkit-border-radius:0;
+-webkit-border-bottom-right-radius:2px;
+-webkit-border-bottom-left-radius:2px;
+}
+.permanentScrollbars::-webkit-scrollbar-thumb:vertical {
+height:50px;
+background-color:rgba(0,0,0,0.35);
+-webkit-border-radius:2px;
+}
+.permanentScrollbars::-webkit-scrollbar-thumb:horizontal {
+width:50px;
+background-color: rgba(0,0,0,0.35);
+-webkit-border-radius:2px;
+}
+
+.x-form-text {
+-webkit-border-radius: 0px;
+}
+
+.x-panel-header.x-panel-header-noborder {
+background-image: none;
+background-color: #CEDEFF;
+border-width: 1px 1px 0px 1px;
+}
+
+.x-layout-collapsed-north {
+display: none !important;
+}
+
+.multiTrigger .triggerSpacer {
+width: 8px;
+background: transparent;
+border-bottom-color: transparent;
+cursor:default;
+}
+.multiTrigger .findNext,
+.multiTrigger .findPrev {
+-webkit-border-radius: 4px;
+border-left: 1px solid #7EADD9;
+}
+.touchScroller {
+color: black;
+opacity: 0;
+background-color: transparent;
+white-space: pre;
+font-size: 11px;
+line-height: 16px;
+top: 0px;
+left: 2px;
+position: absolute;
+overflow: hidden;
+}
+.br-chrome .touchScroller {
+overflow: scroll;
+}
+.menuTreeContainer .x-tool-toggle {
+width: 24px;
+height: 24px;
+border: none;
+}
+.menuTreeContainer .x-tool-toggle .toggleButton {
+width: 15px;
+height: 15px;
+position: absolute;
+top: 6px;
+right: 6px;
+background-image: url("../../ext/extjs/resources/images/default/panel/tool-sprites.gif?v=8629");
+}
+.menuTreeContainer .x-tool-collapse-west .toggleButton {
+background-position: 0 -180px;
+}
+.menuTreeContainer .x-tool-toggle-over .toggleButton {
+background-position: -15px -180px;
+}
+.menuTreeContainer .x-panel-header {
+padding-top: 0;
+padding-bottom: 0;
+padding-right: 0;
+}
+.menuTreeContainer .x-tool {
+background-image: none !important;
+margin: 0;
+padding: 0;
+}
+input::-webkit-input-placeholder {
+font-style:italic;
+}
+.kerio .admTitleBar #k_admTitleBarCaptionText {
+font-size: 14px !important;
+top: -11px !important;
+font-weight: bold;
+}
+.kerio .centralPane .admTitleBar #k_admTitleBarCaptionText {
+top: 3px !important;
+}
+.kerio .admTitleBar .x-toolbar-left .xtb-text {
+padding-top: 2px;
+}
+.kerio .centralPane .admTitleBar .admTitleIcon {
+width: 22px !important;
+height: 22px !important;
+margin-top: 0 !important;
+vertical-align: middle;
+}
+.mainMenu .x-tab-panel-body, .mainMenu .x-tab-panel-bwrap {
+background: transparent !important;
+margin-left: 0 !important;
+}
+.mainMenu .x-tab-panel-body .x-panel-body {
+background: #ffffff !important;
+opacity: 0.95;
+border-right: 1px solid #99bbe8;
+}
+.mainMenu.x-layout-collapsed-west {
+left: 0 !important;
+border: 0 !important;
+height: 100% !important;
+}
+.kerio .admTitleBar .loadingTitle {
+padding:6px 2px !important;
+top:2px !important;
+}

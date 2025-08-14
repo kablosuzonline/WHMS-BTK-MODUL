@@ -1,0 +1,2374 @@
+
+
+.simpleButton{
+font:normal 11px tahoma, verdana, helvetica;
+cursor:pointer;
+white-space: nowrap;
+}
+.simpleButton button{
+border:0 none;
+background:transparent;
+font:normal 11px tahoma,verdana,helvetica;
+padding-left:3px;
+padding-right:3px;
+cursor:pointer;
+margin:0;
+overflow:visible;
+width:auto;
+}
+.ext-gecko .simpleButton button {
+padding-left:0;
+padding-right:0;
+}
+.ext-ie .simpleButton button {
+padding-top:2px;
+}
+.br-ie11 .simpleButton button {
+line-height: 13px;
+}
+
+.simpleButton.sbIcon .sbCenter .sbText{
+background-position: center;
+background-repeat: no-repeat;
+height: 16px;
+width: 16px;
+cursor:pointer;
+white-space: nowrap;
+padding:0;
+}
+.simpleButton.sbIcon .sbCenter{
+padding:1px;
+}
+.x-toolbar .simpleButton .sbCenter{
+padding: 0;
+}
+.simpleButton em {
+font-style:normal;
+font-weight:normal;
+}
+
+.simpleButton.sbTextIcon .sbCenter .sbText{
+background-position: 0 2px;
+background-repeat: no-repeat;
+padding-left:18px;
+padding-top:3px;
+padding-bottom:2px;
+padding-right:0;
+}
+.simpleButton .sbLeft,
+.simpleButton .sbRight {
+font-size:1px;
+line-height:1px;
+width:3px;
+height:21px;
+background-image: url(./img/simpleButton/btn-sprite.gif?v=8629);
+background-repeat: no-repeat;
+}
+.simpleButton .sbLeft{
+background-position: 0 0;
+}
+.simpleButton .sbRight{
+background-position: 0 -21px;
+}
+.simpleButton .sbLeft i,
+.simpleButton .sbRight i{
+display: block;
+width: 3px;
+overflow: hidden;
+font-size: 1px;
+line-height: 1px;
+}
+.simpleButton .sbCenter{
+background:url(./img/simpleButton/btn-sprite.gif?v=8629) repeat-x 0 -42px;
+vertical-align: middle;
+text-align:center;
+padding:0 2px;
+cursor:pointer;
+white-space:nowrap;
+}
+
+.simpleButton.defaultButton .sbLeft {
+background-position:0 -189px;
+}
+.simpleButton.defaultButton .sbRight {
+background-position:0 -210px;
+}
+.simpleButton.defaultButton .sbCenter {
+background-position:0 -231px;
+}
+
+.simpleButton.sbOver .sbLeft{
+background-position:0 -63px;
+}
+.simpleButton.sbOver .sbRight{
+background-position:0 -84px;
+}
+.simpleButton.sbOver .sbCenter{
+background-position:0 -105px;
+}
+
+.simpleButton.sbClick .sbLeft,
+.simpleButton.sbMenuActive .sbLeft {
+background-position:0 -126px;
+}
+.simpleButton.sbClick .sbRight,
+.simpleButton.sbMenuActive .sbRight {
+background-position:0 -147px;
+}
+.simpleButton.sbClick .sbCenter,
+.simpleButton.sbMenuActive .sbCenter {
+background-position:0 -168px;
+}
+.simpleButton.sbMenuTextWrap .sbCenter {
+padding:0 3px;
+}
+.ext-gecko .sbMenuTextWrap .sbCenter {
+padding:0 1px;
+}
+.sbMenuArrowWrap .sbCenter {
+padding:0;
+}
+.sbMenuArrowWrap .sbCenter button {
+width: 9px !important;
+height: 21px;
+padding: 0 !important;
+display: block;
+background: transparent url(./img/btn-arrow.gif?v=8629) no-repeat left 3px;
+}
+.simpleButton .sbMenuArrowWrap .sbCenter {
+padding-right: 2px !important;
+}
+.simpleButton .sbWithMenu .sbCenter em {
+display: block;
+background: transparent url(./img/btn-arrow.gif?v=8629) no-repeat right 0;
+padding-right: 10px;
+}
+.br-ie .simpleButton .sbWithMenu .sbCenter em {
+background-position-y: 1px;
+}
+.simpleButton.sbTextIcon .sbWithMenu .sbCenter em {
+display: block;
+background: transparent url(./img/btn-arrow.gif?v=8629) no-repeat right 3px;
+padding-right: 10px;
+}
+
+.simpleButton.sbPressed .sbLeft{
+background-position: 0 -126px;
+}
+.simpleButton.sbPressed .sbRight{
+background-position: 0 -147px;
+}
+.simpleButton.sbPressed .sbCenter{
+background-position: 0 -168px;
+}
+.x-toolbar .sbMenuTextWrap .sbCenter button {
+padding-right:2px;
+}
+.ext-gecko .x-toolbar .sbMenuTextWrap .sbCenter button {
+padding-right:0;
+}
+.x-toolbar .sbMenuArrowWrap .sbCenter button {
+padding:0 2px;
+}
+.x-toolbar .sbOver .sbMenuArrowWrap .sbCenter button {
+background-position: 0 -47px;
+}
+.x-toolbar .sbWithMenu .sbCenter em {
+padding-right:8px;
+}
+.ext-gecko .simpleButton .sbText {
+padding-bottom: 0;
+}
+.simpleButton.x-item-disabled .sbLeft {
+background-position: 0 0;
+}
+.simpleButton.x-item-disabled .sbRight {
+background-position: 0 -21px;
+}
+.simpleButton.x-item-disabled .sbCenter {
+background-position: 0 -42px;
+}
+.simpleButton.x-item-disabled * {
+color:gray !important;
+cursor:default !important;
+}
+
+.br-ie7 .x-item-disabled a span{
+color:gray !important;
+}
+
+.simpleButton.x-item-disabled .sbWithMenu .sbCenter em {
+background-position: right -99px;
+}
+.simpleButton.x-item-disabled .sbMenuArrowWrap .sbCenter button {
+background-position: right -96px;
+}
+
+.flatToolbarButtons .sbLeft,
+.flatToolbarButtons .sbCenter,
+.flatToolbarButtons .sbRight {
+background: none;
+}
+.flatToolbarButtons .sbLeft,
+.flatToolbarButtons .sbRight {
+background-repeat: no-repeat;
+}
+.flatToolbarButtons .sbCenter {
+background-repeat: repeat-x;
+}
+.flatToolbarButtons .sbOver .sbLeft,
+.flatToolbarButtons .sbOver .sbCenter,
+.flatToolbarButtons .sbOver .sbRight,
+.flatToolbarButtons .sbPressed .sbLeft,
+.flatToolbarButtons .sbPressed .sbCenter,
+.flatToolbarButtons .sbPressed .sbRight {
+background-image: url(./img/simpleButton/tb-btn-sprite.gif?v=8629);
+}
+.flatToolbarButtons .sbOver .sbLeft {
+background-position: 0 0;
+}
+.flatToolbarButtons .sbOver .sbRight {
+background-position: 0 -21px;
+}
+.flatToolbarButtons .sbOver .sbCenter{
+background-position: 0 -42px;
+}
+.flatToolbarButtons .sbClick .sbLeft,
+.flatToolbarButtons .sbPressed .sbLeft {
+background-position: 0 -63px;
+}
+.flatToolbarButtons .sbClick .sbRight,
+.flatToolbarButtons .sbPressed .sbRight {
+background-position: 0 -84px;
+}
+.flatToolbarButtons .sbClick .sbCenter,
+.flatToolbarButtons .sbPressed .sbCenter {
+background-position: 0 -105px;
+}
+
+
+@media print {
+BODY.kerio {
+background-color: white;
+}
+BODY.kerio.br-ff,
+BODY.kerio.br-webkit {
+overflow: visible; height: auto;
+}
+.kerio .noPrint {
+display: none !important;
+}
+.kerio .x-shadow,
+.kerio .ext-el-mask,
+.kerio .ext-shim,
+.kerio #k_printPreviewDialog .x-resizable-handle,
+.kerio #k_printPreviewDialog .x-window-tl,
+.kerio #k_printPreviewDialog .x-window-bl {
+display: none !important;
+}
+.kerio #k_printPreviewDialog .x-window-ml,
+.kerio #k_printPreviewDialog .x-window-mr {
+padding: 0 !important;
+}
+.kerio #k_printPreviewDialog .x-window-body,
+.kerio #k_printPreviewDialog .x-window-mc
+{
+border: 0 !important;
+}
+.kerio.br-ff #k_printPreviewDialog {
+
+position: static !important;
+}
+.kerio #k_printPreviewDialog {
+top: 0 !important;
+left: 0 !important;
+}
+.kerio #k_printPreviewDialog .x-window-body {
+width: auto !important;
+height: auto !important;
+}
+.kerio #k_printPreviewDialog {
+width: auto !important;
+height: auto !important;
+}
+.kerio #k_printPreviewDialog .x-window-bwrap,
+.kerio #k_printPreviewDialog .x-window-body,
+.kerio #k_printPreviewDialog .x-panel-body,
+.kerio #k_printPreviewDialog .x-panel-bwrap {
+overflow: visible !important;
+}
+.kerio #k_printPreviewPanel {
+width: auto !important;
+height: auto !important;
+}
+.kerio #k_printPreviewPanel .x-panel-body {
+width: auto !important;
+height: auto !important;
+overflow: visible !important;
+}
+}  
+
+.kerio #k_printedGrid                         {padding: 0px; width: auto !important;}
+.kerio #k_printedGrid .x-printer-grid3        {table-layout: fixed;}
+.kerio #k_printPreviewPanel .x-panel-body     {border: none;}  
+.kerio #k_printPreviewPanel .x-grid3-hd-row td {
+padding: 3px 1px 2px 4px;
+height: 18px;
+overflow: hidden !important;
+text-overflow: ellipsis;
+}
+.kerio.br-ff #k_printPreviewPanel .x-grid3-hd-row td {
+height: 24px;
+}
+.kerio #k_printPreviewPanel .x-grid3-hd-row td pre {
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.kerio #k_printPreviewPanel .x-grid3-row td,
+.kerio #k_printPreviewPanel .x-grid3-summary-row td {
+padding: 1px;
+overflow: hidden !important;
+text-overflow: ellipsis;
+}
+.kerio #k_printPreviewPanel .x-grid3-summary-row td div {
+overflow: hidden !important;
+text-overflow: ellipsis;
+}
+.kerio #k_printPreviewPanel .x-grid3-summary-row td pre {
+overflow: hidden !important;
+text-overflow: ellipsis;
+}
+.kerio #k_printPreviewPanel .x-grid3,
+.kerio #k_printPreviewPanel .x-grid-panel .x-panel-body {
+overflow: visible !important; 
+}
+.kerio .printedTitle {
+font-size: 12px;
+padding: 4px 0px 4px 10px;
+}
+
+.kerio A { 
+color: #0000EE;
+}
+
+.kerio .ext-el-mask {
+background: url(../../ext/extjs/s.gif?v=8629) repeat;
+-moz-opacity: 1;
+opacity: 1;
+filter: alpha(opacity=100);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=100)";
+z-index: inherit;
+cursor: wait;
+}
+
+.kerio .ext-el-mask.modalMask,
+.kerio .gridDisabled .ext-el-mask {
+background: #CCC;
+-moz-opacity: 0.5;
+opacity: 0.5;
+filter: alpha(opacity=50);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
+cursor: default;
+}
+.kerio .ext-el-mask.disableClickMask {
+-moz-opacity: 0;
+opacity: 0;
+filter: alpha(opacity=0);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+cursor: default;
+}
+.kerio .ext-el-mask-msg {
+z-index: inherit;
+cursor: wait;
+}
+
+.kerio .x-border-layout-ct {
+background-color: transparent;
+}
+.kerio .x-layout-split {
+background-color: #DFE8F6;
+}
+
+.kerio .layout .x-layout-collapsed {
+display: none !important;
+}
+.kerio .x-panel-collapsed {
+display: none !important;
+}
+
+.kerio .baseTree {
+padding: 10px;
+}
+.kerio .x-tree-node .x-tree-selected  {
+background-color: #eee;
+}
+.kerio .focusedItem .x-tree-node .x-tree-selected {
+background-color: #D9E8FB;
+}
+.kerio .x-grid3-row-selected {
+border: 1px dotted #BFBFBF;
+background: #efefef!important;
+}
+.kerio .focusedItem .x-grid3-row-selected {
+border: 1px dotted #a3bae9;
+background: #DFE8F6!important;
+}
+
+.ext-gecko .x-window-body .x-form-item {
+overflow: visible;
+}
+
+html, body {
+margin:0;
+padding:0;
+border:0 none;
+overflow:hidden;
+height:100%;
+}
+
+.kerio.br-ff36 *:focus {
+outline: none!important;
+}
+
+.kerio.br-webkit BUTTON:focus {
+outline: invert dotted 1px!important;
+}
+
+.kerio.br-webkit.br-chrome BUTTON:focus {
+outline: 1px dotted black !important;
+}
+
+.kerio .flag {
+background: url(img/flags.png?v=8629) no-repeat 0 -2px;
+}
+.kerio .flag.default {
+background-position: 0 -2px;
+}
+.kerio .flag.cs {
+background-position: 0 -26px;
+}
+.kerio .flag.de {
+background-position: 0 -51px;
+}
+.kerio .flag.en {
+background-position: 0 -76px;
+}
+.kerio .flag.en.gb {
+background-position: 0 -426px;
+}
+.kerio .flag.es {
+background-position: 0 -101px;
+}
+.kerio .flag.fr {
+background-position: 0 -126px;
+}
+.kerio .flag.it {
+background-position: 0 -151px;
+}
+.kerio .flag.nl {
+background-position: 0 -176px;
+}
+.kerio .flag.ja {
+background-position: 0 -201px;
+}
+.kerio .flag.pt {
+background-position: 0 -226px;
+}
+.kerio .flag.ru {
+background-position: 0 -251px;
+}
+.kerio .flag.sk {
+background-position: 0 -276px;
+}
+.kerio .flag.zh {
+background-position: 0 -301px;
+}
+.kerio .flag.hr {
+background-position: 0 -326px;
+}
+.kerio .flag.hu {
+background-position: 0 -351px;
+}
+.kerio .flag.pl {
+background-position: 0 -378px;
+}
+.kerio .flag.sv {
+background-position: 0 -401px;
+}
+.kerio .whiteSpace .x-grid3-cell-inner {
+white-space: pre;
+}
+
+
+.kerio .cellIcon {
+padding: 2px 2px 1px 2px;
+}
+
+.kerio .gridCellWithIcon.ie8 .cellIcon {
+display: block;
+float: left;
+margin: -2px 3px -2px -20px;
+padding: 0px;
+width: 16px;
+height: 17px;
+}
+.kerio.br-ie9 .colSpanRow .cellIcon {
+height: 100%;
+}
+.kerio .gridCellWithIcon.ie8 .x-grid3-cell-inner {
+padding-left: 25px;
+}
+.kerio .gridCellWithIcon.ie8 .gridColCbxWithText .cellIcon {
+margin-left: 18px;
+margin-right: -15px;
+}
+.kerio .x-grid3 {
+background-color: transparent;
+}
+.kerio .toolbarButtons.x-toolbar {
+
+background: transparent;
+border: none;
+}
+.br-ie7 .x-form-cb-label {
+top: 2px;
+}
+.groupingHeaderWithCheckbox {
+position: relative;
+bottom: 2px;
+background-position: 1px 0;
+background-repeat: no-repeat;
+background-color: transparent;
+background-image: url(../../ext/extjs/resources/images/default/menu/unchecked.gif?v=8629);
+}
+.groupingHeaderWithCheckbox.checked {
+background-image: url(../../ext/extjs/resources/images/default/menu/checked.gif?v=8629);
+}
+.groupingHeaderWithCheckbox.unchecked {
+background-image: url(../../ext/extjs/resources/images/default/menu/unchecked.gif?v=8629);
+}
+.groupingHeaderWithCheckbox.someChecked {
+background-image: url(./img/someChecked.gif?v=8629);
+}
+.groupingHeaderWithCheckbox.disabled {
+background-image: url(./img/uncheckedDisabled.gif?v=8629);
+}
+.groupingHeaderCheckbox {
+position: relative;
+top: 2px;
+margin-right: 4px;
+-moz-opacity: 0;
+opacity: 0;
+filter: alpha(opacity=0);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+}
+.x-toolbar-cell .x-form-cb-label {
+top: 0;
+}
+.os-mac.br-ff .x-toolbar-cell .x-form-cb-label {
+top: 1px;
+}
+
+.x-form-item .x-form-check-wrap {
+position: relative;
+top: -2px;
+}
+.br-ie7 .x-form-check-wrap {
+position: relative;
+top: -1px;
+}
+.br-ie7 .x-form-check-wrap input {
+position: relative;
+top: 2px;
+}
+.os-linux.br-chrome .x-form-item .x-form-check-wrap input {
+position: relative;
+top: -1px;
+}
+
+.x-toolbar-cell .x-form-check-wrap {
+padding-bottom: 4px;
+}
+.kerio .x-grid3-viewport {
+background-color: #fff;
+}
+.kerio .colSpanRow TR {
+display: none;
+}
+.kerio .x-grid3-dirty-cell {
+
+background: none;
+}
+.kerio .gridColCbxWithText {
+
+background-position: left top;
+padding-top: 2px;
+overflow: hidden;
+text-overflow: ellipsis;
+-o-text-overflow: ellipsis;
+white-space: pre;
+}
+.kerio .x-grid3-body .x-grid3-check-col-td .x-grid3-cell-inner {
+
+padding-left: 3px !important;
+}
+.kerio .cbxMultiEdit {
+
+padding-left: 18px;  
+}
+.kerio .x-grid3-col-indentGroupMembers {
+
+margin-left: 20px;
+}
+.kerio .x-grid-group-hd span {
+
+padding: 2px;
+}
+.kerio .x-grid-group .x-grid3-col-0 span {
+
+padding: 2px;
+}
+.kerio .gridNoCellBorders .x-grid3-row,
+.kerio .gridNoCellBorders .x-grid-group-hd {
+border-bottom-color: transparent;
+}
+.kerio .gridNoCellBorders .x-grid3-row.x-grid3-row-selected {
+border-bottom-color: #BFBFBF;
+}
+.kerio .gridNoCellBorders .x-grid3-row.x-grid3-row-over {
+border-bottom-color: #DDD;
+}
+.kerio .gridNoCellBorders.focusedItem .x-grid3-row.x-grid3-row-selected {
+border-bottom-color: #A3BAE9;
+}
+.kerio .gridDragGhost .x-dd-drag-ghost {
+padding-top: 0px;
+padding-right: 0px;
+padding-bottom: 0px;
+}
+.kerio .gridDragGhost .x-dd-drag-ghost .x-grid3-row {
+border: 1px dotted #a3bae9;
+background: #DFE8F6!important;
+}
+.kerio .gridDragGhost .x-grid3-cell-inner {
+height: 13px;
+}
+.kerio .gridDragGhost .gridColCbxWithText {
+padding-top: 0px;
+background-position: left -2px;
+}
+.kerio .gridDragGhost .x-grid3-col-indentGroupMembers {
+margin-left: 0px;
+}
+.gridDragGhost .emptyDraggedRow {
+color: #9a9a9a;
+}
+.kerio .x-grid3-row.dragged {
+opacity: .4;
+-moz-opacity:.4;
+filter:alpha(opacity=40);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=40)";
+}
+.kerio .gridRowInsertBottomLine,
+.kerio .mlCellOver.gridRowInsertBottomLine {
+border-bottom: 1px solid #99bbe8 !important;
+}
+.kerio .gridRowInsertTopLine,
+.kerio .mlCellOver.gridRowInsertTopLine {
+border-top: 1px solid #99bbe8 !important;
+}
+.kerio .hideRowHighlighting .x-grid3-row-over {
+border-color: #FFFFFF #EDEDED #EDEDED;
+border-width: 1px;
+background-color: transparent;
+background-image: none;
+}
+.rowMoveLeft,
+.rowMoveRight {
+width: 9px;
+height: 9px;
+position: absolute;
+top: 0;
+line-height: 1px;
+font-size: 1px;
+overflow: hidden;
+visibility: hidden;
+z-index: 20000;
+background: transparent no-repeat left top;
+}
+.rowMoveLeft {
+background-image: url(./img/rowMoveLeft.gif?v=8629);
+}
+.rowMoveRight {
+background-image: url(./img/rowMoveRight.gif?v=8629);
+}
+.rowMoveLeft.notAllowed {
+display: none!important;
+}
+.rowMoveRight.notAllowed {
+display: none!important;
+}
+.kerio .insertToGroup {
+background: #EFEFEF;
+}
+.kerio .insertToGroup .x-grid3-row {
+border: 1px solid #EFEFEF !important;
+}
+
+.kerio .gridReadOnly .x-grid3-check-col-on,
+.kerio .gridDisabled .x-grid3-check-col-on {
+background-image: url(img/checkedDisabled.gif?v=8629);
+}
+.kerio .gridReadOnly .x-grid3-check-col,
+.kerio .gridDisabled .x-grid3-check-col {
+background-image: url(img/uncheckedDisabled.gif?v=8629);
+}
+.kerio .gridReadOnly .checkAllButton,
+.kerio .gridDisabled .checkAllButton {
+display: none;
+}
+
+.kerio .emptyGridBody {
+height: 1px;
+}
+
+.kerio .noGridHeader .emptyGridBody {
+width: auto;
+height: auto;
+}
+.kerio .x-grid-empty {
+text-align: center;
+font-style: italic;
+position: absolute;
+width: 100%;
+padding: 10px 0 0;
+}
+.kerio .baseGrid.hiddenEmptyText .x-grid-empty {
+display: none;
+}
+
+
+.kerio .gridRaster .x-grid3-col {
+border-left:  1px dotted #EEEEEE;
+border-right: 1px dotted #D2D2D2;
+}
+
+.kerio .gridRaster .x-grid3-cell-first {
+border-left:  0px dotted #EEEEEE;
+}
+
+.kerio .gridRaster .x-grid3-row td,
+.kerio .gridRaster .x-grid3-summary-row td {
+padding-left: 0px !important;
+padding-right: 0px !important;
+}
+
+.kerio .selectionByCbx .x-grid3-td-checker {
+background: transparent;
+}
+.kerio .selectionByCbx .x-grid3-row-selected .x-grid3-row-checker {
+background-position: 2px 2px;
+}
+.kerio .selectionByCbx .checkedRow .x-grid3-row-checker,
+.kerio .selectionByCbx .checkedRow .x-grid3-row-selected .x-grid3-row-checker {
+background-position: -23px 2px;
+}
+.kerio.ext-webkit .x-small-editor .x-form-text {
+padding-top: 1px;
+}
+
+.x-color-palette {
+width: 140px;
+height: 80px;
+}
+.x-color-palette a,
+.x-color-palette a.x-color-palette-sel {
+padding: 0;
+border: 0;
+}
+.x-color-palette a em {
+border: 0;
+}
+.x-color-palette em span {
+height: 20px;
+line-height: 20px;
+width: 17px;
+text-align: center;
+font-size: 14px;
+overflow: hidden;
+font-weight: bold;
+padding-left: 3px;
+}
+.x-color-palette .x-color-palette-sel span:before {
+content: "\2713"
+}
+.x-color-palette a:hover {
+border: 1px solid gray !important;
+}
+.x-color-palette a:hover em span {
+height: 18px;
+line-height: 18px;
+width: 15px;
+}
+.x-color-palette a.x-color-palette-sel:hover span {
+padding-left: 2px;
+width: 16px !important;
+}
+
+
+BODY,
+.x-grid3-cell PRE,
+.x-small-editor .x-form-field,
+.ext-webkit .x-small-editor .x-form-field,
+.x-grid3-row TD, .x-grid3-summary-row TD,
+.x-grid3-hd-row TD,
+.x-grid3-topbar, .x-grid3-bottombar,
+.x-tree-node,
+.x-list-header-inner DIV EM,
+.x-btn BUTTON,
+.x-toolbar TD,.x-toolbar SPAN,.x-toolbar INPUT,.x-toolbar DIV,.x-toolbar SELECT,.x-toolbar LABEL,
+.x-menu-list-item,
+.x-panel-fbar TD,.x-panel-fbar SPAN,.x-panel-fbar INPUT,.x-panel-fbar DIV,.x-panel-fbar SELECT,.x-panel-fbar LABEL,
+.rowView PRE {
+font-family: tahoma, arial, sans-serif;
+}
+
+.kerio.br-webkit {
+-webkit-user-select: none;
+}
+.kerio.br-ff {
+-moz-user-select: -moz-none;
+}
+
+.kerio.br-ff2 input,
+.kerio.br-ff2 textarea,
+.kerio.br-ff .selectable
+{
+-moz-user-select: text;
+}
+
+.kerio.br-webkit .selectable {
+-webkit-user-select: text;
+}
+
+
+.kerio .x-item-disabled {
+cursor:default !important;
+}
+.kerio input.x-form-text,
+.kerio textarea {
+cursor: text;
+}
+.kerio A,
+.kerio A * {
+cursor: pointer;
+}
+
+
+.kerio .dialogButtonsContainer.x-panel-btns {
+padding: 10px 0 11px 0;
+}
+.kerio .dialogButtonsContainer .x-toolbar-cell {
+padding: 0
+}
+
+.kerio A.toolbarLink,
+.kerio A.toolbarLink:hover,
+.kerio A.toolbarLink:active {
+color:#00e;
+}
+
+
+.kerio .toolbarSprite .enabled .sbText {
+background-position: 0 0;
+}
+.kerio .toolbarSprite .disabled .sbText {
+background-position: 0 -16px;
+}
+
+.kerio .toolbarSprite.enabled .sbText {
+background-position: 0 0;
+}
+.kerio .toolbarSprite.disabled .sbText {
+background-position: 0 -16px;
+}
+
+.kerio .toolbarButtons .xtb-spacer {
+width: 5px;
+}
+.kerio .x-toolbar-left .toolbarItemSpacer,
+.kerio .x-toolbar-left .fieldLabelContainer {
+padding-right: 5px;
+}
+.kerio .x-toolbar-right .toolbarItemSpacer,
+.kerio .x-toolbar-right .fieldLabelContainer,
+.kerio .x-toolbar-extras-row .x-toolbar-cell {
+padding-left: 5px;
+}
+.kerio .x-toolbar-left .fieldLabelContainer,
+.kerio .x-toolbar-right .fieldLabelContainer {
+padding-top: 1px;
+}
+
+.kerio .verticalToolbar {
+height: 100%;
+width: 100%;
+}
+.kerio .verticalToolbar .vSeparator {
+height: 1px;
+width: 100%;
+background-color: #9AC6FF;
+}
+.kerio .verticalToolbar .x-toolbar-ct {
+height: 100%
+}
+.kerio .verticalToolbar .x-toolbar-top {
+vertical-align: top;
+}
+.kerio .verticalToolbar .x-toolbar-bottom {
+vertical-align: bottom;
+}
+.kerio .verticalToolbar .x-toolbar-top .x-toolbar-cell {
+padding-bottom: 5px;
+}
+.kerio .verticalToolbar .x-toolbar-bottom .x-toolbar-cell {
+padding-top: 5px;
+}
+.kerio .verticalToolbar.centered .x-toolbar-top {
+vertical-align: middle;
+height: 100%;
+}
+.kerio .x-btn-text-icon .x-btn-icon-small-left .x-btn-text {
+padding-left: 18px;
+}
+
+
+.kerio.br-ie7 .x-menu-item-icon {
+margin-right: 0;
+border-right: 8px solid transparent !important;
+}
+
+.kerio .x-menu A {
+color: black;
+}
+
+.kerio .radioMenu .x-menu-item-icon {
+background: transparent url(img/radio.png?v=8629) no-repeat 0 0;
+}
+.kerio .x-menu-item-checked .radioMenu .x-menu-item-icon {
+background-position: 0 -30px;
+}
+
+
+.kerio .dialog .x-window-body {
+background-color: white !important;
+}
+
+.kerio .dialogBlueBackground .x-window-body {
+background-color: transparent !important;
+}
+.kerio .loadingHeader {
+position: absolute;
+top: 3px;
+left: 0px;
+text-align: center;
+display: none;
+}
+.kerio SPAN.loadingHeaderText {
+padding-left: 22px !important;
+background: url('../../ext/extjs/resources/images/default/grid/grid-loading.gif?v=8629') no-repeat scroll 0 center;
+white-space: nowrap;
+}
+.kerio .loadingHeader SPAN.loadingHeaderText {
+padding: 2px;
+line-height: 20px;
+}
+
+
+.kerio .x-tree .unselectableRoot,
+.kerio .x-tree .unselectableRoot *,
+.kerio .x-tree .unselectableRoot a * {
+cursor: default;
+}
+.kerio .x-tree .unselectableRoot.x-tree-node-over {
+background-color: transparent;
+}
+
+.kerio .rootNode {
+font-weight: bold;
+}
+
+.kerio .rootNode.emptyTree span {
+font-weight: normal;
+font-style: italic;
+color: gray;
+}
+.kerio .emptyTree .rootIcon {
+background: none;
+}
+
+.kerio .nonCollapsible ul.x-tree-root-ct {
+margin-left: -18px;
+}
+
+.kerio .x-tree-icon, .kerio .x-tree-ec-icon, .kerio .x-tree-elbow-line, .kerio .x-tree-elbow, .kerio .x-tree-elbow-end,
+.kerio .x-tree-elbow-plus, .kerio .x-tree-elbow-minus, .kerio .x-tree-elbow-end-plus, .kerio .x-tree-elbow-end-minus {
+padding-right: 5px;
+}
+
+.kerio .x-tree-node a span, .x-dd-drag-ghost a span {
+padding-left: 5px;
+}
+
+.kerio .baseGrid {
+
+padding: 10px;
+}
+.kerio .baseGrid .x-grid3-hd-row td.x-grid3-cell-first {
+border-left: none;
+}
+.kerio .x-grid3-row td,
+.kerio .x-grid3-summary-row td {
+-webkit-user-select: none;
+-khtml-user-select: none;
+}
+.kerio .noGridHeader .x-grid3-header {
+display: none;
+}
+.kerio .baseGrid .x-grid3-scroller {
+border-top: none;
+}
+.kerio .gridFieldsetCover {
+padding: 10px;
+}
+.kerio .gridInFieldset {
+padding: 0px;
+}
+.kerio.br-ie .gridInFieldset .x-fieldset-header {
+margin-bottom: 0px;
+}
+.kerio.br-ff .gridInFieldset .x-fieldset-header {
+margin-left: 5px;
+}
+.kerio .gridInFieldset .x-grid3-viewport {
+background-color: white;
+}
+.kerio .gridInFieldset .x-grid3 {
+background-color: transparent;
+}
+.kerio .x-grid3-row-over {
+
+background:#efefef;
+}
+
+.kerio .lastFormItem {
+margin-bottom: 0;
+}
+.kerio .formContent.baseGrid,
+.kerio .formContent.baseTree {
+padding: 0 0 10px 0;
+}
+.kerio .formContent .rightToolbar {
+padding: 0 0 0 10px;
+}
+.kerio .formContent.rightToolbarCover {
+padding-bottom: 10px;
+}
+.kerio .formContent.rightToolbarCover .baseGrid,
+.kerio .formContent.rightToolbarCover .baseTree {
+padding: 0;
+}
+.kerio .formContent .rightToolbar.topRightToolbar {
+padding-top: 31px;
+}
+.kerio .formFieldsetContainer .formContent.rightToolbarCover {
+padding-bottom: 0;
+}
+.kerio .lastFormItem .formContent,
+.kerio .lastFormItem.formContent {
+padding-bottom: 0 !important;
+}
+
+.kerio.br-webkit .x-form-check-wrap {
+padding-left: 1px;
+}
+.kerio .x-form-item label,
+.kerio .x-form-field,
+.kerio .x-form-text,
+.kerio .x-progress-wrap,
+.kerio .x-combo-list-item,
+.kerio .x-form-display-field {
+font-size: 11px;
+}
+.kerio.br-ie7 .x-window .x-form > .x-form-item {
+width: 100%;
+}
+
+.x-form-item label.x-form-item-label {
+z-index: auto;
+}
+
+.kerio.br-ie9 .x-form-item-label {
+max-height: 13px;
+}
+.kerio.br-ie11 .x-form-item-label {
+line-height: 13px;
+}
+
+.kerio.br-ff.os-mac .x-form-item label {
+line-height: 13px;
+}
+.kerio .x-form-text {
+height: 16px;
+line-height: 13px;
+vertical-align: top;  
+}
+.kerio.br-ie7 .x-form-text {
+line-height: 14px;
+}
+.kerio.br-ie7 .x-grid-editor .x-form-text {
+margin-top: 0px !important;  
+}
+.kerio.br-webkit .x-form-simple-text,
+.kerio.br-webkit .x-form-template-text,
+.kerio.br-webkit .x-small-editor .x-form-field {
+font-size:11px;
+}
+.kerio .x-form-trigger {
+height:19px !important;    
+}
+.kerio.br-ie .formRowContainer .buttonInForm,
+.kerio.br-ie .formRowContainer .buttonInForm .x-panel-bwrap,
+.kerio.br-ie .formRowContainer .buttonInForm .x-panel-body,
+.kerio.br-ie .formColumnContainer .buttonInForm,
+.kerio.br-ie .formColumnContainer .buttonInForm .x-panel-bwrap,
+.kerio.br-ie .formColumnContainer .buttonInForm .x-panel-body {
+overflow: visible !important;
+}
+
+.kerio .x-form-field-wrap .multiTrigger .x-form-trigger{
+position: static;
+top: auto;
+vertical-align: top;
+}
+
+.kerio .formFieldProgress {
+border: none;
+height: 100%;
+width: 0;
+background: #9CBFEE url(../../ext/extjs/resources/images/default/progress/progress-bg.gif?v=8629) repeat-x scroll left center;
+}
+
+.kerio .x-html-editor-wrap .x-html-editor-tb .x-btn-icon.x-edit-image .x-btn-text {
+background-image: url(./img/insertImage.png?v=8629);
+background-position: -2px -1px;
+}
+.kerio .x-html-editor-wrap.readonly .x-html-editor-tb .sbIcon .sbText,
+.kerio .x-html-editor-wrap.disabled .x-html-editor-tb .sbIcon .sbText {
+opacity:.5;
+-moz-opacity:.5;
+filter:alpha(opacity=50);
+}
+.x-html-editor-tb .simpleButton.sbIcon .sbText {
+background:transparent url(../../ext/extjs/resources/images/default/editor/tb-sprite.gif?v=8629) no-repeat;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-bold {
+background-position:0 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-italic {
+background-position:-16px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-underline {
+background-position:-32px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-forecolor {
+background-position:-160px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-backcolor {
+background-position:-176px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-justifyleft {
+background-position:-112px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-justifycenter {
+background-position:-128px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-justifyright {
+background-position:-144px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-insertorderedlist {
+background-position:-80px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-insertunorderedlist {
+background-position:-96px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-increasefontsize {
+background-position:-48px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-decreasefontsize {
+background-position:-64px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-sourceedit {
+background-position:-192px 0;
+}
+.x-html-editor-tb .simpleButton.sbIcon .x-edit-createlink {
+background-position:-208px 0;
+}
+
+.kerio .x-tbar-page-number {
+width: 3.2em;
+padding-left: 2px;
+}
+.kerio .hiddenPaging {
+display: none;
+}
+.kerio .x-column {
+padding-left: 5px;
+}
+.kerio .column0 {
+padding-left: 0px;
+}
+.kerio .x-column.formFieldsetContainer {
+padding: 10px;
+margin-left: 5px;
+}
+.kerio.br-ie .x-column.formFieldsetContainer {
+padding-top: 0;
+}
+.kerio .column0.formFieldsetContainer {
+margin-left: 0px;
+}
+
+.kerio .x-form-empty-field {
+font-style: italic;
+}
+
+.kerio .x-item-disabled {
+color:#808080;
+opacity:1;
+-moz-opacity:1;
+filter: none;
+}
+.kerio .x-item-disabled * {
+color:#808080;
+opacity:1;
+-moz-opacity:1;
+filter: none;
+}
+.kerio.br-webkit .x-item-disabled INPUT[type=text] {
+color: #282828!important;
+}
+.kerio .x-item-disabled img,
+.kerio .x-item-disabled span.x-form-template-text-icon-left,
+.kerio .x-item-disabled span.x-form-template-text-icon-right,
+.kerio .x-item-disabled .displayFieldLeftIcon,
+.kerio .x-item-disabled .displayFieldRightIcon {
+opacity:.6;
+-moz-opacity:.6;
+filter:alpha(opacity=60);
+}
+
+.kerio .readonly * {
+color:#808080 !important;
+border-color: #B5B8C8 !important; 
+cursor: auto!important;
+}
+.kerio .readonly .x-form-field {
+background-image: none;
+}
+.kerio .readonly .x-form-trigger {
+background-position:0 0 !important;
+cursor: default;
+opacity: .6;
+-moz-opacity: .6;
+filter: alpha(opacity=60);
+}
+.kerio .readonly .x-form-trigger-over {
+background-position:0 0 !important;
+border-bottom:1px solid #B5B8C8;
+}
+.kerio .readonly .x-form-trigger-click {
+background-position:0 0 !important;
+border-bottom:1px solid #B5B8C8;
+}
+
+.kerio input.x-combo-noedit {
+cursor: pointer;
+}
+
+.kerio .x-form-field-wrap {
+font-size: 11px;
+}
+
+.kerio .iconCombo .iconWrap {
+width: 20px;
+height: 18px !important;
+}
+.kerio.br-webkit .x-grid-editor .iconCombo .iconWrap {
+height: 17px !important;
+}
+.kerio.br-webkit .x-toolbar .iconCombo .iconWrap {
+padding-top: 0px;
+}
+
+.kerio .iconWrap .icon.flag {
+margin-top: -2px;
+width: 17px;  
+}
+.kerio .x-combo-list-item .icon.flag {
+margin-top: -4px;
+}
+.kerio.br-ff.os-mac .x-combo-list-item .icon.flag {
+margin-top: -3px;
+}
+
+.kerio .template-text {
+padding: 1px 1px;
+min-height: 18px;
+line-height: 18px;
+vertical-align: middle;
+}
+.kerio.br-ie .template-text {
+height: auto;
+line-height: normal;
+}
+.kerio .template-text DIV {
+line-height: 17px;
+}
+.kerio.br-ie .template-text DIV {
+line-height: 16px;
+}
+.kerio .template-text-icon-left {
+padding-left: 20px;
+background-repeat: no-repeat;
+}
+.kerio .template-text-icon-right {
+padding-right: 20px;
+background-repeat: no-repeat;
+}
+
+.kerio .x-form-display-field {
+padding-top: 0;
+min-height: 19px;
+line-height: 18px;
+vertical-align: middle;
+cursor: default;
+}
+.kerio.br-ie7 .x-form-display-field {
+line-height: 17px;
+}
+.kerio.ext-webkit .x-form-display-field {
+padding-top: 1px;
+}
+.kerio .readonly .x-form-display-field,
+.kerio .readonly .x-form-display-field * {
+cursor: default!important;
+}
+.kerio .displayFieldIcon {
+background-repeat: no-repeat;
+background-position: left 1px;
+}
+.kerio .displayFieldIcon.left {
+padding-left: 20px;
+}
+.kerio .displayFieldIcon.right {
+padding-right: 20px;
+background-position: right;
+}
+
+.kerio .link {
+cursor: pointer;
+background-color: transparent;
+}
+.kerio .textLink {
+text-decoration: underline;
+color: #00E;
+font-size: 11px;
+}
+.kerio .readonly .template-text .textLink {
+color:#0000EE !important;
+}
+.kerio .readonly .template-text .link {
+cursor:pointer !important;
+}
+.x-form-checkbox:focus,
+.x-form-radio:focus {
+outline: none;
+}
+BUTTON:focus,
+.formRadioFocus{
+outline: 1px dotted black;
+}
+.x-form-focus {
+border-color: #4d90fe;
+}
+
+body.br-ie.x-body-masked .x-window-plain .x-window-mc{
+background:#C9D5E4;
+}
+body.br-ie9.x-body-masked .x-window-plain .x-window-mc{
+background:#CED9E7;
+}
+body.os-tiger.br-webkit.x-body-masked .x-window-plain .x-window-mc,
+body.os-leopard.br-webkit.x-body-masked .x-window-plain .x-window-mc {
+background-color: #C5D1E2;
+}
+.kerio.br-ie7 .x-progress-bar {
+padding-top: 0;
+padding-bottom: 0;
+}
+.kerio .x-progress-text,
+.kerio .x-progress-text-back {
+padding-left: 0px;
+padding-right: 0px;
+}
+
+.kerio .x-form-label-top .x-progress-wrap {
+padding-bottom: 0;
+}
+
+.kerio .progressbarValueExceeded {
+border: 1px solid transparent;
+}
+
+.kerio .progressbarValueExceeded div {
+padding-top: 2px;
+padding-bottom: 2px;
+vertical-align: middle;
+}
+
+.kerio .x-progress-wrap.x-item-disabled .x-progress-bar,
+.kerio .x-progress-wrap.readonly .x-progress-bar {
+background: #B9B9B9 url(img/progress-ind-gray.gif?v=8629) repeat-x left center;
+}
+.kerio .x-progress-wrap.x-item-disabled .x-progress-inner,
+.kerio .x-progress-wrap.readonly .x-progress-inner {
+background: #E6E6E6 url(img/progress-inner-gray.gif?v=8629) repeat-x scroll 0%;
+}
+
+.kerio .x-progress-wrap.x-item-disabled,
+.kerio DIV.x-progress-wrap.readonly,
+.kerio .x-progress-wrap.x-item-disabled .x-progress-bar {
+border-color: #B0B0B0 !important;
+}
+.kerio .x-progress-wrap.progressbarValueExceeded.x-item-disabled {
+border-color: transparent;
+}
+
+.kerio .x-progress-wrap.progressbarValueExceeded.readonly {
+border-color: transparent !important;
+}
+
+.kerio .formSlider.x-item-disabled {
+opacity:0.6;
+-moz-opacity:.6;
+filter:alpha(opacity=60);
+}
+.kerio.br-ie7 .formSlider.x-item-disabled * {
+filter:alpha(opacity=60);
+}
+.kerio .formSlider.x-item-disabled .x-slider-thumb {
+background-position: 0 0!important;
+cursor: default;
+}
+.kerio .formSlider .x-slider-thumb {
+cursor: pointer;
+}
+.kerio .formSlider.focusedItem .x-slider-thumb {
+outline: gray dotted thin;
+}
+.kerio.br-ie8 .formSlider.x-item-disabled {
+filter: inherit;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+}
+
+.kerio .form {
+padding: 10px;
+}
+
+.kerio.br-ff2 .x-window {
+position: fixed !important;
+}
+
+.kerio.ext-webkit .x-fieldset-header {
+padding-top: 0px;
+}
+
+.kerio .x-tab-strip-top .x-tab-right {
+background: transparent url(img/tabs-sprite.gif?v=8629) no-repeat 0 -51px;
+padding-left:10px;
+}
+.kerio .x-tab-strip-top .x-tab-left {
+background: transparent url(img/tabs-sprite.gif?v=8629) no-repeat right -351px;
+padding-right:10px;
+}
+.kerio .x-tab-strip-top .x-tab-strip-inner {
+background: transparent url(img/tabs-sprite.gif?v=8629) repeat-x 0 -201px;
+}
+.kerio .x-tab-strip-top .x-tab-strip-over .x-tab-right {
+background-position:0 -101px;
+}
+.kerio .x-tab-strip-top .x-tab-strip-over .x-tab-left {
+background-position:right -401px;
+}
+.kerio .x-tab-strip-top .x-tab-strip-over .x-tab-strip-inner {
+background-position:0 -251px;
+}
+.kerio .x-tab-strip-top .x-tab-strip-active .x-tab-right {
+background-position: 0 0;
+}
+.kerio .x-tab-strip-top .x-tab-strip-active .x-tab-left {
+background-position: right -301px;
+}
+.kerio .x-tab-strip-top .x-tab-strip-active .x-tab-strip-inner {
+background-position: 0 -151px;
+}
+.kerio .x-tab-panel-header-plain .x-tab-strip-spacer  {
+height: 0;
+border-width: 0;
+}
+.kerio ul.x-tab-strip li {
+margin-left: 1px;
+}
+.kerio ul.x-tab-strip li.x-tab-strip-active {
+margin-left: 0;
+}
+.kerio .dialogWithTabs .x-tab-panel {
+background: none !important;
+}
+.kerio .dialogWithTabs .x-window-body {
+background-color: transparent !important;
+}
+.kerio .x-tab-strip-active span.x-tab-strip-text {
+font-weight:normal;
+}
+.kerio.br-ff.os-mac .x-tab-strip span.x-tab-strip-text {
+line-height: 13px;
+}
+.kerio .x-tab-scroller-left {
+background-size: 36px 43px;
+background-position: -18px -1px;
+border-left: 1px solid #8DB2E3;
+}
+.kerio .x-tab-scroller-left-over {
+background-position:0 -1px;
+}
+.kerio .x-tab-scroller-left-disabled {
+background-position: -18px -1px;
+}
+.kerio .x-tab-scroller-right {
+background-size: 36px 43px;
+background-position: 0 -1px;
+border-right: 1px solid #8DB2E3;
+}
+.kerio .x-tab-scroller-right-over {
+background-position: -18px -1px;
+}
+.kerio .x-tab-scroller-right-disabled {
+background-position: 0 -1px;
+}
+.kerio .dialogWithTabs .x-window-header {
+padding: 5px 0 8px !important;
+}
+.kerio .wizardHeader {
+padding-bottom: 4px;
+}
+.kerio .wizard .x-tab-panel-body-top {
+border-top: 1px solid #8DB2E3;
+}
+.kerio .autoScroll {
+overflow: auto;
+}
+
+.kerio .layoutFormGrid .form {
+padding-bottom: 0;
+}
+.kerio .layoutFormGrid .gridFieldsetCover,
+.kerio .layoutFormGrid .gridCoverPanel .baseGrid,
+.kerio .layoutFormGrid .gridCoverPanel .gridRightToolbar {
+padding-top:0px;
+}
+.kerio .layoutFormGrid .gridFieldsetCover .gridCoverPanel .baseGrid,
+.kerio .layoutFormGrid .gridFieldsetCover .gridCoverPanel .gridRightToolbar {
+padding-top:10px;
+}
+.kerio .noBottomMargin {
+margin-bottom: 0px;
+}
+.kerio .noBottomPadding {
+padding-bottom: 0px;
+}
+.kerio .noWrap {
+white-space: pre;
+}
+.kerio .noWrap * {
+white-space: pre;
+}
+
+.kerio .noGroupHeader .x-grid-group-hd {
+height: 0px;
+padding: 0px;
+border-width: 0px;
+}
+.kerio .noGroupHeader .x-grid-group-hd div {
+background: none;
+}
+
+.kerio .nonCollapsibleGroup .x-grid-group-hd {
+cursor: default;
+}
+.kerio .nonCollapsibleGroup .x-grid-group-hd div {
+background-image: none;
+padding: 4px 4px 4px 4px;
+}
+.kerio .nonCollapsibleGroup .x-grid3-col-indentGroupMembers {
+
+margin-left: 7px;
+}
+
+.kerio .spinnerField {
+text-align: right;
+}
+.kerio .spinnerTrigger {
+background: transparent url(img/spinner.gif?v=8629) no-repeat 0 0;
+}
+.kerio .spinnerOverup{
+background-position: -17px 0;
+}
+.kerio .spinnerClickup {
+background-position: -34px 0;
+}
+.kerio .spinnerOverdown {
+background-position: -51px 0;
+}
+.kerio .spinnerClickdown {
+background-position: -68px 0;
+}
+.kerio .x-trigger-wrap-focus .spinnerTrigger {
+background-position: -85px 0;
+}
+.kerio .x-trigger-wrap-focus .spinnerOverup {
+background-position: -102px 0;
+}
+.kerio .x-trigger-wrap-focus .spinnerClickup {
+background-position: -119px 0;
+}
+.kerio .x-trigger-wrap-focus .spinnerOverdown {
+background-position: -136px 0;
+}
+.kerio .x-trigger-wrap-focus .spinnerClickdown {
+background-position: -153px 0;
+}
+.kerio .spinnerSplitter {
+line-height: 1px;
+font-size: 1px;
+background: transparent url(img/spinner-split.gif?v=8629) no-repeat 0 0;
+position: absolute;
+cursor: default;
+}
+.kerio .x-trigger-wrap-focus .spinnerSplitter {
+background-position: -14px 0;
+}
+
+
+.kerio .x-date-middle {
+padding-top: 2px;
+padding-bottom: 2px;
+width: 130px; 
+}
+.kerio input.x-date-noedit {
+cursor: pointer;
+}
+.kerio .x-date-picker .x-date-inner TH.dayNameAlignForChinese {
+text-align: center !important;
+}
+
+.kerio .multilineCell {
+width: 100%;
+padding: 0;
+margin: 0;
+}
+.kerio .mlCellOver {
+border:1px solid #ddd !important;
+background-color:#efefef !important;
+}
+.kerio .x-grid3-row-over .multilineCellContainer,
+.kerio .mlCellOver .multilineCellContainer,
+.kerio .mlCellOver .multilineCellContainer * {
+background-color: #efefef;
+}
+
+.kerio .x-grid3-row-selected .multilineCellContainer,
+.kerio.br-ie .x-grid3-row-selected .multilineCellContainer * {
+background-color: #efefef !important;
+}
+.kerio .focusedItem .x-grid3-row-selected .multilineCellContainer,
+.kerio .focusedItem .x-grid3-row-selected .multilineCellContainer * {
+background-color: #DFE8F6 !important;
+}
+.kerio .multilineCell TD {
+padding: 0;
+margin: 0;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: pre;
+}
+.kerio .multilineCell TD.collapsible {
+width: 16px;
+}
+.kerio .multilineCell TD.collapsible.collapsed {
+background: url(../../ext/extjs/resources/images/default/tree/elbow-plus-nl.gif?v=8629) no-repeat scroll center right;
+}
+.kerio .multilineCell TD.collapsible.expanded {
+background: url(../../ext/extjs/resources/images/default/tree/elbow-minus-nl.gif?v=8629) no-repeat scroll center right;
+}
+
+.kerio .multilineCell TD.cbx {
+width: 16px;
+}
+.kerio .multilineCell TD.cbx div {
+width: 13px;
+height: 13px;
+margin-top: 0px;
+background: url(img/checkbox.gif?v=8629) no-repeat;
+}
+.kerio .multilineCell TD.cbx .cbxOn {
+background-position: 0 -13px;
+}
+.kerio .multilineCell TD.cbx .cbxOff {
+background-position: 0 0;
+}
+.kerio .multilineCell TD.cbx .cbxOn.disabled {
+background-position: -39px -13px;
+}
+.kerio .multilineCell TD.cbx .cbxOff.disabled {
+background-position: -39px 0;
+}
+
+.kerio .multilineCell .passive TD.cbx .cbxOn {
+background-position: -52px -13px;
+}
+.kerio .multilineCell .passive TD.cbx .cbxOff {
+background-position: -52px 0;
+}
+
+.kerio .statusBar {
+font-size: 11px;
+
+border-color: transparent; 
+border-width: 0 1px;
+padding: 3px 5px 0; 
+}
+.kerio .statusBar .x-panel-body {
+background-color: transparent;
+line-height: 18px; 
+}
+.kerio .statusBar .statusBarIcon,
+.kerio .statusBar .statusBarText,
+.kerio .statusBar .statusBarLink {
+padding: 2px 0px 2px 0px;
+}
+.kerio .statusBarLink {
+text-decoration: underline;
+color: blue;
+}
+
+.kerio .toolbarButtons {
+padding: 0;
+}
+.kerio .topToolbar .xtb-text,
+.kerio .bottomToolbar .xtb-text {
+line-height: 14px;
+padding-top: 0px;
+}
+
+.kerio .topToolbar {
+padding-bottom: 10px;
+}
+
+.kerio .bottomToolbar {
+padding-top: 10px;
+}
+
+.kerio .rightToolbar {
+padding: 10px 10px 10px 0;
+}
+.kerio .rightToolbar.topRightToolbar {
+padding-top: 41px;
+}
+.kerio .rightToolbar.bottomRightToolbar {
+padding-bottom: 41px;
+}
+
+.kerio .fileUploadWrap {
+position: relative;
+height: 22px;
+overflow: hidden;
+}
+.kerio .fileUploadWrap .fileInput {
+position: absolute;
+right: 0;
+-moz-opacity: 0;
+filter:alpha(opacity=0);
+opacity: 0;
+z-index: 2;
+height: 22px;
+cursor: pointer;
+}
+.kerio .fileUploadWrap .fileInput.readonly,
+.kerio .fileUploadWrap .fileInput.disabled {
+cursor: default;
+}
+.kerio .fileUploadWrap .fileInputButton {
+position: absolute;
+right: 0;
+z-index: 1;
+}
+.kerio.br-ff3 .x-toolbar .fileInputButton {
+top: 1px;
+}
+
+.kerio.br-ie7 .formUploadButtonInColumn.x-column {
+overflow: visible;
+}
+
+.kerio .ext-mb-content.messageBoxWithIcon {
+padding-left: 47px;
+}
+.kerio .ext-mb-error {
+background-image: url(./img/errorBig.png?v=8629); 
+}
+
+.kerio .scroller {
+font-size: 12px;
+width: 20px;
+height: 100%;
+overflow: auto;
+position: relative;
+background-color: white;
+}
+
+.kerio.br-ie8 .scroller .x-grid3-focus {
+margin-top: 1px;
+margin-left: 1px;
+}
+.kerio .proxyScroller {
+overflow: hidden;
+border: 1px solid transparent;
+border-bottom: none;
+position: absolute;
+top: 0;
+left: 0;
+}
+.kerio .proxyScroller .spacer {
+padding: 0px;
+margin: 0px;
+border: none;
+background-color: white;
+overflow: hidden;
+}
+.kerio .proxyScroller .spacer .loadingText,
+.kerio .proxyScroller .data .loadingText {
+font-style: italic;
+color: gray;
+}
+.kerio .proxyScroller .data {
+overflow: hidden;
+background-color: white;
+}
+.kerio .proxyScroller .singleRow {
+height: 16px;
+font-size: 11px;
+padding: 0;
+}
+.kerio .proxyScroller .rowContent {
+line-height: 16px;
+display: inline;
+}
+.kerio .proxyScroller .selectedText,
+.kerio .proxyScroller .selectedText * {
+color: HighlightText;
+background-color: Highlight;
+line-height: 16px;
+}
+.kerio .proxyScroller .selectedText.find,
+.kerio .proxyScroller .selectedText .find {
+color: HighlightText !important;
+font-weight: bold !important;
+background-color: Highlight !important;
+}
+.kerio .proxyScroller .hideSelection .selectedText,
+.kerio .proxyScroller .hideSelection .selectedText a {
+background-color: transparent;
+color: inherit;
+}
+.kerio.br-ie7 .proxyScroller .hideSelection .selectedText,
+.kerio.br-ie7 .proxyScroller .hideSelection .selectedText a {
+
+color: black;
+}
+.kerio .rowView .internalMask {
+position: absolute;
+top: 40px;  
+left: 10px; 
+display: none;
+}
+
+.kerio.br-ff .proxyScroller .rowContent,
+.kerio.br-ff .proxyScroller .selectedText {
+padding: 2px 0px 1px 0px;
+}
+.kerio.br-webkit .proxyScroller .rowContent,
+.kerio.br-webkit .proxyScroller .selectedText {
+padding: 1px 0px 2px 0px;
+}
+.kerio.br-ie11 .proxyScroller .rowContent,
+.kerio.br-ie11 .proxyScroller .selectedText {
+padding: 1px 0px 1px 0px;
+}
+.kerio.br-ie8 .proxyScroller .rowContent {
+
+padding: 0;
+}
+.kerio.br-ie8 .proxyScroller .selectedText {
+padding: 1px 0px 2px 0px;
+}
+.kerio.br-ie7 .proxyScroller .selectedText {
+padding: 2px 0px 2px 0px;
+}
+.kerio.br-ie7 .proxyScroller .rowContent {
+padding: 2px 0px 1px 0px;
+}
+.kerio .proxyScroller .singleRow {
+margin-left: 2px;  
+}
+.kerio .proxyScroller .rowDataViewEmptyText {
+position: absolute;
+top: 0px;
+left: 0px;
+width: 100%;
+height: 100%;
+}
+
+.kerio .scrollArrowClip {
+position: absolute;
+overflow: hidden;
+}
+.kerio .fakeScroller {
+position: relative;
+width: 30px;
+height: 100px;
+overflow-x: hidden;
+overflow-y: scroll;
+}
+.kerio .fakeScroller DIV {
+width: 10px;
+height: 200px;
+}
+
+.kerio .colorItem {
+background: url(img/colorPickerItemBorder.gif?v=8629) no-repeat;
+}
+.kerio .background {
+background-color: #FFFFFF;  
+}
+.kerio .backgroundffffff,
+.kerio .backgroundFFFFFF {
+background-color: #FFFFFF;
+}
+.kerio .backgroundffffcc,
+.kerio .backgroundFFFFCC,
+.kerio .backgroundFFFFB2 { 
+background-color: #FFFFB2;
+}
+.kerio .backgroundccffff,
+.kerio .backgroundCCFFFF,
+.kerio .backgroundC9D8ED { 
+background-color: #C9D8ED;
+}
+.kerio .backgroundffcccc,
+.kerio .backgroundFFCCCC { 
+background-color: #FFCCCC;
+}
+.kerio .backgroundccffcc,
+.kerio .backgroundCCFFCC,
+.kerio .backgroundC9EEC6 { 
+background-color: #C9EEC6;
+}
+.kerio .backgroundccccff,
+.kerio .backgroundCCCCFF,
+.kerio .backgroundDDBFEB  { 
+background-color: #DDBFEB;
+}
+.kerio .backgroundffccff,
+.kerio .backgroundFFCCFF,
+.kerio .backgroundFDE8CA  { 
+background-color: #FDE8CA;
+}
+.kerio .backgroundcccccc,
+.kerio .backgroundCCCCCC,
+.kerio .backgroundE8E8E8  { 
+background-color: #E8E8E8;
+}
+.backgroundFFFFCE {
+background-color: #FFFFCE;
+}
+.backgroundFEF6E3 {
+background-color: #FEF6E3;
+}
+.backgroundFFE4E4 {
+background-color: #FFE4E4;
+}
+.backgroundF0DAF7 {
+background-color: #F0DAF7;
+}
+.backgroundE2ECF8 {
+background-color: #E2ECF8;
+}
+.backgroundE2F9E0 {
+background-color: #E2F9E0;
+}
+.backgroundD4D4D4 {
+background-color: #D4D4D4;
+}
+.backgroundFFFF9A {
+background-color: #FFFF9A;
+}
+.backgroundF9D4B1 {
+background-color: #F9D4B1;
+}
+.backgroundFFB3B3 {
+background-color: #FFB3B3;
+}
+.backgroundC6A6D9 {
+background-color: #C6A6D9;
+}
+.backgroundB0C0DB {
+background-color: #B0C0DB;
+}
+.backgroundB0DDAD {
+background-color: #B0DDAD;
+}
+.backgroundC6C6C6 {
+background-color: #C6C6C6;
+}
+.backgroundFFFF81 {
+background-color: #FFFF81;
+}
+.backgroundF6C69E {
+background-color: #F6C69E;
+}
+.backgroundFFA1A1 {
+background-color: #FFA1A1;
+}
+.backgroundB693CB {
+background-color: #B693CB;
+}
+.backgroundA5B7D6 {
+background-color: #A5B7D6;
+}
+.background9DD09A {
+background-color: #9DD09A;
+}
+
+.kerio.br-ie8 .x-form-text,
+.kerio.br-ie8 TEXTAREA.x-form-field {
+margin: 0 !important;
+}
+.kerio.br-ie8 .x-small-editor .iconCombo .iconWrap {
+position: relative;
+}
+.kerio.br-ie8 .x-toolbar .xtb-text {
+padding-top: 0px;
+}
+.kerio.br-ie8 .x-toolbar .x-form-trigger,
+.kerio.br-ie8 .x-toolbar .iconCombo .iconWrap {
+top: 0;
+}
+.kerio.br-ie8 .x-item-disabled,
+.kerio.br-ie8 .x-item-disabled * {
+filter: inherit;
+}
+.kerio.br-ie8 .x-item-disabled .x-form-trigger {
+filter: inherit;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=60)";
+}
+.kerio.br-ie8 .fileUploadWrap .fileInput {
+filter: inherit;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+}
+
+.kerio .ext-el-mask.invisible {
+-moz-opacity: 0;
+opacity: 0;
+filter: alpha(opacity=0);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+cursor: wait;
+}
+
+.kerio .hideForRendering {
+visibility: hidden;
+}
+.kerio.br-ff2 .hideForRendering input {
+
+font-size: 1px;
+}
+
+.kerio .actionResultOk {
+background: url(./img/actionResult.png?v=8629) no-repeat 0px 0px;
+}
+.kerio .actionResultError {
+background: url(./img/actionResult.png?v=8629) no-repeat 0px -39px;
+}
+.kerio .actionResultWarning {
+background: url(./img/actionResult.png?v=8629) no-repeat 0px -19px;
+}
+
+.kerio .x-masked .x-grid-panel .x-masked .ext-el-mask,
+.kerio .x-masked .x-grid-panel .x-masked .ext-el-mask-msg,
+.kerio.x-masked .x-grid-panel .x-masked .ext-el-mask,
+.kerio.x-masked .x-grid-panel .x-masked .ext-el-mask-msg {
+display: none;
+}
+
+.kerio.br-ff36 .x-form-text,
+
+.kerio.br-ff4.os-linux input.x-form-text {
+padding-top: 1px;
+padding-bottom: 1px;
+}
+.kerio.br-ff36 .iconWrap {
+padding-top: 0;
+padding-bottom: 0;
+}
+.kerio.br-ff4 input.x-form-text {
+padding-top: 0px;
+padding-bottom: 2px;
+}
+
+.kerio.br-ie7 ul.x-tab-strip li .x-tab-strip-text {
+height: 13px !important;
+}
+.kerio.br-webkit .fixWebKitRightMarginSize {
+display: inline-block!important;
+}
+
+.x-spotlight {
+filter: alpha(opacity=0);
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+opacity: 0;
+}
+
+.kerio.br-webkit TEXTAREA {
+display: block;
+}
+
+
+.kerio.br-ie7.fixLangZhJa .sbText {
+margin-bottom: -3px;
+}
+.kerio.br-ie7.fixLangZhJa .simpleButton .sbWithMenu .sbCenter EM {
+background-position-y: 0;
+}
+
+.kerio.fixLangZhJa .x-form-text {
+line-height: 17px;
+}
+.br-ff.os-mac fieldset legend {
+height: 13px;
+margin-bottom: 1px;
+margin-top: -1px;
+}
+
+.br-webkit .x-window-dlg .ext-mb-text p:first-child {
+display: inline;
+}
+
+.scroller.iScroll::-webkit-scrollbar {
+width: 7px;
+height: 7px;
+background-color: rgba(0,0,0,0.10);
+}
+.scroller.iScroll::-webkit-scrollbar-button:start:decrement,
+.scroller.iScroll::-webkit-scrollbar-button:end:increment {
+display: block;
+height: 0px;
+width: 0px;
+background-color: transparent;
+}
+.scroller.iScroll::-webkit-scrollbar-track-piece {
+-webkit-border-radius: 0;
+-webkit-border-bottom-right-radius: 4px;
+-webkit-border-bottom-left-radius: 4px;
+}
+.scroller.iScroll::-webkit-scrollbar-thumb:vertical {
+height: 30px;
+background-color: rgba(0,0,0,0.52);
+-webkit-border-radius: 4px;
+}
+.scroller.iScroll::-webkit-scrollbar-thumb:horizontal {
+width: 80px;
+background-color: rgba(0,0,0,0.52);
+-webkit-border-radius: 4px;
+}
+
+.br-webkit .x-grid3-focus {
+-webkit-user-select: none;
+user-select: none;
+}
+
+.copyableAlert {
+font: normal 12px tahoma,verdana,helvetica;
+border: none;
+background-color: transparent;
+}
+.searchField {
+background-image: url(./img/search.png?v=8629);
+background-repeat: no-repeat;
+background-position: right center;
+background-size: 21px 14px;
+padding-right: 20px;
+}
+.searchHighlighting {
+background-color: #ffd700 !important;
+}
+.kerio .x-grid-group-hd span.searchHighlighting {
+padding: 0;
+}
+.lastVisibleColumn .x-grid3-hd-btn {
+right: 0px;
+border-right: 1px solid #AACCF6;
+}
+.checkAllButtonWrap {
+height: 23px;
+border-right: 1px solid #D0D0D0; 
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+}
+.x-grid3-hd-over .checkAllButtonWrap,
+.sort-desc .checkAllButtonWrap,
+.sort-asc .checkAllButtonWrap,
+.x-grid3-hd-menu-open .checkAllButtonWrap {
+border-right: 1px solid #AACCF6;
+}
+.checkAllButton {
+width: 12px;
+height: 15px;
+background-image: url('./img/checkmenu.png?v=8629');
+background-position: -19px -1px;
+margin: 4px 3px 0 5px
+}
+.checkAllButtonCell {
+padding-left: 25px;
+}
+.displayNone {
+display: none;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 2.5dppx) {
+.searchField {
+background-image: url(./img/search@2x.png?v=8629);
+}
+.kerio .x-tab-scroller-left {
+background-image: url(./img/scroll-left@2x.png?v=8629);
+}
+.kerio .x-tab-scroller-right {
+background-image: url(./img/scroll-right@2x.png?v=8629);
+}
+
+.kerio .x-form-invalid-tip .x-tip-body {
+background-image: url(./img/exclamation@2x.png?v=8629);
+background-size: 13px 13px;
+background-position: 4px 2px;
+}
+.kerio .x-form-invalid-tip .x-tip-tc,
+.kerio .x-form-invalid-tip .x-tip-tl,
+.kerio .x-form-invalid-tip .x-tip-tr,
+.kerio .x-form-invalid-tip .x-tip-bc,
+.kerio .x-form-invalid-tip .x-tip-bl,
+.kerio .x-form-invalid-tip .x-tip-br,
+.kerio .x-form-invalid-tip .x-tip-ml,
+.kerio .x-form-invalid-tip .x-tip-mr {
+background-image: url(./img/error-tip-corners@2x.png?v=8629);
+background-size: 500px 824px;
+}
+
+.kerio .x-window-dlg .ext-mb-info {
+background-image: url(./img/icon-info@2x.png?v=8629);
+background-size: 32px 32px;
+}
+.kerio .x-window-dlg .ext-mb-warning {
+background-image: url(./img/icon-warning@2x.png?v=8629);
+background-size: 32px 32px;
+}
+.kerio .x-window-dlg .ext-mb-question {
+background-image: url(./img/icon-question@2x.png?v=8629);
+background-size: 32px 32px;
+}
+.kerio .x-window-dlg .ext-mb-error {
+background-image: url(./img/icon-error@2x.png?v=8629);
+background-size: 32px 32px;
+}
+}
+.iconCombo .iconInput {
+border-left-style: none;
+}
+.iconCombo .iconWrap {
+cursor: pointer;
+width: 20px;
+height: 20px;
+margin: 0;
+padding: 0;
+float: left;
+border-right-width: 0;  
+}
+.ext-ie7 .x-toolbar .iconCombo .iconWrap {
+top: 1px;
+}
+.ext-ie .x-grid-editor .iconCombo .iconWrap {
+margin: 0 !important;
+top: 0;
+}
+.ext-webkit .x-grid-editor .iconCombo .iconWrap {
+height: 17px;
+}
+.ext-webkit .x-toolbar .iconCombo .iconWrap {
+padding-top: 0px;
+}
+.iconCombo .iconWrap .icon {
+width: 16px;
+height: 16px;
+margin: 1px;
+}
+.x-combo-list-item .icon {
+width: 16px;
+height: 16px;
+margin-right: 4px;
+float:left;
+}
+.hiddenIcon .iconWrap {
+display: none;
+}
+.hiddenIcon .iconInput {
+border-left-style: solid;
+}
+.x-grid-subgroup-hd {
+padding-left: 8px !important;
+border-bottom: 1px solid #ededed !important;
+padding-top: 1px;
+}
+.x-grid-subgroup-hd .x-grid-subgroup-title {
+padding-top: 4px !important;
+padding-bottom: 2px !important;
+}
+.x-grid-subgroup-hd .groupingHeaderWithCheckbox {
+font-weight: normal;
+color: #000;
+}
+.kerio .x-grid-subgroup-body .x-grid3-col-indentGroupMembers {
+margin-left: 28px !important;
+}

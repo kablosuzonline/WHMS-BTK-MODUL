@@ -1,0 +1,193 @@
+html, body {
+font-family: Tahoma, Arial;
+font-size: 13px;
+margin: 0px;
+padding: 0px;
+border: 0px none;
+height: 100%;
+width: 100%;
+}
+body.helpFramework {
+
+overflow: hidden;
+}
+a {
+color: #4a8fe8;
+font-family: Tahoma, Arial;
+font-size: 13px;
+}
+#helpHeader {
+position: absolute;
+top: 0;
+left: 0;
+padding: 0px;
+margin: 2px 0;
+width: 100%;
+border: 0px none;
+border-collapse: collapse;
+}
+#helpHeader td {
+border: 0px;
+border-bottom: 1px solid #99bbe8;
+padding: 8px;
+}
+.navigationpage {
+padding: 0px;
+margin: 0;
+font-size: 11px;
+color: #777777;
+}
+.navigationpage a {
+font-size: 11px;
+color: #4a8fe8;
+}
+#trPrint {
+padding-left: 5px;  
+}
+iframe {
+width: 100%;
+padding: 0 0 8px 8px;
+border: 0px none;
+box-sizing: border-box;
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+}
+#printdiv {
+display: none;
+}
+#kbArticle {
+display: none;
+}
+@media print {
+#printdiv {
+display: block;
+color: black;
+font-size: 13px;
+padding-bottom: 30px;
+}
+.chapter {
+overflow: visible;
+height: 100%;
+}
+hr {
+height: 1px;
+}
+iframe {
+overflow: visible;
+height: 100% !important;
+}
+body div {
+overflow: visible;
+}
+}
+
+.informalfigure, .figure, .informaltable, .table {
+margin-left: 24pt;
+margin-top: 6pt;
+margin-bottom: 6pt;
+}
+.programlisting {
+margin-left: 24pt;
+}
+.literallayout {
+margin-left: 0pt;
+}
+.guilabel, .guibutton, .guimenu, .guimenuitem, .guisubmenu {
+font-style: italic;
+}
+.guiicon {
+border: solid 1px black;
+background-color: silver;
+padding: 1px 1px 1px 1px;
+}
+p {
+margin-top: 6pt;
+margin-bottom: 6pt;
+margin-right: 8px;
+}
+p.title {
+font-size: 7pt;
+margin-top: 5pt;
+margin-bottom: 18pt;
+}
+p.title b {
+font-weight: normal; 
+}
+tt {
+font-size: 9pt;
+}
+pre, code {
+font-size: 9pt;
+}
+code.email {
+font-size: 8pt;
+}
+ul {
+margin-top: 0pt;
+margin-bottom: 0pt;
+}
+h1 {
+color: #000000;
+font-size: 1.5em;
+}
+h2 {
+color: #000000;
+font-size: 20px;
+clear: both;
+font-weight: normal;
+margin: 0px;
+}
+div.simplesect h2 {
+color: #000000;
+font-size: 17px;
+clear: both;
+font-weight: normal;
+margin-top: 30px;
+}
+h3 {
+color: #000000;
+font-size: 1.0em;
+margin-top: 1.2em;
+margin-bottom: 0.5em;
+clear: both;
+font-style : italic;
+}
+
+h3.title {
+margin-top: 0pt;
+}
+
+div.toc p {
+margin-top: 20pt;
+font-size: 1.5em;
+}
+
+div.navheader th {
+font-size: 10pt;
+}
+
+div.figure img, div.table table, div.informalfigure img, div.informaltable table {
+margin-top: 6pt;
+}
+div.note, div.warning, div.caution, div.tip {
+padding: 5pt;
+background-color: #e0e0e0;
+margin-right: 8px;
+margin-bottom: 8px;
+}
+span.term, span.glossterm {
+font-weight: bold;
+}
+em.term, em.glossterm {
+font-style: normal;
+}
+dd {
+margin-left: 0px;
+}
+table.noPadding td {
+padding-top: 8px;
+padding-right: 0px;
+}
+.printText {
+text-align: right;
+}
