@@ -1,0 +1,497 @@
+
+#k_admMenuTree .rootIcon {
+background-position: -593px -16px !important;
+}
+
+.admMenuTree .nodeIcon {
+background: transparent url(img/menuBigIcons.png?v=8629) 0px 0px no-repeat;
+}
+
+.admMenuTree .treeIconDashboard {
+background-position: 0 0;
+}
+.admMenuTree .treeIconInterfaces {
+background-position: 0 -30px;
+}
+.admMenuTree .treeIconTrafficRules {
+background-position: 0 -60px;
+}
+.admMenuTree .treeIconIntrusionPrevention {
+background-position: 0 -90px;
+}
+.admMenuTree .treeIconSecuritySettings {
+background-position: 0 -120px;
+}
+.admMenuTree .treeIconBandwidthManagement {
+background-position: -30px 0;
+}
+.admMenuTree .treeIconContentFilter {
+background-position: -240px -60px;
+}
+.admMenuTree .treeIconHttpPolicy {
+background-position: -30px -30px;
+}
+.admMenuTree .treeIconFtpPolicy {
+background-position: -30px -60px;
+}
+.admMenuTree .treeIconAntivirusList {
+background-position: -30px -90px;
+}
+.admMenuTree .treeIconRoutingTable {
+background-position: -90px -60px;
+}
+.admMenuTree .treeIconAccounting {
+background-position: -90px -90px;
+}
+.admMenuTree .treeIconRemoteServices {
+background-position: -30px -30px;
+}
+.admMenuTree .treeIconAdvancedOptions {
+background-position: -90px -120px;
+}
+.admMenuTree .treeIconDhcpServer {
+background-position: -30px -120px;
+}
+.admMenuTree .treeIconRouterAdvertisements {
+background-position: -60px 0;
+}
+.admMenuTree .treeIconDns {
+background-position: -60px -30px;
+}
+.admMenuTree .treeIconUsers {
+background-position: -120px 0;
+}
+.admMenuTree .treeIconGroups {
+background-position: -120px -30px;
+}
+.admMenuTree .treeIconDomains {
+background-position: -120px -60px;
+}
+.admMenuTree .treeIconCertificates {
+background-position: -60px -60px;
+}
+.admMenuTree .treeIconIpGroups {
+background-position: -60px -90px;
+}
+.admMenuTree .treeIconUrlGroups {
+background-position: -60px -120px;
+}
+.admMenuTree .treeIconTimeRanges {
+background-position: -90px 0;
+}
+.admMenuTree .treeIconServices {
+background-position: -90px -30px;
+}
+.admMenuTree .treeIconProxyServer {
+background-position: -240px -120px;
+}
+
+.admMenuTree .treeIconActiveHosts {
+background-position: -120px -90px;
+}
+.admMenuTree .treeIconConnections {
+background-position: -120px -120px;
+}
+.admMenuTree .treeIconVpnClients {
+background-position: -150px -30px;
+}
+.admMenuTree .treeIconUserStatistics {
+background-position: -150px 0;
+}
+.admMenuTree .treeIconTrafficStatistics {
+background-position: -150px -60px;
+}
+.admMenuTree .treeIconAlertMessages {
+background-position: -150px -90px;
+}
+.admMenuTree .treeIconSystemHealth {
+background-position: -150px -120px;
+}
+.admMenuTree .treeIconIpTools {
+background-position: -240px -30px;
+}
+
+.admMenuTree .treeIconLogAlert {
+background-position: -180px 0;
+}
+.admMenuTree .treeIconLogConfig {
+background-position: -180px -30px;
+}
+.admMenuTree .treeIconLogConnection {
+background-position: -180px -60px;
+}
+.admMenuTree .treeIconLogDebug {
+background-position: -180px -90px;
+}
+.admMenuTree .treeIconLogDial {
+background-position: -180px -120px;
+}
+.admMenuTree .treeIconLogError {
+background-position: -210px 0;
+}
+.admMenuTree .treeIconLogFilter {
+background-position: -210px -30px;
+}
+.admMenuTree .treeIconLogHttp {
+background-position: -210px -60px;
+}
+.admMenuTree .treeIconLogSecurity {
+background-position: -210px -90px;
+}
+.admMenuTree .treeIconLogWarning {
+background-position: -210px -120px;
+}
+.admMenuTree .treeIconLogWeb {
+background-position: -240px 0;
+}
+.admMenuTree .treeIconLogHost {
+background-position: -240px -90px;
+}
+
+
+.admTitleBar .admTitleIcon.screenIconDashboard {
+background-image: url(img/big/dashboard.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconInterfaces {
+background-image: url(img/big/interfaces.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconTrafficPolicy {
+background-image: url(img/big/trafficPolicy.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconTrafficRules {
+background-image: url(img/big/trafficRules.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconIntrusionPrevention {
+background-image: url(img/big/intrusionPrevention.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconSecuritySettings {
+background-image: url(img/big/securitySettings.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconBandwidthLimiter {
+background-image: url(img/big/bandwidthLimiter.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconHttpPolicy {
+background-image: url(img/big/httpPolicy.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconFtpPolicy {
+background-image: url(img/big/ftpPolicy.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconDhcpServer {
+background-image: url(img/big/dhcpServer.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconDns {
+background-image: url(img/big/dns.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconUrlGroups {
+background-image: url(img/big/urlGroups.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconRoutingTable {
+background-image: url(img/big/routingTable.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconAccounting {
+background-image: url(img/big/accounting.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconRemoteServices {
+background-image: url(img/big/remoteServices.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconAdvancedOptions {
+background-image: url(img/big/advancedOptions.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconRouterAdvertisements {
+background-image: url(img/big/routerAdvertisements.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconAntivirus {
+background-image: url(img/big/antivirus.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconCertificates {
+background-image: url(img/big/certificates.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconIpGroups {
+background-image: url(img/big/ipGroups.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconTimeRanges {
+background-image: url(img/big/timeGroups.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconServices {
+background-image: url(img/big/serviceGroups.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.screenIconContentFilter {
+background-image: url(img/big/contentFilter.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconProxyServer {
+background-image: url(img/big/proxyServer.png?v=8629);
+}
+
+.admTitleBar .admTitleIcon.screenIconActiveHosts {
+background-image: url(img/big/activeHosts.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconVpnClients {
+background-image: url(img/big/vpnClients.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconUserStatistics {
+background-image: url(img/big/userStatistics.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconTrafficStatistics {
+background-image: url(img/big/interfaceStatistics.png?v=8629); 
+}
+.admTitleBar .admTitleIcon.screenIconAlertMessages {
+background-image: url(img/big/alertMessages.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconSystemHealth {
+background-image: url(img/big/systemHealth.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconConnections {
+background-image: url(img/big/activeConnections.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.screenIconIpTools {
+background-image: url(img/big/ipTools.png?v=8629);
+}
+
+.admTitleBar .admTitleIcon.screenIconDomains {
+background-image: url(img/big/domains.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconUsers {
+background-image: url(img/big/user.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconGroups {
+background-image: url(img/big/userGroups.png?v=8629);
+background-position: 0 0;
+}
+
+.admTitleBar .admTitleIcon.screenIconLogAlert {
+background-image: url(img/big/logAlert.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogConnection {
+background-image: url(img/big/logConnection.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogDial {
+background-image: url(img/big/logDial.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogFilter {
+background-image: url(img/big/logFilter.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogHttp {
+background-image: url(img/big/logHttp.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogWeb {
+background-image: url(img/big/logWeb.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconLogConfig {
+background-image: url(img/big/logConfig.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconLogDebug {
+background-image: url(img/big/logDebug.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconLogError {
+background-image: url(img/big/logError.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconLogSecurity {
+background-image: url(img/big/logSecurity.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.treeIconLogWarning {
+background-image: url(img/big/logWarning.png?v=8629);
+background-position: 0 0;
+}
+.admTitleBar .admTitleIcon.screenIconLogHost {
+background-image: url(img/big/logHost.png?v=8629);
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 2.5dppx) {
+.admMenuTree .nodeIcon {
+background-image: url(img/menuBigIcons@2x.png?v=8629);
+background-size: 270px 144px !important;
+}
+.admTitleBar .admTitleIcon {
+background-size: 32px 32px;
+}
+.admTitleBar .admTitleIcon.screenIconDashboard {
+background-image: url(img/big/dashboard@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconInterfaces {
+background-image: url(img/big/interfaces@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconTrafficPolicy {
+background-image: url(img/big/trafficPolicy@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconTrafficRules {
+background-image: url(img/big/trafficRules@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconIntrusionPrevention {
+background-image: url(img/big/intrusionPrevention@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconSecuritySettings {
+background-image: url(img/big/securitySettings@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconBandwidthLimiter {
+background-image: url(img/big/bandwidthLimiter@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconHttpPolicy {
+background-image: url(img/big/httpPolicy@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconFtpPolicy {
+background-image: url(img/big/ftpPolicy@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconDhcpServer {
+background-image: url(img/big/dhcpServer@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconDns {
+background-image: url(img/big/dns@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconUrlGroups {
+background-image: url(img/big/urlGroups@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconRoutingTable {
+background-image: url(img/big/routingTable@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconAccounting {
+background-image: url(img/big/accounting@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconRemoteServices {
+background-image: url(img/big/remoteServices@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconAdvancedOptions {
+background-image: url(img/big/advancedOptions@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconRouterAdvertisements {
+background-image: url(img/big/routerAdvertisements@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconAntivirus {
+background-image: url(img/big/antivirus@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconCertificates {
+background-image: url(img/big/certificates@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconIpGroups {
+background-image: url(img/big/ipGroups@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconTimeRanges {
+background-image: url(img/big/timeGroups@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconServices {
+background-image: url(img/big/serviceGroups@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconContentFilter {
+background-image: url(img/big/contentFilter@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconProxyServer {
+background-image: url(img/big/proxyServer@2s.png?v=8629);
+}
+
+.admTitleBar .admTitleIcon.screenIconActiveHosts {
+background-image: url(img/big/activeHosts@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconVpnClients {
+background-image: url(img/big/vpnClients@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconUserStatistics {
+background-image: url(img/big/userStatistics@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconTrafficStatistics {
+background-image: url(img/big/interfaceStatistics@2x.png?v=8629); 
+}
+.admTitleBar .admTitleIcon.screenIconAlertMessages {
+background-image: url(img/big/alertMessages@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconSystemHealth {
+background-image: url(img/big/systemHealth@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconConnections {
+background-image: url(img/big/activeConnections@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconIpTools {
+background-image: url(img/big/ipTools@2x.png?v=8629);
+}
+
+.admTitleBar .admTitleIcon.screenIconDomains {
+background-image: url(img/big/domains@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconUsers {
+background-image: url(img/big/user@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconGroups {
+background-image: url(img/big/userGroups@2x.png?v=8629);
+}
+
+.admTitleBar .admTitleIcon.screenIconLogAlert {
+background-image: url(img/big/logAlert@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogConnection {
+background-image: url(img/big/logConnection@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogDial {
+background-image: url(img/big/logDial@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogFilter {
+background-image: url(img/big/logFilter@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogHttp {
+background-image: url(img/big/logHttp@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogSslvpn {
+background-image: url(img/big/logSslvpn@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogWeb {
+background-image: url(img/big/logWeb@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconLogConfig {
+background-image: url(img/big/logConfig@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconLogDebug {
+background-image: url(img/big/logDebug@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconLogError {
+background-image: url(img/big/logError@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconLogSecurity {
+background-image: url(img/big/logSecurity@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.treeIconLogWarning {
+background-image: url(img/big/logWarning@2x.png?v=8629);
+}
+.admTitleBar .admTitleIcon.screenIconLogHost {
+background-image: url(img/big/logHost@2x.png?v=8629);
+}
+}
+
+.mainMenu {
+background-repeat: no-repeat !important;
+background-position: 13px bottom !important;
+background-image: url(img/serverTitle.png?v=8629) !important;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 2.5dppx) {
+.mainMenu {
+background-image: url(img/serverTitle@2x.png?v=8629) !important;
+background-size:270px 144px !important;
+}
+}
+@media (max-height:450px) {
+.mainMenu {
+background-image: none !important;
+}
+}
+.mainMenu > .x-form-display-field > .textLink {
+background-image: url(img/server_big.png?v=8629) !important;
+background-position: 7px 0 !important;
+top: 55px;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 2.5dppx) {
+.mainMenu > .x-form-display-field > .textLink {
+background-image: url(img/server_big@2x.png?v=8629) !important;
+background-size: 26px 26px !important;
+}
+}

@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Kerio Control Administration</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="img/appleTouchIcon.png?v=8629">
+<meta name="google" content="notranslate">
+<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="img/favicon.ico?v=8629">
+<script type="text/javascript">
+window.k_startedAt = new Date();
+if (document.images) {
+var k_image = new Image();
+k_image.src = "weblib/ext/extjs/resources/images/default/shared/blue-loading.gif?v=8629";
+}
+</script>
+<script type="text/javascript" src="weblib/int/webAssist/webAssist.js?v=8629"></script>
+<!--webAssist hack begin <script type="text/javascript" src="webAssist.js?v=8629"></script> webAssist hack end-->
+<script type="text/javascript">
+if (window.k_webAssist) { window.k_webAssist.k_init({
+k_productName: 'Kerio Control',
+k_module: 'WebAdmin'
+});
+window.k_webAssist.k_serverOs = 'Init';
+} </script>
+<!-- // end of webAssist initialization
+//load Wrapper files -->
+<script type="text/javascript" src="weblib/int/lib/kLib.js?v=8629"></script>
+<script type="text/javascript" src="weblib/ext/sandbox/ext-all-sandbox.js?v=8629"></script>
+<script type="text/javascript">
+kerio.lib.k_loadJs('weblib/int/graph/patch.js', true);
+</script>
+<script type="text/javascript">
+kerio.JSU = {extTest: function() {}};
+kerio.k_isMyKerio = window.location !== window.top.location;
+kerio.k_getDefaultRequestParams = function() {
+var k_params = Ext4.Object.fromQueryString(window.location.search);
+if (kerio.k_isMyKerio) {
+kerio.lib.k_ajax.k_setMyKerioDefaultParams({
+k_headers: JSON.parse(k_params.uploadHeaders),
+k_JSESSION_ID_TEMPLATE: ';jsessionid',
+k_INSTANCE_ID_PARAM_NAME: 'X-InstanceId'
+});
+return {
+k_url: k_params.appUrl,
+k_method: 'post',
+k_headers: JSON.parse(k_params.jsonHeaders)
+};
+}
+return {
+k_url: 'api/jsonrpc/',
+k_method: 'post',
+k_headers: {'Accept': 'application/json-rpc'}
+};
+};
+kerio.lib.k_ajax.k_setDefaultRequestParams(kerio.k_getDefaultRequestParams());
+kerio.waw = {
+isInMyKerio: kerio.k_isMyKerio,
+activation: (kerio.waw ? kerio.waw.activation : undefined), ui: {},
+status: {
+k_currentScreen: {}
+},
+shared: {
+k_widgets: {},
+k_tasks: undefined },
+init: {
+k_asyncOperations: 0
+} };
+</script>
+<script type="text/javascript" src="weblib/int/adm/framework.js?v=8629"></script>
+<script type="text/javascript" src="weblib/int/adm/widgets.js?v=8629"></script>
+<script type="text/javascript" src="constants_client.js?v=8629"></script>
+<script type="text/javascript" src="constants.js?v=8629"></script>
+<script type="text/javascript">
+kerio.lib.k_loadFiles([
+'framework.css'
+], './weblib/int/adm', true);
+kerio.lib.k_loadFiles([
+'main.css',
+'init.js',
+'initKlib.js',
+'userSettings.js',
+'appManagerSettings.js',
+'sharedDefinitions.js',
+'sharedMethods.js',
+'productInfo.js',
+'validator.js',
+'renderers.js',
+'appWidgetsKlib.js',
+'appWidgets.js',
+'appWidgetsGrids.js',
+'dataStore.js',
+'requests.js',
+'waitingDialog.js',
+'activation.js',
+'menuTree.css',
+'mainLayout.js',
+'statusCurrentScreen.js',
+'alertWithCheckbox.js',
+'notifications.js',
+'certificateList.js',
+'certificateImport.js',
+'certificateDetail.js',
+'certificatePassword.js',
+'certificateRename.js',
+'certificateRequest.js'
+], './', true);
+kerio.lib.k_loadFiles([
+'mapping.js'
+], './help', true);
+if (true === kerio.lib.k_isIPadCompatible) {
+kerio.lib.k_loadFiles([
+'iPad.css'
+], './', true);
+}
+kerio.lib.k_loadJs('weblib/int/graph/BaseComponent4.js', true);
+kerio.lib.k_loadJs('weblib/int/graph/DataStore4.js', true);
+kerio.lib.k_loadJs('weblib/int/graph/BaseChart.js', true);
+kerio.lib.k_loadJs('weblib/int/graph/LineChart.js', true);
+kerio.lib.k_loadJs('weblib/int/graph/TimeChart.js', true);
+kerio.lib.k_loadCss('weblib/ext/sandbox/ext-sandbox.css', true);
+kerio.lib.k_loadFiles([
+'wawTileForm.js',
+'tiles.js',
+'dashboardList.js'
+], './dashboard', true);
+kerio.lib.k_onReady = function() {
+kerio.lib.k_engineConstants = {
+k_TOKEN_NAME: 'TOKEN_CONTROL_WEBADMIN' };
+var k_requestCfg = {
+k_jsonRpc: {
+'method': 'Server.getNamedConstantList',
+'params': null
+},
+k_onError: function(k_response) {
+var
+k_message,
+k_error;
+if (kerio.k_isMyKerio) {
+k_message = 'The appliance cannot be reached right now.';
+if (k_response.k_decoded && k_response.k_decoded.error) {
+k_error = k_response.k_decoded.error;
+if (kerio.lib.k_ajax.k_MYKERIO_ERROR_CODE_REQUEST_TIMEOUT !== k_error.code && k_error.message && 'undefined' !== k_error.message) {
+k_message = k_response.k_decoded.error.message;
+}
+}
+Ext.Msg.show({
+title: 'Error',
+msg: k_message,
+buttons: [],
+icon: Ext.MessageBox['ERROR'],
+closable: false
+});
+}
+else {
+kerio.lib.k_reportError('Internal error: can\'t load constants from server', 'index.html');
+}
+return true;
+},
+k_callback: function(k_response, k_success, k_params) {
+var
+k_CONSTANTS,
+k_PRODUCT_INFO,
+k_activationRequired;
+if (!k_success || !k_response.k_isOk) {
+if (!kerio.k_isMyKerio) {
+kerio.lib.k_reportError('Internal error: can\'t load constants from server', 'index.html');
+}
+return;
+}
+k_CONSTANTS = kerio.waw.shared.k_CONSTANTS;
+kerio.waw.shared.k_methods.k_mergeObjects(k_response.k_decoded.constants, k_CONSTANTS);
+k_PRODUCT_INFO = k_CONSTANTS.k_SERVER.k_PRODUCT_INFO;
+k_CONSTANTS.kerio_web_SharedConstants['kerio_web_ServerOs'] = k_PRODUCT_INFO.osDescription;
+k_CONSTANTS.kerio_web_SharedConstants['k_PRODUCT_NAME'] = 'Kerio Control';
+k_CONSTANTS.kerio_web_SharedConstants['k_ENGINE_VERSION'] = k_PRODUCT_INFO.versionString.replace(' build ', '.');
+window.k_webAssist.k_serverOs = '' === k_PRODUCT_INFO.boxEdition ? 'KWF Box' : 'KWF ApE';
+k_activationRequired = !k_PRODUCT_INFO.licenseSet || !k_PRODUCT_INFO.passwordSet || !k_PRODUCT_INFO.clientStatisticsSet || !k_PRODUCT_INFO.centralManagementSet;
+if (k_PRODUCT_INFO.licenseSet && (!k_PRODUCT_INFO.clientStatisticsSet || !k_PRODUCT_INFO.centralManagementSet)) {
+k_activationRequired = !k_CONSTANTS.k_USER.k_isAuditor;
+}
+if (k_activationRequired) {
+kerio.waw.activation = {
+k_needLicense: !k_PRODUCT_INFO.licenseSet,
+k_needPassword: !k_PRODUCT_INFO.passwordSet,
+k_needClientStatistics: !k_PRODUCT_INFO.clientStatisticsSet,
+k_needCentralManagement: !k_PRODUCT_INFO.centralManagementSet,
+k_showOnLoad: true
+};
+}
+kerio.adm._k_builtInWidgets.push('certificateRename');
+kerio.waw.shared.k_widgets._K_Requests._k_BATCH_MAX_COMMAND_COUNT = kerio.waw.shared.k_CONSTANTS.k_BATCH_MAX_COMMAND_COUNT;
+kerio.waw.shared.k_widgets._K_Requests._k_ERROR_BATCH_MAX_COMMAND_EXCEEDED = kerio.waw.shared.k_CONSTANTS.k_ERROR_BATCH_MAX_COMMAND_EXCEEDED;
+kerio.waw.shared.k_widgets._K_Requests._k_isFinalVersion = kerio.waw.shared.k_CONSTANTS.k_SERVER.k_PRODUCT_INFO.finalVersion;
+kerio.waw.init.k_onReady();
+}
+};
+kerio.lib.k_ajax.k_request({
+k_jsonRpc: {
+method: 'Session.reset'
+},
+k_callback: function() {
+kerio.lib.k_ajax.k_request(k_requestCfg);
+}
+});
+};
+</script>
+</head>
+<body>
+<script type="text/javascript">
+if (kerio.k_isMyKerio) {
+document.body.innerHTML = '<div id="k_initLoading" style="height: 100%;position:relative;"><div style="width: 400px;height: 300px;position:absolute; top: 50%; left: 50%; margin: -150px -200px;text-align: center;padding-top: 190px;font-size: 20px;color: #40403F;opacity: 0.8;background-image: url(img/loading.gif?v=8629); background-size: 400px 200px; background-position: top center; background-repeat: no-repeat;">Opening secure connection</div></div>';
+}
+else {
+document.body.innerHTML = '<div id="k_initLoading" style="height: 100%; background-image: url(weblib/ext/extjs/resources/images/default/shared/blue-loading.gif?v=8629); background-position: center center; background-repeat: no-repeat;"></div>';
+}
+</script>
+</body>
+</html>

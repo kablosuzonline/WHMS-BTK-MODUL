@@ -1,0 +1,155 @@
+.splittedLayout .tabsInLayout .x-tab-strip {
+padding-left: 0px;
+padding-top: 0px !important;
+}
+.activeItemsList.splittedLayout.detailsPaneActive .x-border-layout-ct {
+border-color: #CEDEFF; 
+}
+.admTitleBar .admTitleIcon {
+background-image: url(img/menuBigIcons.png?v=8629) !important;
+background-repeat: no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-resolution: 2.5dppx) {
+.admTitleBar .admTitleIcon {
+background-image: url(img/menuBigIcons@2x.png?v=8629) !important;
+background-size: 270px 144px !important;
+}
+}
+.admTitleBar .admTitleIcon.screenIconDashboard {
+background-position: 0 0 !important;
+}
+.admTitleBar .admTitleIcon.screenIconInterfaces {
+background-position: 0 -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconTrafficPolicy {
+background-position: 0 -60px !important;
+}
+.admTitleBar .admTitleIcon.screenIconIntrusionPrevention {
+background-position: 0 -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconSecuritySettings {
+background-position: 0 -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconBandwidthLimiter {
+background-position: -30px 0 !important;
+}
+.admTitleBar .admTitleIcon.screenIconContentFilter {
+background-position: -240px -60px !important;
+}
+.admTitleBar .admTitleIcon.screenIconAntivirus {
+background-position: -30px -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconRoutingTable {
+background-position: -90px -60px !important;
+}
+.admTitleBar .admTitleIcon.screenIconAccounting {
+background-position: -90px -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconRemoteServices {
+background-position: -30px -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconAdvancedOptions {
+background-position: -90px -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconDhcpServer {
+background-position: -30px -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconRouterAdvertisements {
+background-position: -60px 0 !important;
+}
+.admTitleBar .admTitleIcon.screenIconDns {
+background-position: -60px -30px !important;
+}
+.admTitleBar .admTitleIcon.treeIconUsers {
+background-position: -120px 0 !important;
+}
+.admTitleBar .admTitleIcon.treeIconGroups {
+background-position: -120px -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconDomains {
+background-position: -120px -60px !important;
+}
+.admTitleBar .admTitleIcon.treeIconCertificates {
+background-position: -60px -60px !important;
+}
+.admTitleBar .admTitleIcon.treeIconIpGroups {
+background-position: -60px -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconUrlGroups {
+background-position: -60px -120px !important;
+}
+.admTitleBar .admTitleIcon.treeIconTimeRanges {
+background-position: -90px 0 !important;
+}
+.admTitleBar .admTitleIcon.treeIconServices {
+background-position: -90px -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconActiveHosts {
+background-position: -120px -90px !important;
+}
+.admTitleBar .admTitleIcon.treeIconConnections {
+background-position: -120px -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconVpnClients {
+background-position: -150px -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconUserStatistics {
+background-position: -150px 0 !important;
+}
+.admTitleBar .admTitleIcon.screenIconTrafficStatistics {
+background-position: -150px -60px !important;
+}
+.admTitleBar .admTitleIcon.screenIconAlertMessages {
+background-position: -150px -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconSystemHealth {
+background-position: -150px -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogAlert {
+background-position: -180px 0 !important;
+}
+.admTitleBar .admTitleIcon.treeIconLogConfig {
+background-position: -180px -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogConnection {
+background-position: -180px -60px !important;
+}
+.admTitleBar .admTitleIcon.treeIconLogDebug {
+background-position: -180px -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogDial {
+background-position: -180px -120px !important;
+}
+.admTitleBar .admTitleIcon.treeIconLogError {
+background-position: -210px 0 !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogFilter {
+background-position: -210px -30px !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogHttp {
+background-position: -210px -60px !important;
+}
+.admTitleBar .admTitleIcon.treeIconLogSecurity {
+background-position: -210px -90px !important;
+}
+.admTitleBar .admTitleIcon.treeIconLogWarning {
+background-position: -210px -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogWeb {
+background-position: -240px 0 !important;
+}
+.admTitleBar .admTitleIcon.screenIconLogHost {
+background-position: -240px -90px !important;
+}
+.admTitleBar .admTitleIcon.screenIconProxyServer {
+background-position: -240px -120px !important;
+}
+.admTitleBar .admTitleIcon.screenIconIpTools {
+background-position: -240px -30px !important;
+}
+#accountingList_k_statisticsForm_k_linkToStar,
+#accountingList_k_statisticsForm_k_linkToStar * {
+font-size: 11px !important;
+}
